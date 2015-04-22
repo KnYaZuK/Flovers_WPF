@@ -49,7 +49,7 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void button_Create_Click(object sender, RoutedEventArgs e)
         {
-            await oClientsRepository.Insert_Clients_Async(new Clients() { full_name = textbox_full_name.Text, phone_number = textbox_phone_number.Text, email = textbox_email.Text });
+            await oClientsRepository.Insert_Clients_Async(new Clients(textbox_full_name.Text,textbox_phone_number.Text,textbox_email.Text,textbox_referer_number.Text));
             await Update_Grid_View();
 
             Clear_Controls();
@@ -59,8 +59,9 @@ namespace Flovers_WPF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_Update_Click(object sender, RoutedEventArgs e)
+        private async void button_Update_Click(object sender, RoutedEventArgs e)
         {
+            await Update_Grid_View();
             Clear_Controls();
         }
 
@@ -126,10 +127,31 @@ namespace Flovers_WPF
             textbox_full_name.Text = "ФИО";
             textbox_phone_number.Text = "Номер Телефона";
             textbox_email.Text = "Email";
+            textbox_referer_number.Text = "Номер Реферера";
 
             button_Create.IsEnabled = true;
             button_Update.IsEnabled = false;
             button_Delete.IsEnabled = false;
+        }
+
+        private void textbox_full_name_IsMouseCapturedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            textbox_full_name.Text = null;
+        }
+
+        private void textbox_phone_number_IsMouseCapturedChanged_1(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            textbox_phone_number.Text = null;
+        }
+
+        private void textbox_email_IsMouseCapturedChanged_1(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            textbox_email.Text = null;
+        }
+
+        private void textbox_referer_number_IsMouseCapturedChanged_1(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            textbox_referer_number.Text = null;
         }
     }
 }
