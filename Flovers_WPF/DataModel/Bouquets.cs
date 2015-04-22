@@ -8,7 +8,8 @@ namespace Flovers_WPF.DataModel
         [PrimaryKey, AutoIncrement]
         public int bouquets_id { get; set; }
 
-
+        public int name { get; set; }
+        public double price_extra { get; set; }
     }
 }
 

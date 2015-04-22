@@ -8,7 +8,8 @@ namespace Flovers_WPF.DataModel
         [PrimaryKey, AutoIncrement]
         public int discounts_id { get; set; }
 
-
+        public double percents { get; set; }
+        public double value { get; set; }
     }
 }
 
