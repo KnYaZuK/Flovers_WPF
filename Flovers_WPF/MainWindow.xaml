@@ -1,8 +1,17 @@
-﻿<Window x:Class="Flovers_WPF.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:SqlServer="clr-namespace:System.Data.Entity.SqlServer;assembly=EntityFramework.SqlServer" x:Class="Flovers_WPF.MainWindow"
+        Title="MainWindow" Height="350" Width="931" Loaded="Window_Loaded">
     <Grid>
-        
+        <DataGrid x:Name="gridview" HorizontalAlignment="Left" Margin="192,10,0,0" VerticalAlignment="Top" Height="299" Width="721" SelectionChanged="gridview_SelectionChanged"/>
+        <TextBox x:Name="textbox_full_name" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="full_name" VerticalAlignment="Top" Width="177"/>
+        <TextBox x:Name="textbox_phone_number" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="phone_number" VerticalAlignment="Top" Width="177"/>
+        <TextBox x:Name="textbox_email" HorizontalAlignment="Left" Height="23" Margin="10,66,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" Width="177"/>
+        <TextBox x:Name="textbox_referer_number" HorizontalAlignment="Left" Height="23" Margin="10,94,0,0" TextWrapping="Wrap" Text="referer_number" VerticalAlignment="Top" Width="177"/>
+        <Button x:Name="button_Create" Content="Create" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Width="177" Click="button_Create_Click"/>
+        <Button x:Name="button_Update" Content="Update" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top" Width="177" Click="button_Update_Click"/>
+        <Button x:Name="button_Delete" Content="Delete" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top" Width="177" Click="button_Delete_Click"/>
+
     </Grid>
 </Window>
