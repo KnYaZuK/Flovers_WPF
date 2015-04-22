@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <NuGetPackageImportStamp>f3b7725a</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,10 +35,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.96.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.96.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -57,6 +75,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAccess\IDBConnection.cs" />
+    <Compile Include="DataAccess\DBConnection.cs" />
+    <Compile Include="DataModel\Payments.cs" />
+    <Compile Include="DataModel\Orders.cs" />
+    <Compile Include="DataModel\Flowers.cs" />
+    <Compile Include="DataModel\Discounts.cs" />
+    <Compile Include="DataModel\Contents.cs" />
+    <Compile Include="DataModel\Constants.cs" />
+    <Compile Include="DataModel\Clients.cs" />
+    <Compile Include="DataModel\Carts.cs" />
+    <Compile Include="DataModel\Bouquets.cs" />
+    <Compile Include="DataModel\Accessories.cs" />
+    <Compile Include="Repository\AccessoriesRepository.cs" />
+    <Compile Include="Repository\ClientsRepository.cs" />
+    <Compile Include="Repository\FlowersRepository.cs" />
+    <Compile Include="Repository\IPaymentsRepository.cs" />
+    <Compile Include="Repository\IOrdersRepository.cs" />
+    <Compile Include="Repository\IFlowersRepository.cs" />
+    <Compile Include="Repository\IDiscountsRepository.cs" />
+    <Compile Include="Repository\IContentsRepository.cs" />
+    <Compile Include="Repository\IConstantsRepository.cs" />
+    <Compile Include="Repository\IClientsRepository.cs" />
+    <Compile Include="Repository\ICartsRepository.cs" />
+    <Compile Include="Repository\IBouquetsRepository.cs" />
+    <Compile Include="Repository\IAccessoriesRepository.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Page Include="MainWindow.xaml">
