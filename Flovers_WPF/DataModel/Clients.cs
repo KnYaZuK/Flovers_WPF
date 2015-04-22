@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using System;
+using SQLite;
 
 namespace Flovers_WPF.DataModel
 {
@@ -17,15 +18,28 @@ namespace Flovers_WPF.DataModel
         public string email { get; set; }
 
         [NotNull]
-        public int bonus_card_number { get; set; }
+        public string bonus_card_number { get; set; }
 
         [NotNull]
         public int bonus_card_points { get; set; }
 
         [NotNull]
-        public int referal_number { get; set; }
+        public string referal_number { get; set; }
 
-        public int referer_number { get; set; }
+        public string referer_number { get; set; }
+
+        public Clients() { }
+
+        public Clients(string full_name, string phone_number, string email = null, string referer_number = null)
+        {
+            this.full_name = full_name;
+            this.phone_number = phone_number;
+            this.email = email;
+            this.bonus_card_number = Guid.NewGuid().ToString();
+            this.bonus_card_points = 0;
+            this.referal_number = Guid.NewGuid().ToString();
+            this.referer_number = referer_number;
+        }
     }
 }
 
