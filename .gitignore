@@ -12,6 +12,8 @@
 
 # Build results
 [Dd]ebug/
+![Dd]ebug/*.sqlite
+![Dd]ebug/sqlite3.dll
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
