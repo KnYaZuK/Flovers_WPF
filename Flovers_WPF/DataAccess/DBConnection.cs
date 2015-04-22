@@ -5,14 +5,14 @@ using Flovers_WPF.DataModel;
 
 namespace Flovers_WPF.DataAccess
 {
-    interface DBConnection : IDBConnection
+    class DBConnection : IDBConnection
     {
         string dbPath;
         SQLiteAsyncConnection conn;
 
         public DBConnection()
         {
-            dbPath = Path.Combine("Flowers.sqlite");
+            dbPath = Path.Combine(Directory.GetCurrentDirectory(),"Flowers.sqlite");
             conn = new SQLiteAsyncConnection(dbPath);
         }
 
