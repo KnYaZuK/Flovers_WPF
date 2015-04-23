@@ -19,6 +19,16 @@ namespace Flovers_WPF.DataModel
 
         [Indexed, NotNull]
         public int accessories_id { get; set; }
+
+        public Contents() { }
+
+        public Contents( decimal count, int bouquets_id, int flowers_id, int accessories_id )
+        {
+            this.count = count;
+            this.bouquets_id = bouquets_id;
+            this.flowers_id = flowers_id;
+            this.accessories_id = accessories_id;
+        }
     }
 }
 

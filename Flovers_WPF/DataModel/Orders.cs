@@ -19,6 +19,15 @@ namespace Flovers_WPF.DataModel
 
         [Indexed, NotNull]
         public int clients_id { get; set; }
+
+        public Orders() { }
+
+        public Orders( string address, double price, string status )
+        {
+            this.address = address;
+            this.price = price;
+            this.status = status;
+        }
     }
 }
 

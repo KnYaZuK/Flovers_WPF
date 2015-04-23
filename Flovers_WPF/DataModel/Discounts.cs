@@ -13,6 +13,14 @@ namespace Flovers_WPF.DataModel
 
         [NotNull]
         public double value { get; set; }
+
+        public Discounts() { }
+
+        public Discounts( double percents, double value )
+        {
+            this.percents = percents;
+            this.value = value;
+        }
     }
 }
 

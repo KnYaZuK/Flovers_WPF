@@ -13,6 +13,14 @@ namespace Flovers_WPF.DataModel
 
         [NotNull]
         public string value { get; set; }
+
+        public Constants() { }
+
+        public Constants( string name, string value )
+        {
+            this.name = name;
+            this.value = value;
+        }
     }
 }
 
