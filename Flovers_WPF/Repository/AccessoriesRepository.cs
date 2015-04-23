@@ -6,7 +6,7 @@ using Flovers_WPF.DataModel;
 
 namespace Flovers_WPF.Repository
 {
-    class AccessoriesRepository
+    class AccessoriesRepository :IAccessoriesRepository
     {
         SQLiteAsyncConnection conn;
 
