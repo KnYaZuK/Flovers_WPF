@@ -51,6 +51,7 @@ namespace Flovers_WPF
         {
             await oClientsRepository.Insert_Clients_Async(new Clients(textbox_full_name.Text,textbox_phone_number.Text,textbox_email.Text,textbox_referer_number.Text));
             await Update_Grid_View();
+            await Update_ListBox_View();
 
             Clear_Controls();
         }
@@ -62,6 +63,8 @@ namespace Flovers_WPF
         private async void button_Update_Click(object sender, RoutedEventArgs e)
         {
             await Update_Grid_View();
+            await Update_ListBox_View();
+
             Clear_Controls();
         }
 
@@ -74,6 +77,7 @@ namespace Flovers_WPF
         {
             await oClientsRepository.Delete_Clients_Async(oClients);
             await Update_Grid_View();
+            await Update_ListBox_View();
 
             Clear_Controls();
         }
@@ -86,7 +90,14 @@ namespace Flovers_WPF
         {
             List<Clients> result = await oClientsRepository.Select_All_Clients_Async();
 
-            gridview.ItemsSource = result;
+            datagridview.ItemsSource = result;
+        }
+
+        private async Task Update_ListBox_View()
+        {
+            List<Clients> result = await oClientsRepository.Select_All_Clients_Async();
+
+            listview.ItemsSource = result;
         }
 
         /// <summary>
@@ -97,7 +108,9 @@ namespace Flovers_WPF
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             await Initialize_Database();
+
             await Update_Grid_View();
+            await Update_ListBox_View();
         }
 
         /// <summary>
@@ -113,6 +126,22 @@ namespace Flovers_WPF
             }
 
             oClients = e.AddedItems[0] as Clients;
+            spanel_Clients.DataContext = oClients;
+
+            button_Create.IsEnabled = false;
+            button_Update.IsEnabled = true;
+            button_Delete.IsEnabled = true;
+        }
+
+        private void listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count <= 0)
+            {
+                return;
+            }
+            
+            oClients = e.AddedItems[0] as Clients;
+            spanel_Clients.DataContext = oClients;
 
             button_Create.IsEnabled = false;
             button_Update.IsEnabled = true;
@@ -124,34 +153,25 @@ namespace Flovers_WPF
         /// </summary>
         private void Clear_Controls()
         {
-            textbox_full_name.Text = "ФИО";
-            textbox_phone_number.Text = "Номер Телефона";
-            textbox_email.Text = "Email";
-            textbox_referer_number.Text = "Номер Реферера";
+            textbox_full_name.Text = "";
+            textbox_phone_number.Text = "";
+            textbox_email.Text = "";
+            textbox_referer_number.Text = "";
 
             button_Create.IsEnabled = true;
             button_Update.IsEnabled = false;
             button_Delete.IsEnabled = false;
         }
 
-        private void textbox_full_name_IsMouseCapturedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Очищает выделение в listview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listview_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            textbox_full_name.Text = null;
-        }
-
-        private void textbox_phone_number_IsMouseCapturedChanged_1(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            textbox_phone_number.Text = null;
-        }
-
-        private void textbox_email_IsMouseCapturedChanged_1(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            textbox_email.Text = null;
-        }
-
-        private void textbox_referer_number_IsMouseCapturedChanged_1(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            textbox_referer_number.Text = null;
+            listview.SelectedIndex = -1;
+            Clear_Controls();
         }
     }
 }

@@ -2,16 +2,64 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:SqlServer="clr-namespace:System.Data.Entity.SqlServer;assembly=EntityFramework.SqlServer" x:Class="Flovers_WPF.MainWindow"
-        Title="MainWindow" Height="350" Width="931" Loaded="Window_Loaded">
+        Title="MainWindow" Height="345" Width="1024" Loaded="Window_Loaded">
     <Grid>
-        <DataGrid x:Name="gridview" HorizontalAlignment="Left" Margin="192,10,0,0" VerticalAlignment="Top" Height="299" Width="721" SelectionChanged="gridview_SelectionChanged"/>
-        <TextBox x:Name="textbox_full_name" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="ФИО" VerticalAlignment="Top" Width="177" IsMouseCapturedChanged="textbox_full_name_IsMouseCapturedChanged"/>
-        <TextBox x:Name="textbox_phone_number" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Номер Телефона" VerticalAlignment="Top" Width="177" IsMouseCapturedChanged="textbox_phone_number_IsMouseCapturedChanged_1"/>
-        <TextBox x:Name="textbox_email" HorizontalAlignment="Left" Height="23" Margin="10,66,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="177" IsMouseCapturedChanged="textbox_email_IsMouseCapturedChanged_1"/>
-        <TextBox x:Name="textbox_referer_number" HorizontalAlignment="Left" Height="23" Margin="10,94,0,0" TextWrapping="Wrap" Text="Номер Реферера" VerticalAlignment="Top" Width="177" IsMouseCapturedChanged="textbox_referer_number_IsMouseCapturedChanged_1"/>
-        <Button x:Name="button_Create" Content="Create" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Width="177" Click="button_Create_Click"/>
-        <Button x:Name="button_Update" Content="Update" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top" Width="177" Click="button_Update_Click"/>
-        <Button x:Name="button_Delete" Content="Delete" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top" Width="177" Click="button_Delete_Click"/>
+        <DataGrid x:Name="datagridview" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="304" Width="386" SelectionChanged="gridview_SelectionChanged"/>
+        <ListView Name="listview" ItemsSource="{Binding}" Margin="606,11,10,0" SelectionChanged="listview_SelectionChanged" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseRightButtonUp="listview_MouseRightButtonUp">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical"  Margin="4">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Clients Id" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding clients_id}" ></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Full Name" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding full_name}" ></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Phone Number" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding phone_number}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Email" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding email}" ></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Bonus Card Number" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding bonus_card_number}" ></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Bonus Card Points" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding bonus_card_points}" ></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Referal Number" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding referal_number}" ></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Referer Number" Width="128"></TextBlock>
+                            <TextBlock Text="{Binding referer_number}" ></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel x:Name="spanel_Clients" HorizontalAlignment="Left" Height="205" Margin="401,11,0,0" VerticalAlignment="Top" Width="200">
+            <TextBlock TextWrapping="Wrap" Text="ФИО" Height="20"/>
+            <TextBox x:Name="textbox_full_name" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding full_name}"/>
+            <TextBlock TextWrapping="Wrap" Text="Номер Телефона" Height="20"/>
+            <TextBox x:Name="textbox_phone_number" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding phone_number}"/>
+            <TextBlock TextWrapping="Wrap" Text="Email" Height="20"/>
+            <TextBox x:Name="textbox_email" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding email}"/>
+            <TextBlock TextWrapping="Wrap" Text="Номер Реферера" Height="20"/>
+            <TextBox x:Name="textbox_referer_number" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding referer_number}"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Height="98" Margin="401,216,0,0" VerticalAlignment="Top" Width="200">
+            <Button x:Name="button_Create" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Click="button_Create_Click" Height="30"/>
+            <Button x:Name="button_Update" Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Click="button_Update_Click" Height="30"/>
+            <Button x:Name="button_Delete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Click="button_Delete_Click" Height="30"/>
+        </StackPanel>
 
     </Grid>
 </Window>
