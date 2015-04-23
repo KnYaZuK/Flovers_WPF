@@ -153,10 +153,11 @@ namespace Flovers_WPF
         /// </summary>
         private void Clear_Controls()
         {
-            textbox_full_name.Text = "";
-            textbox_phone_number.Text = "";
-            textbox_email.Text = "";
-            textbox_referer_number.Text = "";
+            //textbox_full_name.Text = null;
+            //textbox_phone_number.Text = null;
+            //textbox_email.Text = null;
+            //textbox_referer_number.Text = null;
+            spanel_Clients.DataContext = null;
 
             button_Create.IsEnabled = true;
             button_Update.IsEnabled = false;
