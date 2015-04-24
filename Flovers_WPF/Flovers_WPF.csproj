@@ -77,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="DataAccess\IDBConnection.cs" />
     <Compile Include="DataAccess\DBConnection.cs" />
+    <Compile Include="DataModel\Cards.cs" />
     <Compile Include="DataModel\Payments.cs" />
     <Compile Include="DataModel\Orders.cs" />
     <Compile Include="DataModel\Flowers.cs" />
@@ -87,9 +88,11 @@
     <Compile Include="DataModel\Carts.cs" />
     <Compile Include="DataModel\Bouquets.cs" />
     <Compile Include="DataModel\Accessories.cs" />
+    <Compile Include="Repository\CardsRepository.cs" />
     <Compile Include="Repository\AccessoriesRepository.cs" />
     <Compile Include="Repository\ClientsRepository.cs" />
     <Compile Include="Repository\FlowersRepository.cs" />
+    <Compile Include="Repository\ICardsRepository.cs" />
     <Compile Include="Repository\IPaymentsRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
     <Compile Include="Repository\IFlowersRepository.cs" />

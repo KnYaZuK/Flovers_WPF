@@ -29,6 +29,7 @@ namespace Flovers_WPF
         }
 
         ClientsRepository oClientsRepository; //Объект для работы с таблицей Клиентов
+        CardsRepository oCardsRepository;
 
         Clients oClients; //Текущий выделенный клиент
 
@@ -39,8 +40,11 @@ namespace Flovers_WPF
         private async Task Initialize_Database()
         {
             DBConnection oDBConnection = new DBConnection();
+
             await oDBConnection.InitializeDatabase();
+
             oClientsRepository = new ClientsRepository(oDBConnection);
+            oCardsRepository = new CardsRepository(oDBConnection);
         }
         /// <summary>
         /// Создание новой записи
@@ -49,7 +53,12 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void button_Create_Click(object sender, RoutedEventArgs e)
         {
-            await oClientsRepository.Insert_Clients_Async(new Clients(textbox_full_name.Text,textbox_phone_number.Text,textbox_email.Text,textbox_referer_number.Text));
+            Cards card = new Cards();
+            Clients client = new Clients(textbox_full_name.Text,textbox_phone_number.Text,textbox_email.Text,textbox_referer_number.Text, card.cards_id );
+
+            await oClientsRepository.Insert_Clients_Async(client);
+            await oCardsRepository.Insert_Cards_Async(card);
+
             await Update_Grid_View();
             await Update_ListBox_View();
 
@@ -88,7 +97,7 @@ namespace Flovers_WPF
         /// <returns></returns>
         private async Task Update_Grid_View()
         {
-            List<Clients> result = await oClientsRepository.Select_All_Clients_Async();
+            List<Cards> result = await oCardsRepository.Select_All_Cards_Async();
 
             datagridview.ItemsSource = result;
         }
@@ -98,6 +107,8 @@ namespace Flovers_WPF
             List<Clients> result = await oClientsRepository.Select_All_Clients_Async();
 
             listview.ItemsSource = result;
+
+            
         }
 
         /// <summary>

@@ -39,5 +39,7 @@ namespace Flovers_WPF.Repository
         {
             return await conn.QueryAsync<Clients>(query);
         }
+
+        //public async Task<List<Clients,Cards>> Select_Clients_Cards_Async(string query)
     }
 }
