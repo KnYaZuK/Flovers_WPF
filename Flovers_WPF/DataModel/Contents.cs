@@ -14,10 +14,10 @@ namespace Flovers_WPF.DataModel
         [Indexed, NotNull]
         public int bouquets_id { get; set; }
 
-        [Indexed, NotNull]
+        [Indexed]
         public int flowers_id { get; set; }
 
-        [Indexed, NotNull]
+        [Indexed]
         public int accessories_id { get; set; }
 
         public Contents() { }
