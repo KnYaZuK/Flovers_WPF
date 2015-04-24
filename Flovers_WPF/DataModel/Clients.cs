@@ -22,15 +22,19 @@ namespace Flovers_WPF.DataModel
 
         public string referer_number { get; set; }
 
+        [Indexed, NotNull]
+        public int cards_id { get; set; }
+
         public Clients() { }
 
-        public Clients(string full_name, string phone_number, string email = null, string referer_number = null)
+        public Clients(string full_name, string phone_number, string email, string referer_number, int cards_id )
         {
             this.full_name = full_name;
             this.phone_number = phone_number;
             this.email = email;
             this.referal_number = Guid.NewGuid().ToString();
             this.referer_number = referer_number;
+            this.cards_id = clients_id;
         }
     }
 }

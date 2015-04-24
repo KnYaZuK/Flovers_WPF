@@ -15,16 +15,12 @@ namespace Flovers_WPF.DataModel
         [NotNull]
         public int bonus_card_points { get; set; }
 
-        [Indexed, NotNull]
-        public int clients_id { get; set; }
+        //public Cards() { }
 
-        public Cards() { }
-
-        public Cards( int clients_id )
+        public Cards( )
         {
             this.bonus_card_number = Guid.NewGuid().ToString();
             this.bonus_card_points = 0;
-            this.clients_id = clients_id;
         }
     }
 }
