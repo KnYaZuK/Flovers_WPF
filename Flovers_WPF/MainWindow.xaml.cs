@@ -15,175 +15,81 @@ using System.Windows.Shapes;
 using Flovers_WPF.DataAccess;
 using Flovers_WPF.DataModel;
 using Flovers_WPF.Repository;
+using MahApps.Metro.Controls;
 
 namespace Flovers_WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        ClientsRepository oClientsRepository; //Объект для работы с таблицей Клиентов
-        CardsRepository oCardsRepository;
+        WorkersRepository oWorkersRepository;
+        List<Workers> workers;
+        public bool isLoogedIn;
 
-        Clients oClients; //Текущий выделенный клиент
-
-        /// <summary>
-        /// Устанавливает связь с базой данных.
-        /// </summary>
-        /// <returns></returns>
         private async Task Initialize_Database()
         {
             DBConnection oDBConnection = new DBConnection();
-
             await oDBConnection.InitializeDatabase();
-
-            oClientsRepository = new ClientsRepository(oDBConnection);
-            oCardsRepository = new CardsRepository(oDBConnection);
+            oWorkersRepository = new WorkersRepository(oDBConnection);
         }
-        /// <summary>
-        /// Создание новой записи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void button_Create_Click(object sender, RoutedEventArgs e)
+
+        private async Task get_workers_login()
         {
-            Cards card = new Cards();
-            Clients client = new Clients(textbox_full_name.Text,textbox_phone_number.Text,textbox_email.Text,textbox_referer_number.Text, card.cards_id );
-
-            await oClientsRepository.Insert_Clients_Async(client);
-            await oCardsRepository.Insert_Cards_Async(card);
-
-            await Update_Grid_View();
-            await Update_ListBox_View();
-
-            Clear_Controls();
+            workers = await oWorkersRepository.Select_Workers_Async("select login,password from workers");
         }
-        /// <summary>
-        /// Изменение выделенной записи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void button_Update_Click(object sender, RoutedEventArgs e)
+
+        public async void check_logpas()
         {
-            await Update_Grid_View();
-            await Update_ListBox_View();
-
-            Clear_Controls();
+            await get_workers_login();
+            foreach(var c in workers)
+            {
+                if(login1.Text == c.login && pass.Password == c.password)
+                {
+                    isLoogedIn = true;
+                    break;
+                }
+                else
+                {
+                    isLoogedIn = false;
+                }
+            }
+            if (isLoogedIn)
+            {
+                Main_menu mm = new Main_menu();
+                mm.Show();
+                this.Close();
+                attention.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else
+            {
+                attention.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
-        /// <summary>
-        /// Удаление выделенной записи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void button_Delete_Click(object sender, RoutedEventArgs e)
+        private void login_Click(object sender, RoutedEventArgs e)
         {
-            await oClientsRepository.Delete_Clients_Async(oClients);
-            await Update_Grid_View();
-            await Update_ListBox_View();
-
-            Clear_Controls();
+            check_logpas();
         }
 
-        /// <summary>
-        /// Обновление содержимого GridView
-        /// </summary>
-        /// <returns></returns>
-        private async Task Update_Grid_View()
-        {
-            List<Cards> result = await oCardsRepository.Select_All_Cards_Async();
-
-            datagridview.ItemsSource = result;
-        }
-
-        private async Task Update_ListBox_View()
-        {
-            List<Clients> result = await oClientsRepository.Select_All_Clients_Async();
-
-            listview.ItemsSource = result;
-
-            
-        }
-
-        /// <summary>
-        /// Инициализация базы данных и обновление GridView при загрузке формы
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await Initialize_Database();
-
-            await Update_Grid_View();
-            await Update_ListBox_View();
         }
 
-        /// <summary>
-        /// Хранит в себе выделенный элемент GridView
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void gridview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void register_Click(object sender, RoutedEventArgs e)
         {
-            if (e.AddedItems.Count <= 0)
-            {
-                return;
-            }
-
-            oClients = e.AddedItems[0] as Clients;
-            spanel_Clients.DataContext = oClients;
-
-            button_Create.IsEnabled = false;
-            button_Update.IsEnabled = true;
-            button_Delete.IsEnabled = true;
+            Registration reg_form = new Registration();
+            reg_form.ShowDialog();
         }
 
-        private void listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count <= 0)
-            {
-                return;
-            }
-            
-            oClients = e.AddedItems[0] as Clients;
-            spanel_Clients.DataContext = oClients;
+       
 
-            button_Create.IsEnabled = false;
-            button_Update.IsEnabled = true;
-            button_Delete.IsEnabled = true;
-        }
-
-        /// <summary>
-        /// Присвоить стандартные значения текст-боксам
-        /// </summary>
-        private void Clear_Controls()
-        {
-            //textbox_full_name.Text = null;
-            //textbox_phone_number.Text = null;
-            //textbox_email.Text = null;
-            //textbox_referer_number.Text = null;
-            spanel_Clients.DataContext = null;
-
-            button_Create.IsEnabled = true;
-            button_Update.IsEnabled = false;
-            button_Delete.IsEnabled = false;
-        }
-
-        /// <summary>
-        /// Очищает выделение в listview
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void listview_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            listview.SelectedIndex = -1;
-            Clear_Controls();
-        }
     }
 }

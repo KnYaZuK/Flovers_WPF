@@ -1,0 +1,9 @@
+﻿<Controls:MetroWindow x:Name="reg_form" x:Class="Flovers_WPF.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Registration" Height="500" Width="500" EnableDWMDropShadow="True" WindowStartupLocation="CenterScreen">
+    <Grid>
+        
+    </Grid>
+</Controls:MetroWindow>

@@ -1,0 +1,8 @@
+﻿<Window x:Class="Flovers_WPF.Main_menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Main_menu" Height="600" Width="800" Closed="Window_Closed">
+    <Grid>
+        
+    </Grid>
+</Window>

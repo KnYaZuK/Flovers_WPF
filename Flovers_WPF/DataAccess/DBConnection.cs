@@ -20,7 +20,6 @@ namespace Flovers_WPF.DataAccess
         {
             await conn.CreateTableAsync<Accessories>();
             await conn.CreateTableAsync<Bouquets>();
-            await conn.CreateTableAsync<Cards>();
             await conn.CreateTableAsync<Carts>();
             await conn.CreateTableAsync<Clients>();
             await conn.CreateTableAsync<Constants>();
