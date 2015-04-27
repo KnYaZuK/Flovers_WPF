@@ -7,11 +7,11 @@ using SQLite;
 
 namespace Flovers_WPF.DataModel
 {
-    [Table("workers")]
-    public class Workers
+    [Table("users")]
+    public class Users
     {
         [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
+        public int users_id { get; set; }
 
         [NotNull]
         public string login { get; set; }
@@ -19,9 +19,9 @@ namespace Flovers_WPF.DataModel
         [NotNull]
         public string password { get; set; }
 
-        public Workers() { }
+        public Users() { }
 
-        public Workers(string login, string password)
+        public Users(string login, string password)
         {
             this.login = login;
             this.password = password;
