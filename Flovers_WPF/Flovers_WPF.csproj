@@ -96,7 +96,7 @@
     <Compile Include="DataModel\Carts.cs" />
     <Compile Include="DataModel\Bouquets.cs" />
     <Compile Include="DataModel\Accessories.cs" />
-    <Compile Include="DataModel\Workers.cs" />
+    <Compile Include="DataModel\Users.cs" />
     <Compile Include="Main_menu.xaml.cs">
       <DependentUpon>Main_menu.xaml</DependentUpon>
     </Compile>
@@ -116,8 +116,8 @@
     <Compile Include="Repository\ICartsRepository.cs" />
     <Compile Include="Repository\IBouquetsRepository.cs" />
     <Compile Include="Repository\IAccessoriesRepository.cs" />
-    <Compile Include="Repository\IWorkersRepository.cs" />
-    <Compile Include="Repository\WorkersRepository.cs" />
+    <Compile Include="Repository\IUsersRepository.cs" />
+    <Compile Include="Repository\UsersRepository.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Page Include="MainWindow.xaml">
