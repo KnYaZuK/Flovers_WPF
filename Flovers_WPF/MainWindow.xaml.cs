@@ -29,20 +29,20 @@ namespace Flovers_WPF
             InitializeComponent();
         }
 
-        WorkersRepository oWorkersRepository;
-        List<Workers> workers;
+        UsersRepository oWorkersRepository;
+        List<Users> workers;
         public bool isLoogedIn;
 
         private async Task Initialize_Database()
         {
             DBConnection oDBConnection = new DBConnection();
             await oDBConnection.InitializeDatabase();
-            oWorkersRepository = new WorkersRepository(oDBConnection);
+            oWorkersRepository = new UsersRepository(oDBConnection);
         }
 
         private async Task get_workers_login()
         {
-            workers = await oWorkersRepository.Select_Workers_Async("select login,password from workers");
+            workers = await oWorkersRepository.Select_Users_Async("select login,password from Users");
         }
 
         public async void check_logpas()
