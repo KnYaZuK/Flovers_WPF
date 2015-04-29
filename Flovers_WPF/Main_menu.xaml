@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Автоматизация работы цветочного магазина" Height="700" Width="900" Closed="Window_Closed" WindowStartupLocation="CenterScreen" BorderBrush="Black" GlowBrush="#FF1AF9DB" EnableDWMDropShadow="True">
-    <Grid>
-        
-    </Grid>
+    
+    <Grid x:Name="gr_orders"/>
 </Controls:MetroWindow>
