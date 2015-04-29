@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Flovers_WPF
     /// <summary>
     /// Interaction logic for Main_menu.xaml
     /// </summary>
-    public partial class Main_menu : Window
+    public partial class Main_menu : MetroWindow
     {
         public Main_menu()
         {
