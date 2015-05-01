@@ -16,19 +16,13 @@ using System.Windows.Shapes;
 namespace Flovers_WPF
 {
     /// <summary>
-    /// Interaction logic for New_Order_Window.xaml
+    /// Interaction logic for New_Client.xaml
     /// </summary>
-    public partial class New_Order_Window : MetroWindow
+    public partial class New_Client : MetroWindow
     {
-        public New_Order_Window()
+        public New_Client()
         {
             InitializeComponent();
-        }
-
-        private void bt_new_client_Click(object sender, RoutedEventArgs e)
-        {
-            New_Client new_Client = new New_Client();
-            new_Client.Show();
         }
     }
 }
