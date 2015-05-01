@@ -29,5 +29,10 @@ namespace Flovers_WPF
         {
             this.Close();
         }
+
+        private void bt_settings_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
