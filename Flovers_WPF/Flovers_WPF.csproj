@@ -64,6 +64,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -101,6 +102,12 @@
     <Compile Include="Main_menu.xaml.cs">
       <DependentUpon>Main_menu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="New_Order_Window.xaml.cs">
+      <DependentUpon>New_Order_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Order_Window.xaml.cs">
+      <DependentUpon>Order_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
@@ -134,6 +141,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Main_menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="New_Order_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Order_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

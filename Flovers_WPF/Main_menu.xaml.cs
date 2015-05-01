@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Forms;
 
 namespace Flovers_WPF
 {
@@ -30,9 +31,22 @@ namespace Flovers_WPF
             this.Close();
         }
 
+        public string DB_Path;
+        
         private void bt_settings_Click(object sender, RoutedEventArgs e)
         {
-            
+            SaveFileDialog sfd = new SaveFileDialog();
+            if(sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DB_Path = sfd.FileName;
+            }
         }
+
+        private void bt_Orders_Click(object sender, RoutedEventArgs e)
+        {
+            Order_Window ord_win = new Order_Window();
+            ord_win.Show();
+        }
+        
     }
 }
