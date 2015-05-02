@@ -1,0 +1,70 @@
+﻿<Controls:MetroWindow x:Class="Flovers_WPF.Records_goods"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Учет товаров" Height="348" Width="900" GlowBrush="#FF9BFFF1" BorderBrush="Black" BorderThickness="0" EnableDWMDropShadow="True" ResizeMode="CanMinimize" Loaded="MetroWindow_Loaded">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel x:Name="stackpanel" Width="395">
+                
+                <Label Content="Выберите тип товара :"/>
+                
+                <ComboBox x:Name="combobox_Type" SelectionChanged="combobox_Type_SelectionChanged" BorderThickness="1">
+                    <ComboBoxItem BorderThickness="1,0,0,0" Cursor="Hand" Content="Цветы"/>
+                    <ComboBoxItem BorderThickness="1,0,0,0" Content="Аксессуары" Cursor="Hand"/>
+                </ComboBox>
+                
+                <Label Content="Добавить новый товар :"/>
+                
+                <TextBox x:Name="textbox_name" Controls:TextBoxHelper.Watermark="Название" Text="{Binding name}">
+                    <TextBox.Effect>
+                        <DropShadowEffect ShadowDepth="1"/>
+                    </TextBox.Effect>
+                </TextBox>
+
+                <TextBox x:Name="textbox_cost" Controls:TextBoxHelper.Watermark="Стоимость" Text="{Binding price}">
+                    <TextBox.Effect>
+                        <DropShadowEffect ShadowDepth="1"/>
+                    </TextBox.Effect>
+                </TextBox>
+
+                <Controls:NumericUpDown x:Name="numericupdown_count" Minimum="1" Controls:TextBoxHelper.Watermark="Количество" Value="{Binding in_stock}">
+                    <Controls:NumericUpDown.Effect>
+                        <DropShadowEffect ShadowDepth="1"/>
+                    </Controls:NumericUpDown.Effect>
+                </Controls:NumericUpDown>
+                
+                <Button x:Name="button_insert" Content="Добавить" Click="button_insert_Click" />
+                
+                <Button x:Name="button_update" Content="Изменить" Click="button_update_Click" />
+                
+                <Button x:Name="button_delete" Content="Удалить" Click="button_delete_Click" />
+            </StackPanel>
+            
+            <StackPanel Width="500">
+                <ListView Name="listview" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_MouseLeftButtonUp" MouseRightButtonUp="listview_MouseRightButtonUp" SelectionChanged="listview_SelectionChanged">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Название" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding name}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Стоимость" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding price}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Количество на складе" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding in_stock}" ></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+            
+        </StackPanel>
+    </Grid>
+</Controls:MetroWindow>
