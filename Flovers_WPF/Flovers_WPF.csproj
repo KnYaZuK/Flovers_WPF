@@ -88,6 +88,9 @@
     <Compile Include="DataModel\Carts.cs" />
     <Compile Include="DataModel\Bouquets.cs" />
     <Compile Include="DataModel\Accessories.cs" />
+    <Compile Include="mainwindow.xaml.cs">
+      <DependentUpon>mainwindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Repository\CardsRepository.cs" />
     <Compile Include="Repository\AccessoriesRepository.cs" />
     <Compile Include="Repository\ClientsRepository.cs" />
@@ -105,7 +108,7 @@
     <Compile Include="Repository\IAccessoriesRepository.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="KnYaZuK_Test_Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -113,10 +116,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="KnYaZuK_Test_Window.xaml.cs">
+      <DependentUpon>KnYaZuK_Test_Window.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="mainwindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
