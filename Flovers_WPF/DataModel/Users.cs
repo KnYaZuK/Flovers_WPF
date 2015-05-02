@@ -13,7 +13,7 @@ namespace Flovers_WPF.DataModel
         [PrimaryKey, AutoIncrement]
         public int users_id { get; set; }
 
-        [NotNull]
+        [NotNull,Unique]
         public string login { get; set; }
 
         [NotNull]
