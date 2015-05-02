@@ -53,6 +53,12 @@ namespace Flovers_WPF
             Records_goods rec_good = new Records_goods();
             rec_good.Show();
         }
+
+        private void bt_flowers_Click(object sender, RoutedEventArgs e)
+        {
+            Create_Flavour new_flav = new Create_Flavour();
+            new_flav.Show();
+        }
         
     }
 }
