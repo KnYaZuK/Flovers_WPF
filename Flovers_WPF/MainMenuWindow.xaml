@@ -1,4 +1,4 @@
-﻿<Controls:MetroWindow x:Class="Flovers_WPF.Main_menu"
+﻿<Controls:MetroWindow x:Class="Flovers_WPF.MainMenuWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
