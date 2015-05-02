@@ -13,20 +13,20 @@
             <RowDefinition Height="69*"/>
             <RowDefinition Height="67*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="login" Content="Войти" HorizontalAlignment="Left" Margin="215,99,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Style="{StaticResource AccentedSquareButtonStyle}" Background="#CC0AA4E6" Cursor="Hand" Click="login_Click"/>
+        <Button x:Name="button_login" Content="Войти" HorizontalAlignment="Left" Margin="41,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220" Style="{StaticResource AccentedSquareButtonStyle}" Background="#CC0AA4E6" Cursor="Hand" Click="login_Click"/>
         <Label Content="Пожалуйста авторизируйтесь" HorizontalAlignment="Left" Margin="41,20,0,0" VerticalAlignment="Top" Height="39" Width="220" FontSize="14" FontStyle="Italic" Padding="8,8,5,5"/>
-        <TextBox x:Name="login1" HorizontalAlignment="Left" Height="23" Margin="21,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="259" Controls:ControlsHelper.FocusBorderBrush="Black" Controls:TextBoxHelper.Watermark="Логин" Controls:TextBoxHelper.ClearTextButton="True">
+        <TextBox x:Name="textbox_Login" HorizontalAlignment="Left" Height="23" Margin="21,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="259" Controls:ControlsHelper.FocusBorderBrush="Black" Controls:TextBoxHelper.Watermark="Логин" Controls:TextBoxHelper.ClearTextButton="True">
             <TextBox.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFD2F1F1"/>
             </TextBox.Effect>
         </TextBox>
-        <PasswordBox x:Name="pass" HorizontalAlignment="Left" Height="23" Margin="21,10,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="-0.458,0.372" Width="259" Controls:TextBoxHelper.Watermark="Пароль" Controls:TextBoxHelper.ClearTextButton="True" SelectionBrush="#FF084C9E">
+        <PasswordBox x:Name="passwordbox_password" HorizontalAlignment="Left" Height="23" Margin="21,10,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="-0.458,0.372" Width="259" Controls:TextBoxHelper.Watermark="Пароль" Controls:TextBoxHelper.ClearTextButton="True" SelectionBrush="#FF084C9E">
             <PasswordBox.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFD2F1F1"/>
             </PasswordBox.Effect>
         </PasswordBox>
-        <Button x:Name="register" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="41,56,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220" Style="{StaticResource AccentedSquareButtonStyle}" Cursor="Hand" ToolTip="Еще не зарегистрированы?" Background="#CC0EAAEC" OpacityMask="#FF104CEC" Click="register_Click"/>
-        <Label x:Name="attention" Content="Неверный логин или пароль" HorizontalAlignment="Left" Margin="21,54,0,0" VerticalAlignment="Top" Width="259" Foreground="#FFFB0000" Padding="48,5,5,5" Visibility="Hidden"/>
+        <Button x:Name="buton_registration" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="150,96,0,0" Grid.Row="1" VerticalAlignment="Top" Width="130" Style="{StaticResource AccentedSquareButtonStyle}" Cursor="Hand" ToolTip="Еще не зарегистрированы?" Background="#CC0EAAEC" OpacityMask="#FF104CEC" Click="register_Click"/>
+        <Label x:Name="label_attention" Content="Неверный логин или пароль" HorizontalAlignment="Left" Margin="21,54,0,0" VerticalAlignment="Top" Width="259" Foreground="#FFFB0000" Padding="48,5,5,5" Visibility="Hidden"/>
     </Grid>
 
     <!-- your content here -->
