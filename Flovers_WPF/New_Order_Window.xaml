@@ -37,6 +37,7 @@
         </ListView>
         <Button Content="печать чека" Grid.Column="1" HorizontalAlignment="Left" Margin="57,625,0,0" VerticalAlignment="Top" Width="337" Style="{StaticResource AccentedSquareButtonStyle}"/>
         <Button x:Name="bt_make_order" Content="Сделать заказ" HorizontalAlignment="Left" Margin="57,658,0,0" VerticalAlignment="Top" Width="337" Style="{StaticResource AccentedSquareButtonStyle}" OpacityMask="#FF0051FF" Grid.Column="1"/>
+        <Button x:Name="bt_refresh" Content="Обновить данные" HorizontalAlignment="Left" Margin="43,655,0,0" VerticalAlignment="Top" Width="358" Style="{StaticResource AccentedSquareButtonStyle}" OpacityMask="#FF0051FF"/>
 
     </Grid>
 </Controls:MetroWindow>

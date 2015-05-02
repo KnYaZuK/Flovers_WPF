@@ -1,0 +1,41 @@
+﻿<Controls:MetroWindow x:Class="Flovers_WPF.Records_goods"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Учет товаров" Height="348" Width="900" GlowBrush="#FF9BFFF1" BorderBrush="Black" BorderThickness="0" EnableDWMDropShadow="True" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="447*"/>
+            <ColumnDefinition Width="445*"/>
+        </Grid.ColumnDefinitions>
+        <ComboBox x:Name="cmb_choose_type" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="427" SelectionChanged="cmb_choose_type_SelectionChanged" BorderThickness="1">
+            <ComboBoxItem BorderThickness="1,0,0,0" Cursor="Hand" Content="цветы"/>
+            <ComboBoxItem BorderThickness="1,0,0,0" Content="аксессуары" Cursor="Hand"/>
+        </ComboBox>
+        <Label Content="Выберите тип товара :" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="427" Padding="5"/>
+        <Label Content="Добавить новый товар :" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="427"/>
+        <TextBox x:Name="tb_name" HorizontalAlignment="Left" Height="23" Margin="10,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="427" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Название" BorderBrush="#FFA6D4E6">
+            <TextBox.Effect>
+                <DropShadowEffect ShadowDepth="1"/>
+            </TextBox.Effect>
+        </TextBox>
+        <TextBox x:Name="tb_cost" HorizontalAlignment="Left" Height="23" Margin="10,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="427" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Стоимость" BorderBrush="#FFA6D4E6">
+            <TextBox.Effect>
+                <DropShadowEffect ShadowDepth="1"/>
+            </TextBox.Effect>
+        </TextBox>
+        <Controls:NumericUpDown x:Name="num_count" Margin="10,214,317,78" BorderBrush="#FFA6D4E6" BorderThickness="3,1,1,1" Minimum="1" Controls:TextBoxHelper.Watermark="Количество">
+            <Controls:NumericUpDown.Effect>
+                <DropShadowEffect ShadowDepth="1"/>
+            </Controls:NumericUpDown.Effect>
+        </Controls:NumericUpDown>
+        <Button x:Name="bt_add" Content="Добавить" HorizontalAlignment="Left" Margin="10,258,0,0" VerticalAlignment="Top" Width="427" BorderBrush="#FFAADCDA" BorderThickness="2" Click="bt_add_Click"/>
+        <ListView Grid.Column="1" HorizontalAlignment="Left" Height="273" Margin="10,10,0,0" VerticalAlignment="Top" Width="425" BorderThickness="1" Background="#FFF2FBFD">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Controls:MetroWindow>

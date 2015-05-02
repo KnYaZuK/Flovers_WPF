@@ -111,6 +111,9 @@
     <Compile Include="Order_Window.xaml.cs">
       <DependentUpon>Order_Window.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Records_goods.xaml.cs">
+      <DependentUpon>Records_goods.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Order_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Records_goods.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

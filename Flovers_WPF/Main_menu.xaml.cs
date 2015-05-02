@@ -47,6 +47,12 @@ namespace Flovers_WPF
             Order_Window ord_win = new Order_Window();
             ord_win.Show();
         }
+
+        private void bt_records_Click(object sender, RoutedEventArgs e)
+        {
+            Records_goods rec_good = new Records_goods();
+            rec_good.Show();
+        }
         
     }
 }
