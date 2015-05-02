@@ -102,8 +102,8 @@
     <Compile Include="DataModel\Bouquets.cs" />
     <Compile Include="DataModel\Accessories.cs" />
     <Compile Include="DataModel\Users.cs" />
-    <Compile Include="Main_menu.xaml.cs">
-      <DependentUpon>Main_menu.xaml</DependentUpon>
+    <Compile Include="MainMenuWindow.xaml.cs">
+      <DependentUpon>MainMenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="New_Client.xaml.cs">
       <DependentUpon>New_Client.xaml</DependentUpon>
@@ -114,11 +114,11 @@
     <Compile Include="Order_Window.xaml.cs">
       <DependentUpon>Order_Window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Records_goods.xaml.cs">
-      <DependentUpon>Records_goods.xaml</DependentUpon>
+    <Compile Include="ProductsManagmentWindow.xaml.cs">
+      <DependentUpon>ProductsManagmentWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Registration.xaml.cs">
-      <DependentUpon>Registration.xaml</DependentUpon>
+    <Compile Include="RegistrationWindow.xaml.cs">
+      <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Repository\AccessoriesRepository.cs" />
     <Compile Include="Repository\ClientsRepository.cs" />
@@ -153,7 +153,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Main_menu.xaml">
+    <Page Include="MainMenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,11 +169,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Records_goods.xaml">
+    <Page Include="ProductsManagmentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Registration.xaml">
+    <Page Include="RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
