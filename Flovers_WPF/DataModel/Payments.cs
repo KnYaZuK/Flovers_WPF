@@ -21,18 +21,14 @@ namespace Flovers_WPF.DataModel
         [Indexed, NotNull]
         public int orders_id { get; set; }
 
-        [Indexed, NotNull]
-        public int cards_id { get; set; }
-
         public Payments() { }
 
-        public Payments( DateTime time, double value_money, decimal value_points, int orders_id, int cards_id )
+        public Payments( DateTime time, double value_money, decimal value_points, int orders_id )
         {
             this.time = time;
             this.value_money = value_money;
             this.value_points = value_points;
             this.orders_id = orders_id;
-            this.cards_id = cards_id;
         }
     }
 }

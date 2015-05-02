@@ -20,7 +20,6 @@ namespace Flovers_WPF.DataAccess
         {
             await conn.CreateTableAsync<Accessories>();
             await conn.CreateTableAsync<Bouquets>();
-            await conn.CreateTableAsync<Cards>();
             await conn.CreateTableAsync<Carts>();
             await conn.CreateTableAsync<Clients>();
             await conn.CreateTableAsync<Constants>();
@@ -29,6 +28,7 @@ namespace Flovers_WPF.DataAccess
             await conn.CreateTableAsync<Flowers>();
             await conn.CreateTableAsync<Orders>();
             await conn.CreateTableAsync<Payments>();
+            await conn.CreateTableAsync<Users>();
         }
 
         public SQLiteAsyncConnection GetAsyncConnection()
