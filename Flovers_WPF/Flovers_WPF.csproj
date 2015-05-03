@@ -86,8 +86,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Create_Flavour.xaml.cs">
-      <DependentUpon>Create_Flavour.xaml</DependentUpon>
+    <Compile Include="CreateFlowerWindow.xaml.cs">
+      <DependentUpon>CreateFlowerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\DBConnection.cs" />
     <Compile Include="DataAccess\IDBConnection.cs" />
@@ -147,7 +147,7 @@
     <Compile Include="Repository\UsersRepository.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
-    <Page Include="Create_Flavour.xaml">
+    <Page Include="CreateFlowerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

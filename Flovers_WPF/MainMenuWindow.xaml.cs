@@ -56,7 +56,7 @@ namespace Flovers_WPF
 
         private void bt_flowers_Click(object sender, RoutedEventArgs e)
         {
-            Create_Flavour new_flav = new Create_Flavour();
+            CreateFlowerWindow new_flav = new CreateFlowerWindow();
             new_flav.Show();
         }
         
