@@ -12,17 +12,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Flovers_WPF.DataModel;
+using Flovers_WPF.DataAccess;
+using Flovers_WPF.Repository;
 
 namespace Flovers_WPF
 {
     /// <summary>
-    /// Interaction logic for New_Client.xaml
+    /// Interaction logic for NewClientWindow.xaml
     /// </summary>
-    public partial class New_Client : MetroWindow
+    public partial class NewClientWindow : MetroWindow
     {
-        public New_Client()
+        public NewClientWindow()
         {
             InitializeComponent();
         }
+
+        ClientsRepository oClientsRepository;
+        
     }
 }
