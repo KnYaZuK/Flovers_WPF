@@ -2,8 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Составление букета" Height="500" Width="900" EnableDWMDropShadow="True">
+        Title="Составление букета" Height="208" Width="334" EnableDWMDropShadow="True" GlowBrush="#FF84FDE7">
     <Grid>
-        
+        <TextBox x:Name="tb_fl_name" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="309" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Название"/>
+        <TextBox x:Name="tb_add_cost" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="309" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Добавочная стоимость"/>
+        <ComboBox x:Name="cmb_flower" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="227"/>
+        <Controls:NumericUpDown x:Name="num_flower_count" Margin="242,72,7,80" Minimum="1"></Controls:NumericUpDown>
+        <ComboBox x:Name="cmb_accessory" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Width="227"/>
+        <Button x:Name="bt_add_flavour" Content="Добавить" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" Width="309"/>
+        <Controls:NumericUpDown x:Name="num_accessory_count" Margin="242,103,7,49" Minimum="1"/>
     </Grid>
 </Controls:MetroWindow>
