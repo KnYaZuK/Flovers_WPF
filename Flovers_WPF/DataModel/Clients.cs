@@ -34,7 +34,7 @@ namespace Flovers_WPF.DataModel
             this.email = email;
             this.referal_number = Guid.NewGuid().ToString();
             this.referer_number = referer_number;
-            this.cards_id = clients_id;
+            this.cards_id = cards_id;
         }
     }
 }

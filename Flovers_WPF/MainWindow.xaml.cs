@@ -28,10 +28,18 @@ namespace Flovers_WPF
             InitializeComponent();
         }
 
+        struct ClientCard
+        {
+            public Clients client { get; set;}
+            public Cards card { get; set; }
+        }
+
         ClientsRepository oClientsRepository; //Объект для работы с таблицей Клиентов
         CardsRepository oCardsRepository;
 
         Clients oClients; //Текущий выделенный клиент
+
+        DBConnection oDBConnection;
 
         /// <summary>
         /// Устанавливает связь с базой данных.
@@ -39,7 +47,7 @@ namespace Flovers_WPF
         /// <returns></returns>
         private async Task Initialize_Database()
         {
-            DBConnection oDBConnection = new DBConnection();
+            oDBConnection = new DBConnection();
 
             await oDBConnection.InitializeDatabase();
 
@@ -54,10 +62,11 @@ namespace Flovers_WPF
         private async void button_Create_Click(object sender, RoutedEventArgs e)
         {
             Cards card = new Cards();
-            Clients client = new Clients(textbox_full_name.Text,textbox_phone_number.Text,textbox_email.Text,textbox_referer_number.Text, card.cards_id );
-
-            await oClientsRepository.Insert_Clients_Async(client);
             await oCardsRepository.Insert_Cards_Async(card);
+
+            Clients client = new Clients(textbox_full_name.Text,textbox_phone_number.Text,textbox_email.Text,textbox_referer_number.Text, card.cards_id );
+            await oClientsRepository.Insert_Clients_Async(client);
+            
 
             await Update_Grid_View();
             await Update_ListBox_View();
@@ -104,11 +113,21 @@ namespace Flovers_WPF
 
         private async Task Update_ListBox_View()
         {
+            List<ClientCard> clientcard = new List<ClientCard>();
+
             List<Clients> result = await oClientsRepository.Select_All_Clients_Async();
 
-            listview.ItemsSource = result;
+            SQLite.SQLiteAsyncConnection conn = oDBConnection.GetAsyncConnection();
 
-            
+            foreach( Clients client in result   )
+            {
+                ClientCard cc = new ClientCard();
+                cc.client = client;
+                cc.card = await conn.GetAsync<Cards>(client.cards_id);
+                clientcard.Add(cc);
+            }
+
+            listview.ItemsSource = clientcard;
         }
 
         /// <summary>
@@ -150,8 +169,11 @@ namespace Flovers_WPF
             {
                 return;
             }
-            
-            oClients = e.AddedItems[0] as Clients;
+
+            ClientCard cc;
+            cc = (ClientCard) e.AddedItems[0];
+            oClients = cc.client;
+
             spanel_Clients.DataContext = oClients;
 
             button_Create.IsEnabled = false;
