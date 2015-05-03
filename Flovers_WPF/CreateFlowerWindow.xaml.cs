@@ -28,37 +28,96 @@ namespace Flovers_WPF
             InitializeComponent();
         }
 
+        struct Accessories_Flowers
+        {
+            public string Type { get; set; }
+            public string Name { get; set; }
+            public decimal Count { get; set; }
+            //public Accessories accessories { get; set; }
+            //public Flowers flower { get; set; }
+        }
+
         BouquetsRepository oBouquetsRepository;
         ContentsRepository oContentsRepository;
+        AccessoriesRepository oAccessoriesRepository;
+        FlowersRepository oFlowersRepository;
 
         Bouquets bouquet;
+        Accessories accessories;
+        Flowers flowers;
+
+        SQLite.SQLiteAsyncConnection conn;
 
         private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             DBConnection oDBConnection = new DBConnection();
 
-            oDBConnection.InitializeDatabase();
+            await oDBConnection.InitializeDatabase();
 
             oBouquetsRepository = new BouquetsRepository(oDBConnection);
             oContentsRepository = new ContentsRepository(oDBConnection);
+            oAccessoriesRepository = new AccessoriesRepository(oDBConnection);
+            oFlowersRepository = new FlowersRepository(oDBConnection);
 
-            await Update_ListViewBouquets();
+            conn = oDBConnection.GetAsyncConnection();
+
+            await Update_ListView_Bouquets();
 
             Clear_Control_Bouquet();
         }
 
-        private async Task Update_ListViewBouquets()
+        private async Task Update_ListView_Bouquets()
         {
             List<Bouquets> result = await oBouquetsRepository.Select_All_Bouquets_Async();
 
             listview_Bouquet.ItemsSource = result;
         }
 
-        private async Task Update_ListViewContents()
+        private async Task Update_ListView_Contents()
         {
+            List<Accessories_Flowers> acc_flo = new List<Accessories_Flowers>();
+
             List<Contents> result = await oContentsRepository.Select_All_Contents_Async();
 
-            listview_Content.ItemsSource = result;
+            foreach(var c in result)
+            {
+                Accessories_Flowers af = new Accessories_Flowers();
+
+                if ( c.accessories_id != -1 )
+                {
+                    Accessories a = await conn.GetAsync<Accessories>(c.accessories_id);
+                    af.Type = "Аксессуар";
+                    af.Name = a.name;
+                    af.Count = c.count;
+                }
+                else
+                {
+                    Flowers f = await conn.GetAsync<Flowers>(c.flowers_id);
+                    af.Type = "Цветок";
+                    af.Name = f.name;
+                    af.Count = c.count;
+                }
+
+                acc_flo.Add(af);
+            }
+
+            listview_Content.ItemsSource = acc_flo;
+        }
+
+        private async Task Update_ComboBox_Contents( bool type )
+        {
+            if ( type )
+            {
+                List<Accessories> result = await oAccessoriesRepository.Select_All_Accessories_Async();
+
+                combobox_Content.ItemsSource = result;
+            }
+            else
+            {
+                List<Flowers> result = await oFlowersRepository.Select_All_Flowers_Async();
+
+                combobox_Content.ItemsSource = result;
+            }
         }
 
         private void Clear_Control_Bouquet()
@@ -70,6 +129,7 @@ namespace Flovers_WPF
 
         private void Clear_Control_Content()
         {
+            button_CreateContent.IsEnabled = true;
             button_UpdateContent.IsEnabled = false;
             button_DeleteContent.IsEnabled = false;
         }
@@ -78,7 +138,7 @@ namespace Flovers_WPF
         {
             await oBouquetsRepository.Insert_Bouquets_Async(new Bouquets(textbox_NameBouquet.Text, Double.Parse(textbox_PriceExtraBouquet.Text)));
 
-            await Update_ListViewBouquets();
+            await Update_ListView_Bouquets();
 
             Clear_Control_Bouquet();
         }
@@ -90,11 +150,24 @@ namespace Flovers_WPF
 
             await oBouquetsRepository.Update_Bouquets_Async(bouquet);
 
-            await Update_ListViewBouquets();
+            await Update_ListView_Bouquets();
         }
 
-        private void button_CreateContent_Click(object sender, RoutedEventArgs e)
+        private async void button_CreateContent_Click(object sender, RoutedEventArgs e)
         {
+            if ( combobox_TypeContent.SelectedIndex == 0)
+            {
+                await oContentsRepository.Insert_Contents_Async(new Contents( (decimal) numericupdown_CountContent.Value, bouquet.bouquets_id, -1, accessories.accessories_id));
+            }
+
+            if (combobox_TypeContent.SelectedIndex == 1)
+            {
+                await oContentsRepository.Insert_Contents_Async(new Contents( (decimal) numericupdown_CountContent.Value, bouquet.bouquets_id, flowers.flowers_id, -1));
+            }
+
+            await Update_ListView_Contents();
+
+            Clear_Control_Content();
 
         }
 
@@ -144,6 +217,32 @@ namespace Flovers_WPF
             grid_Content.DataContext = null;
 
             Clear_Control_Content();
+        }
+
+        private async void combobox_TypeContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (combobox_TypeContent.SelectedIndex == 0)
+            {
+                await Update_ComboBox_Contents(true);
+            }
+
+            if (combobox_TypeContent.SelectedIndex == 1)
+            {
+                await Update_ComboBox_Contents(false);
+            }
+        }
+
+        private void combobox_Content_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (combobox_TypeContent.SelectedIndex == 0)
+            {
+                accessories = combobox_Content.SelectedItem as Accessories;
+            }
+
+            if (combobox_TypeContent.SelectedIndex == 1)
+            {
+                flowers = combobox_Content.SelectedItem as Flowers;
+            }
         }
     }
 }
