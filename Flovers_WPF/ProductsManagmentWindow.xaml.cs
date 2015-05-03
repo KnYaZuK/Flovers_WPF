@@ -49,7 +49,40 @@ namespace Flovers_WPF
             oFlowersRepository = new FlowersRepository(oDBConnection);
 
             await Update_ListView();
+
             Clear_Controls();
+        }
+
+        /// <summary>
+        /// Обновление содержимого ListView
+        /// </summary>
+        /// <returns></returns>
+        private async Task Update_ListView()
+        {
+            if (combobox_Type.SelectedIndex == 0)
+            {
+                List<Flowers> result = await oFlowersRepository.Select_All_Flowers_Async();
+
+                listview.ItemsSource = result;
+            }
+            if (combobox_Type.SelectedIndex == 1)
+            {
+                List<Accessories> result = await oAccessoriesRepository.Select_All_Accessories_Async();
+
+                listview.ItemsSource = result;
+            }
+        }
+
+        /// <summary>
+        /// Сбрасывает значения textbox и состояние кнопок
+        /// </summary>
+        private void Clear_Controls()
+        {
+            stackpanel.DataContext = null;
+
+            button_insert.IsEnabled = true;
+            button_update.IsEnabled = false;
+            button_delete.IsEnabled = false;
         }
 
         /// <summary>
@@ -72,6 +105,7 @@ namespace Flovers_WPF
 
             Clear_Controls();
         }
+
         /// <summary>
         /// Изменение записи в таблице
         /// </summary>
@@ -100,6 +134,7 @@ namespace Flovers_WPF
 
             Clear_Controls();
         }
+
         /// <summary>
         /// Удаление записи из таблицы
         /// </summary>
@@ -128,8 +163,22 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private void listview_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
+            if (combobox_Type.SelectedIndex == 0)
+            {
+                oFlowers = listview.SelectedItem as Flowers;
+                stackpanel.DataContext = oFlowers;
+            }
+            if (combobox_Type.SelectedIndex == 1)
+            {
+                oAccessories = listview.SelectedItem as Accessories;
+                stackpanel.DataContext = oAccessories;
+            }
+
+            button_insert.IsEnabled = false;
+            button_update.IsEnabled = true;
+            button_delete.IsEnabled = true;
         }
+
         /// <summary>
         /// Снятие выделения с записи
         /// </summary>
@@ -143,62 +192,15 @@ namespace Flovers_WPF
         }
 
         /// <summary>
-        /// Обновление содержимого ListView
-        /// </summary>
-        /// <returns></returns>
-        private async Task Update_ListView()
-        {
-            if ( combobox_Type.SelectedIndex == 0)
-            {
-                List<Flowers> result = await oFlowersRepository.Select_All_Flowers_Async();
-
-                listview.ItemsSource = result;
-            }
-            if (combobox_Type.SelectedIndex == 1)
-            {
-                List<Accessories> result = await oAccessoriesRepository.Select_All_Accessories_Async();
-
-                listview.ItemsSource = result;
-            }
-        }
-        /// <summary>
-        /// Сбрасывает значения textbox и состояние кнопок
-        /// </summary>
-        private void Clear_Controls()
-        {
-            stackpanel.DataContext = null;
-
-            button_insert.IsEnabled = true;
-            button_update.IsEnabled = false;
-            button_delete.IsEnabled = false;
-        }
-        /// <summary>
         /// Изменение выделения в ListView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count <= 0)
-            {
-                return;
-            }
-
-            if (combobox_Type.SelectedIndex == 0)
-            {
-                oFlowers = e.AddedItems[0] as Flowers;
-                stackpanel.DataContext = oFlowers;
-            }
-            if (combobox_Type.SelectedIndex == 1)
-            {
-                oAccessories = e.AddedItems[0] as Accessories;
-                stackpanel.DataContext = oAccessories;
-            }
-
-            button_insert.IsEnabled = false;
-            button_update.IsEnabled = true;
-            button_delete.IsEnabled = true;
+            
         }
+
         /// <summary>
         /// 
         /// </summary>

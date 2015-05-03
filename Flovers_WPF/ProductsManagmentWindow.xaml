@@ -46,20 +46,24 @@
                 <ListView Name="listview" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_MouseLeftButtonUp" MouseRightButtonUp="listview_MouseRightButtonUp" SelectionChanged="listview_SelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
+                            
                             <StackPanel Orientation="Vertical">
+                                
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Название" Width="128"></TextBlock>
+                                    <TextBlock Text="Название:" Width="128"></TextBlock>
                                     <TextBlock Text="{Binding name}" ></TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Стоимость" Width="128"></TextBlock>
+                                    <TextBlock Text="Стоимость:" Width="128"></TextBlock>
                                     <TextBlock Text="{Binding price}" ></TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Количество на складе" Width="128"></TextBlock>
+                                    <TextBlock Text="Количество на складе:" Width="128"></TextBlock>
                                     <TextBlock Text="{Binding in_stock}" ></TextBlock>
                                 </StackPanel>
+                                
                             </StackPanel>
+                            
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
