@@ -89,8 +89,9 @@
     <Compile Include="Create_Flavour.xaml.cs">
       <DependentUpon>Create_Flavour.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\IDBConnection.cs" />
     <Compile Include="DataAccess\DBConnection.cs" />
+    <Compile Include="DataAccess\IDBConnection.cs" />
+    <Compile Include="DataModel\Cards.cs" />
     <Compile Include="DataModel\Payments.cs" />
     <Compile Include="DataModel\Orders.cs" />
     <Compile Include="DataModel\Flowers.cs" />
@@ -121,8 +122,15 @@
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Repository\AccessoriesRepository.cs" />
+    <Compile Include="Repository\BouquetsRepository.cs" />
+    <Compile Include="Repository\CardsRepository.cs" />
+    <Compile Include="Repository\CartsRepository.cs" />
     <Compile Include="Repository\ClientsRepository.cs" />
+    <Compile Include="Repository\ConstantsRepository.cs" />
+    <Compile Include="Repository\ContentsRepository.cs" />
+    <Compile Include="Repository\DiscountsRepository.cs" />
     <Compile Include="Repository\FlowersRepository.cs" />
+    <Compile Include="Repository\ICardsRepository.cs" />
     <Compile Include="Repository\IPaymentsRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
     <Compile Include="Repository\IFlowersRepository.cs" />
@@ -134,6 +142,8 @@
     <Compile Include="Repository\IBouquetsRepository.cs" />
     <Compile Include="Repository\IAccessoriesRepository.cs" />
     <Compile Include="Repository\IUsersRepository.cs" />
+    <Compile Include="Repository\OrdersRepository.cs" />
+    <Compile Include="Repository\PaymentsRepository.cs" />
     <Compile Include="Repository\UsersRepository.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
