@@ -105,8 +105,8 @@
     <Compile Include="MainMenuWindow.xaml.cs">
       <DependentUpon>MainMenuWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="New_Client.xaml.cs">
-      <DependentUpon>New_Client.xaml</DependentUpon>
+    <Compile Include="NewClientWindow.xaml.cs">
+      <DependentUpon>NewClientWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="New_Order_Window.xaml.cs">
       <DependentUpon>New_Order_Window.xaml</DependentUpon>
@@ -157,7 +157,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="New_Client.xaml">
+    <Page Include="NewClientWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

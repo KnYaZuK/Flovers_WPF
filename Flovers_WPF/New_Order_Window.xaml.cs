@@ -27,7 +27,7 @@ namespace Flovers_WPF
 
         private void bt_new_client_Click(object sender, RoutedEventArgs e)
         {
-            New_Client new_Client = new New_Client();
+            NewClientWindow new_Client = new NewClientWindow();
             new_Client.Show();
         }
     }
