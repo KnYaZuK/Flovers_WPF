@@ -34,7 +34,7 @@
             
         </Grid>
 
-        <ListView x:Name="listview_Clients_Cards" Margin="350,10,10,10" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseRightButtonUp="listview_MouseRightButtonUp" MouseLeftButtonUp="listview_MouseLeftButtonUp">
+        <ListView x:Name="listview_Clients_Cards" Margin="350,10,10,10" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseRightButtonUp="listview_MouseRightButtonUp" MouseLeftButtonUp="listview_MouseLeftButtonUp">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     

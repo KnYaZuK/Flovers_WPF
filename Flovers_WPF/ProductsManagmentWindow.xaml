@@ -43,7 +43,7 @@
             </StackPanel>
             
             <StackPanel Width="500">
-                <ListView Name="listview" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_MouseLeftButtonUp" MouseRightButtonUp="listview_MouseRightButtonUp" SelectionChanged="listview_SelectionChanged">
+                <ListView Name="listview" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_MouseLeftButtonUp" MouseRightButtonUp="listview_MouseRightButtonUp" SelectionChanged="listview_SelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             
