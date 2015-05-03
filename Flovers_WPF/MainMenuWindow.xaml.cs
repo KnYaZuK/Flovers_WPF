@@ -17,11 +17,11 @@ using System.Windows.Forms;
 namespace Flovers_WPF
 {
     /// <summary>
-    /// Interaction logic for Main_menu.xaml
+    /// Interaction logic for MainMenuWindow.xaml
     /// </summary>
-    public partial class Main_menu : MetroWindow
+    public partial class MainMenuWindow : MetroWindow
     {
-        public Main_menu()
+        public MainMenuWindow()
         {
             InitializeComponent();
         }

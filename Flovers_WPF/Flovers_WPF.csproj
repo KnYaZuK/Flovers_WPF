@@ -89,8 +89,9 @@
     <Compile Include="Create_Flavour.xaml.cs">
       <DependentUpon>Create_Flavour.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\IDBConnection.cs" />
     <Compile Include="DataAccess\DBConnection.cs" />
+    <Compile Include="DataAccess\IDBConnection.cs" />
+    <Compile Include="DataModel\Cards.cs" />
     <Compile Include="DataModel\Payments.cs" />
     <Compile Include="DataModel\Orders.cs" />
     <Compile Include="DataModel\Flowers.cs" />
@@ -102,11 +103,11 @@
     <Compile Include="DataModel\Bouquets.cs" />
     <Compile Include="DataModel\Accessories.cs" />
     <Compile Include="DataModel\Users.cs" />
-    <Compile Include="Main_menu.xaml.cs">
-      <DependentUpon>Main_menu.xaml</DependentUpon>
+    <Compile Include="MainMenuWindow.xaml.cs">
+      <DependentUpon>MainMenuWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="New_Client.xaml.cs">
-      <DependentUpon>New_Client.xaml</DependentUpon>
+    <Compile Include="NewClientWindow.xaml.cs">
+      <DependentUpon>NewClientWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="New_Order_Window.xaml.cs">
       <DependentUpon>New_Order_Window.xaml</DependentUpon>
@@ -114,15 +115,22 @@
     <Compile Include="Order_Window.xaml.cs">
       <DependentUpon>Order_Window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Records_goods.xaml.cs">
-      <DependentUpon>Records_goods.xaml</DependentUpon>
+    <Compile Include="ProductsManagmentWindow.xaml.cs">
+      <DependentUpon>ProductsManagmentWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Registration.xaml.cs">
-      <DependentUpon>Registration.xaml</DependentUpon>
+    <Compile Include="RegistrationWindow.xaml.cs">
+      <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Repository\AccessoriesRepository.cs" />
+    <Compile Include="Repository\BouquetsRepository.cs" />
+    <Compile Include="Repository\CardsRepository.cs" />
+    <Compile Include="Repository\CartsRepository.cs" />
     <Compile Include="Repository\ClientsRepository.cs" />
+    <Compile Include="Repository\ConstantsRepository.cs" />
+    <Compile Include="Repository\ContentsRepository.cs" />
+    <Compile Include="Repository\DiscountsRepository.cs" />
     <Compile Include="Repository\FlowersRepository.cs" />
+    <Compile Include="Repository\ICardsRepository.cs" />
     <Compile Include="Repository\IPaymentsRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
     <Compile Include="Repository\IFlowersRepository.cs" />
@@ -134,6 +142,8 @@
     <Compile Include="Repository\IBouquetsRepository.cs" />
     <Compile Include="Repository\IAccessoriesRepository.cs" />
     <Compile Include="Repository\IUsersRepository.cs" />
+    <Compile Include="Repository\OrdersRepository.cs" />
+    <Compile Include="Repository\PaymentsRepository.cs" />
     <Compile Include="Repository\UsersRepository.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
@@ -153,11 +163,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Main_menu.xaml">
+    <Page Include="MainMenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="New_Client.xaml">
+    <Page Include="NewClientWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,11 +179,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Records_goods.xaml">
+    <Page Include="ProductsManagmentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Registration.xaml">
+    <Page Include="RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

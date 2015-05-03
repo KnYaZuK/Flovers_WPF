@@ -29,67 +29,75 @@ namespace Flovers_WPF
             InitializeComponent();
         }
 
-        UsersRepository oWorkersRepository;
-        List<Users> workers;
-        public bool isLoogedIn;
+        UsersRepository oUsersRepository; //Контроллер таблиц "Пользователи"
+
+        public bool Loged; //Проверка пользователя на успешный вход в систему
 
         private async Task Initialize_Database()
         {
             DBConnection oDBConnection = new DBConnection();
+
             await oDBConnection.InitializeDatabase();
-            oWorkersRepository = new UsersRepository(oDBConnection);
-        }
 
-        private async Task get_workers_login()
-        {
-            workers = await oWorkersRepository.Select_Users_Async("select login,password from Users");
+            oUsersRepository = new UsersRepository(oDBConnection);
         }
-
-        public async void check_logpas()
+        /// <summary>
+        /// Метод проверки корректности введённых данных
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>Возвращает true или false</returns>
+        public async Task<bool> Check_Login(string login, string password)
         {
-            await get_workers_login();
-            foreach(var c in workers)
+            List<Users> users = await oUsersRepository.Select_All_Users_Async();
+
+            foreach (var c in users)
             {
-                if(login1.Text == c.login && pass.Password == c.password)
+                if (login == c.login && password == c.password)
                 {
-                    isLoogedIn = true;
-                    break;
-                }
-                else
-                {
-                    isLoogedIn = false;
+                    return true;
                 }
             }
-            if (isLoogedIn)
+
+            return false;
+        }
+        /// <summary>
+        /// Вызов метода входа пользователя в систему
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void login_Click(object sender, RoutedEventArgs e)
+        {
+            if (await Check_Login(textbox_Login.Text, passwordbox_password.Password))
             {
-                Main_menu mm = new Main_menu();
+                MainMenuWindow mm = new MainMenuWindow();
                 mm.Show();
                 this.Close();
-                attention.Visibility = System.Windows.Visibility.Hidden;
             }
             else
             {
-                attention.Visibility = System.Windows.Visibility.Visible;
+                label_attention.Visibility = System.Windows.Visibility.Visible;
             }
         }
-
-        private void login_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Вызов окна с регистрацией нового пользователя программы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void register_Click(object sender, RoutedEventArgs e)
         {
-            check_logpas();
-        }
+            RegistrationWindow reg_form = new RegistrationWindow();
 
+            reg_form.ShowDialog();
+        }
+        /// <summary>
+        /// Выполнение операций при загрузке окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await Initialize_Database();
         }
-
-        private void register_Click(object sender, RoutedEventArgs e)
-        {
-            Registration reg_form = new Registration();
-            reg_form.ShowDialog();
-        }
-
-       
-
     }
 }

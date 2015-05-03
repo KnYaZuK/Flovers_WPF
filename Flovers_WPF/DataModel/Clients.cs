@@ -18,27 +18,23 @@ namespace Flovers_WPF.DataModel
         public string email { get; set; }
 
         [NotNull]
-        public string bonus_card_number { get; set; }
-
-        [NotNull]
-        public int bonus_card_points { get; set; }
-
-        [NotNull]
         public string referal_number { get; set; }
 
         public string referer_number { get; set; }
 
+        [Indexed, NotNull]
+        public int cards_id { get; set; }
+
         public Clients() { }
 
-        public Clients(string full_name, string phone_number, string email = null, string referer_number = null)
+        public Clients(string full_name, string phone_number, string email, string referer_number, int cards_id )
         {
             this.full_name = full_name;
             this.phone_number = phone_number;
             this.email = email;
-            this.bonus_card_number = Guid.NewGuid().ToString();
-            this.bonus_card_points = 0;
             this.referal_number = Guid.NewGuid().ToString();
             this.referer_number = referer_number;
+            this.cards_id = cards_id;
         }
     }
 }
