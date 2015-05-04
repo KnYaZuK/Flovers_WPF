@@ -181,7 +181,7 @@ namespace Flovers_WPF
 
         }
 
-        private void listview_Bouquet_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private async void listview_Bouquet_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             bouquet = listview_Bouquet.SelectedItem as Bouquets;
 
@@ -191,6 +191,8 @@ namespace Flovers_WPF
             button_UpdateBouquet.IsEnabled = true;
             grid_Content.IsEnabled = true;
 
+            await Update_ListView_Contents();
+
             Clear_Control_Content();
         }
 
@@ -199,6 +201,7 @@ namespace Flovers_WPF
             listview_Bouquet.SelectedIndex = -1;
 
             grid_Bouquet.DataContext = null;
+            listview_Content.ItemsSource = null;
 
             Clear_Control_Bouquet();
         }
