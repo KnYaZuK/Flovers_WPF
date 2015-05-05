@@ -28,7 +28,6 @@ namespace Flovers_WPF
             InitializeComponent();
         }
 
-<<<<<<< HEAD
         struct Accessories_Flowers
         {
             public Contents contents { get; set; } // Хранит экземпляр выделенного компонента. Необходимо для обновления и удаления.
@@ -58,18 +57,10 @@ namespace Flovers_WPF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-=======
-        BouquetsRepository oBouquetsRepository;
-        ContentsRepository oContentsRepository;
-
-        Bouquets bouquet;
-
->>>>>>> origin/Andrew_metroui
         private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             DBConnection oDBConnection = new DBConnection();
 
-<<<<<<< HEAD
             await oDBConnection.InitializeDatabase();
 
             oBouquetsRepository = new BouquetsRepository(oDBConnection);
@@ -80,34 +71,21 @@ namespace Flovers_WPF
             conn = oDBConnection.GetAsyncConnection();
 
             await Update_ListView_Bouquets();
-=======
-            oDBConnection.InitializeDatabase();
-
-            oBouquetsRepository = new BouquetsRepository(oDBConnection);
-            oContentsRepository = new ContentsRepository(oDBConnection);
-
-            await Update_ListViewBouquets();
->>>>>>> origin/Andrew_metroui
 
             Clear_Control_Bouquet();
         }
 
-<<<<<<< HEAD
         /// <summary>
         /// Обновление списка с букетами
         /// </summary>
         /// <returns></returns>
         private async Task Update_ListView_Bouquets()
-=======
-        private async Task Update_ListViewBouquets()
->>>>>>> origin/Andrew_metroui
         {
             List<Bouquets> result = await oBouquetsRepository.Select_All_Bouquets_Async();
 
             listview_Bouquet.ItemsSource = result;
         }
 
-<<<<<<< HEAD
         /// <summary>
         /// Обновление списка с Компонентами. В список загружаются только компоненты выбранного букета.
         /// </summary>
@@ -242,57 +220,30 @@ namespace Flovers_WPF
             numericupdown_CountContent.Value = null;
 
             button_CreateContent.IsEnabled = true;
-=======
-        private async Task Update_ListViewContents()
-        {
-            List<Contents> result = await oContentsRepository.Select_All_Contents_Async();
-
-            listview_Content.ItemsSource = result;
-        }
-
-        private void Clear_Control_Bouquet()
-        {
-            button_CreateBouquet.IsEnabled = true;
-            button_UpdateBouquet.IsEnabled = false;
-            grid_Content.IsEnabled = false;
-        }
-
-        private void Clear_Control_Content()
-        {
->>>>>>> origin/Andrew_metroui
             button_UpdateContent.IsEnabled = false;
             button_DeleteContent.IsEnabled = false;
         }
 
-<<<<<<< HEAD
         /// <summary>
         /// Создание нового букета.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-=======
->>>>>>> origin/Andrew_metroui
         private async void button_CreateBouquet_Click(object sender, RoutedEventArgs e)
         {
             await oBouquetsRepository.Insert_Bouquets_Async(new Bouquets(textbox_NameBouquet.Text, Double.Parse(textbox_PriceExtraBouquet.Text)));
 
-<<<<<<< HEAD
+
             await Update_ListView_Bouquets();
-=======
-            await Update_ListViewBouquets();
->>>>>>> origin/Andrew_metroui
 
             Clear_Control_Bouquet();
         }
 
-<<<<<<< HEAD
         /// <summary>
         /// Обновление выбранного букета. Обновляются поля с Именем и Доп.Стоимостью
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-=======
->>>>>>> origin/Andrew_metroui
         private async void button_UpdateBouquet_Click(object sender, RoutedEventArgs e)
         {
             bouquet.name = textbox_NameBouquet.Text;
@@ -300,7 +251,6 @@ namespace Flovers_WPF
 
             await oBouquetsRepository.Update_Bouquets_Async(bouquet);
 
-<<<<<<< HEAD
             await Update_ListView_Bouquets();
 
             Clear_Control_Bouquet();
@@ -378,27 +328,6 @@ namespace Flovers_WPF
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void listview_Bouquet_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-=======
-            await Update_ListViewBouquets();
-        }
-
-        private void button_CreateContent_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_UpdateContent_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_DeleteContent_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void listview_Bouquet_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
->>>>>>> origin/Andrew_metroui
         {
             bouquet = listview_Bouquet.SelectedItem as Bouquets;
 
@@ -408,7 +337,6 @@ namespace Flovers_WPF
             button_UpdateBouquet.IsEnabled = true;
             grid_Content.IsEnabled = true;
 
-<<<<<<< HEAD
             await Update_ListView_Contents();
 
             Clear_Control_Content();
@@ -439,28 +367,10 @@ namespace Flovers_WPF
             grid_Content.DataContext = accessories_flowers;
 
             button_CreateContent.IsEnabled = false;
-=======
-            Clear_Control_Content();
-        }
-
-        private void listview_Bouquet_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            listview_Bouquet.SelectedIndex = -1;
-
-            grid_Bouquet.DataContext = null;
-
-            Clear_Control_Bouquet();
-        }
-
-        private void listview_Content_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            button_CreateBouquet.IsEnabled = false;
->>>>>>> origin/Andrew_metroui
             button_UpdateContent.IsEnabled = true;
             button_DeleteContent.IsEnabled = true;
         }
 
-<<<<<<< HEAD
         /// <summary>
         /// Снятие выделения с компонента при нажатии ПКМ и сброс интерфейса в состояние по умолчанию.
         /// </summary>
@@ -505,15 +415,6 @@ namespace Flovers_WPF
             {
                 component = combobox_Content.SelectedItem as Flowers;
             }
-=======
-        private void listview_Content_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            listview_Content.SelectedIndex = -1;
-
-            grid_Content.DataContext = null;
-
-            Clear_Control_Content();
->>>>>>> origin/Andrew_metroui
         }
     }
 }
