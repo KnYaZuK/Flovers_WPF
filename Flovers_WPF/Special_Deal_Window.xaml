@@ -1,0 +1,26 @@
+﻿<Controls:MetroWindow x:Class="Flovers_WPF.Special_Deal_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Спецпредложения" Height="600" Width="900" ForceCursor="True" EnableDWMDropShadow="True">
+    <Grid>
+        <Label Content="Для формирования спецпредложения заполните поля ниже" HorizontalAlignment="Left" Margin="204,10,0,0" VerticalAlignment="Top" Width="629" Padding="108,5,5,5"/>
+        <TextBox x:Name="textbox_theme" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="872" Controls:TextBoxHelper.Watermark="Заголовок" BorderThickness="4,1,1,1" Controls:TextBoxHelper.ClearTextButton="True"/>
+        <RichTextBox x:Name="textbox_text" HorizontalAlignment="Left" Height="248" Margin="10,71,0,0" VerticalAlignment="Top" Width="872" BorderThickness="4,1,1,1" VerticalScrollBarVisibility="Visible">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="Текст спецпредложения"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Image x:Name="imgVideo" HorizontalAlignment="Left" Height="100" Margin="347,328,0,0" VerticalAlignment="Top" Width="113"/>
+        <Image x:Name="imgCaptured" HorizontalAlignment="Left" Height="100" Margin="501,328,0,0" VerticalAlignment="Top" Width="113"/>
+        <Button x:Name="button_startVideo" Content="Вкл.Камеру" HorizontalAlignment="Left" Margin="347,446,0,0" VerticalAlignment="Top" Width="113"/>
+        <Button x:Name="button_stopVideo" Content="Ост.Камеру" HorizontalAlignment="Left" Margin="347,476,0,0" VerticalAlignment="Top" Width="113"/>
+        <Button x:Name="button_CaptureImage" Content="Сделать снимок" HorizontalAlignment="Left" Margin="501,446,0,0" VerticalAlignment="Top" Width="113"/>
+        <Button x:Name="button_SaveImage" Content="Сохранить" HorizontalAlignment="Left" Margin="501,476,0,0" VerticalAlignment="Top" Width="113"/>
+        <Button x:Name="button_SendMail" Content="Сделать рассылку" HorizontalAlignment="Left" Margin="10,520,0,0" VerticalAlignment="Top" Width="390"/>
+        <Button x:Name="button_SaveAsPDF" Content="Сохранить в PDF" HorizontalAlignment="Left" Margin="480,520,0,0" VerticalAlignment="Top" Width="402"/>
+
+    </Grid>
+</Controls:MetroWindow>

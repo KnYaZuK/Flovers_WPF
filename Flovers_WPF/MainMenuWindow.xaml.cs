@@ -59,6 +59,12 @@ namespace Flovers_WPF
             CreateFlowerWindow new_flav = new CreateFlowerWindow();
             new_flav.Show();
         }
+
+        private void bt_deals_Click(object sender, RoutedEventArgs e)
+        {
+            Special_Deal_Window spec_deal = new Special_Deal_Window();
+            spec_deal.Show();
+        }
         
     }
 }
