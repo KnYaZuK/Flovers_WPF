@@ -78,7 +78,7 @@ namespace Flovers_WPF
         /// </summary>
         private void Clear_Controls()
         {
-            stackpanel.DataContext = null;
+            grid.DataContext = null;
 
             button_insert.IsEnabled = true;
             button_update.IsEnabled = false;
@@ -166,12 +166,12 @@ namespace Flovers_WPF
             if (combobox_Type.SelectedIndex == 0)
             {
                 oFlowers = listview.SelectedItem as Flowers;
-                stackpanel.DataContext = oFlowers;
+                grid.DataContext = oFlowers;
             }
             if (combobox_Type.SelectedIndex == 1)
             {
                 oAccessories = listview.SelectedItem as Accessories;
-                stackpanel.DataContext = oAccessories;
+                grid.DataContext = oAccessories;
             }
 
             button_insert.IsEnabled = false;

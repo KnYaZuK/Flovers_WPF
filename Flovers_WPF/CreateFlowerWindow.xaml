@@ -17,6 +17,7 @@
         <Grid x:Name="grid_Content" HorizontalAlignment="Left" Height="280" Margin="325,160,0,0" VerticalAlignment="Top" Width="242">
             
             <Label Content="Компоненты" HorizontalAlignment="Left" Margin="65,0,0,0" VerticalAlignment="Top" FontSize="16"/>
+<<<<<<< HEAD
 
             <ComboBox x:Name="combobox_TypeContent" SelectedIndex="{Binding type_index}" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_TypeContent_SelectionChanged">
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Аксессуар" Cursor="Hand"/>
@@ -32,6 +33,14 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <Controls:NumericUpDown x:Name="numericupdown_CountContent" Value="{Binding count}" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество"></Controls:NumericUpDown>
+=======
+            
+            <ComboBox x:Name="combobox_TypeContent" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="222"/>
+            <Label Content="Выберите тип компонента:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="158"/>
+            <Label Content="Выберите компонент:" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Width="158"/>
+            <ComboBox x:Name="combobox_Content" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="222"/>
+            <Controls:NumericUpDown x:Name="numericupdown_CountContent" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество"></Controls:NumericUpDown>
+>>>>>>> origin/Andrew_metroui
             <Button x:Name="button_CreateContent" Content="Добавить" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="222" Click="button_CreateContent_Click"/>
             <Button x:Name="button_UpdateContent" Content="Изменить" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" Width="222" Click="button_UpdateContent_Click"/>
             <Button x:Name="button_DeleteContent" Content="Удалить" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="222" Click="button_DeleteContent_Click"/>
@@ -46,11 +55,19 @@
 
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
+<<<<<<< HEAD
                                 <TextBlock Text="Название:" Width="128"></TextBlock>
                                 <TextBlock Text="{Binding name}" ></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Доп.Цена:" Width="128"></TextBlock>
+=======
+                                <TextBlock Text="ФИО:" Width="128"></TextBlock>
+                                <TextBlock Text="{Binding name}" ></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Номер телефона:" Width="128"></TextBlock>
+>>>>>>> origin/Andrew_metroui
                                 <TextBlock Text="{Binding price_extra}" ></TextBlock>
                             </StackPanel>
                         </StackPanel>
@@ -70,6 +87,7 @@
                         <StackPanel Orientation="Vertical">
                             
                             <StackPanel Orientation="Horizontal">
+<<<<<<< HEAD
                                 <TextBlock Text="Тип компонента:" Width="128"></TextBlock>
                                 <TextBlock Text="{Binding type}" ></TextBlock>
                             </StackPanel>
@@ -80,6 +98,18 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Количество:" Width="128"></TextBlock>
                                 <TextBlock Text="{Binding count}" ></TextBlock>
+=======
+                                <TextBlock Text="ФИО:" Width="128"></TextBlock>
+                                <TextBlock Text="{Binding name}" ></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Номер телефона:" Width="128"></TextBlock>
+                                <TextBlock Text="{Binding count}" ></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Email:" Width="128"></TextBlock>
+                                <TextBlock Text="{Binding type}" ></TextBlock>
+>>>>>>> origin/Andrew_metroui
                             </StackPanel>
                             
                         </StackPanel>
