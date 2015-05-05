@@ -90,6 +90,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Camera_Control.cs" />
+    <Compile Include="Camera_HelperClass.cs" />
     <Compile Include="CreateFlowerWindow.xaml.cs">
       <DependentUpon>CreateFlowerWindow.xaml</DependentUpon>
     </Compile>
