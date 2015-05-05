@@ -17,21 +17,21 @@
         <Grid x:Name="grid_Content" HorizontalAlignment="Left" Height="280" Margin="325,160,0,0" VerticalAlignment="Top" Width="242">
             
             <Label Content="Компоненты" HorizontalAlignment="Left" Margin="65,0,0,0" VerticalAlignment="Top" FontSize="16"/>
-            
-            <ComboBox x:Name="combobox_TypeContent" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_TypeContent_SelectionChanged">
+
+            <ComboBox x:Name="combobox_TypeContent" SelectedIndex="{Binding type_index}" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_TypeContent_SelectionChanged">
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Аксессуар" Cursor="Hand"/>
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Цветок" Cursor="Hand"/>
             </ComboBox>
             <Label Content="Выберите тип компонента:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="158"/>
             <Label Content="Выберите компонент:" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Width="158"/>
-            <ComboBox x:Name="combobox_Content" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_Content_SelectionChanged">
+            <ComboBox x:Name="combobox_Content" SelectedIndex="{Binding component_index}" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_Content_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding name}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Controls:NumericUpDown x:Name="numericupdown_CountContent" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество"></Controls:NumericUpDown>
+            <Controls:NumericUpDown x:Name="numericupdown_CountContent" Value="{Binding count}" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество"></Controls:NumericUpDown>
             <Button x:Name="button_CreateContent" Content="Добавить" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="222" Click="button_CreateContent_Click"/>
             <Button x:Name="button_UpdateContent" Content="Изменить" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" Width="222" Click="button_UpdateContent_Click"/>
             <Button x:Name="button_DeleteContent" Content="Удалить" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="222" Click="button_DeleteContent_Click"/>
@@ -71,15 +71,15 @@
                             
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Тип компонента:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding Type}" ></TextBlock>
+                                <TextBlock Text="{Binding type}" ></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Название:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding Name}" ></TextBlock>
+                                <TextBlock Text="{Binding component.name}" ></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Количество:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding Count}" ></TextBlock>
+                                <TextBlock Text="{Binding count}" ></TextBlock>
                             </StackPanel>
                             
                         </StackPanel>
