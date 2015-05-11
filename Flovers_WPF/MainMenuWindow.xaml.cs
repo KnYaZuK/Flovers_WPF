@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 
+using Flovers_WPF.DataAccess;
+
 namespace Flovers_WPF
 {
     /// <summary>
@@ -26,19 +28,28 @@ namespace Flovers_WPF
             InitializeComponent();
         }
 
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            DBConnection conn = new DBConnection();
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        public string DB_Path;
         
         private void bt_settings_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            if(sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            Settings settings = new Settings( true );
+
+            if ( settings.dbpath != "" )
             {
-                DB_Path = sfd.FileName;
+                DBConnection.Save_Connection(settings);
+                System.Windows.Forms.MessageBox.Show("Новый путь успешно сохранён.");
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Новый путь не был задан.");
             }
         }
 
@@ -59,6 +70,5 @@ namespace Flovers_WPF
             CreateFlowerWindow new_flav = new CreateFlowerWindow();
             new_flav.Show();
         }
-        
     }
 }

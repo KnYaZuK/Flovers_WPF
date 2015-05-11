@@ -33,6 +33,16 @@ namespace Flovers_WPF
 
         public bool Loged; //Проверка пользователя на успешный вход в систему
 
+        /// <summary>
+        /// Выполнение операций при загрузке окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            await Initialize_Database();
+        }
+
         private async Task Initialize_Database()
         {
             DBConnection oDBConnection = new DBConnection();
@@ -89,15 +99,6 @@ namespace Flovers_WPF
             RegistrationWindow reg_form = new RegistrationWindow();
 
             reg_form.ShowDialog();
-        }
-        /// <summary>
-        /// Выполнение операций при загрузке окна
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            await Initialize_Database();
         }
     }
 }
