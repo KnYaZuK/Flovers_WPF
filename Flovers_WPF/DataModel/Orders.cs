@@ -1,4 +1,6 @@
-﻿using SQLite;
+﻿using System;
+
+using SQLite;
 
 namespace Flovers_WPF.DataModel
 {
@@ -7,6 +9,9 @@ namespace Flovers_WPF.DataModel
     {
         [PrimaryKey, AutoIncrement, NotNull]
         public int orders_id { get; set; }
+
+        [NotNull]
+        public DateTime datetime { get; set; }
 
         [NotNull]
         public string address { get; set; }
