@@ -12,30 +12,36 @@
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Аксессуары" Cursor="Hand"/>
             </ComboBox>
 
-            <Label Content="Добавить новый товар :" Margin="10,66,-10,226"/>
+            <Label Content="Добавить новый товар :" Margin="0,50,0,235"/>
 
-            <TextBox x:Name="textbox_name" Controls:TextBoxHelper.Watermark="Название" Text="{Binding name}" Margin="10,130,10,164" RenderTransformOrigin="0.5,0.5">
+            <TextBox x:Name="textbox_name" Controls:TextBoxHelper.Watermark="Название" Text="{Binding name}" Margin="10,90,10,199" RenderTransformOrigin="0.5,0.5">
                 <TextBox.Effect>
                     <DropShadowEffect ShadowDepth="1"/>
                 </TextBox.Effect>
             </TextBox>
 
-            <TextBox x:Name="textbox_cost" Controls:TextBoxHelper.Watermark="Стоимость" Text="{Binding price}" Margin="10,94,10,195">
+            <Controls:NumericUpDown x:Name="numericupdown_price"  Minimum="0" StringFormat="c2" Controls:TextBoxHelper.Watermark="Стоимость за единицу измерения" Value="{Binding price}" Margin="10,126,10,168">
+                <Controls:NumericUpDown.Effect>
+                    <DropShadowEffect ShadowDepth="1"/>
+                </Controls:NumericUpDown.Effect>
+            </Controls:NumericUpDown>
+            <!--Margin="10,126,10,168"-->
+            <TextBox x:Name="textbox_measure" Controls:TextBoxHelper.Watermark="Единицы измерения" Text="{Binding measure}" Margin="10,157,10,137">
                 <TextBox.Effect>
                     <DropShadowEffect ShadowDepth="1"/>
                 </TextBox.Effect>
             </TextBox>
 
-            <Controls:NumericUpDown x:Name="numericupdown_count" Minimum="1" Controls:TextBoxHelper.Watermark="Количество" Value="{Binding in_stock}" Margin="10,161,10,133">
+            <Controls:NumericUpDown x:Name="numericupdown_count" Minimum="0" Controls:TextBoxHelper.Watermark="Количество" Value="{Binding in_stock}" Margin="10,188,10,106">
                 <Controls:NumericUpDown.Effect>
                     <DropShadowEffect ShadowDepth="1"/>
                 </Controls:NumericUpDown.Effect>
             </Controls:NumericUpDown>
 
-            <Button x:Name="button_insert" Content="Добавить" Click="button_insert_Click" Margin="10,211,10,83" />
-
-            <Button x:Name="button_update" Content="Изменить" Click="button_update_Click" Margin="10,242,10,53" />
-            <Button x:Name="button_delete" Content="Удалить" Click="button_delete_Click" Margin="10,272,10,20" />
+            <Button x:Name="button_insert" Content="Добавить" Click="button_insert_Click" Margin="10,221,10,73" />
+            <Button x:Name="button_update" Content="Изменить" Click="button_update_Click" Margin="10,252,10,43" />
+            <Button x:Name="button_delete" Content="Удалить" Click="button_delete_Click" Margin="10,282,10,10" />
+            
         </Grid>
         <Grid HorizontalAlignment="Left" Height="320" Margin="320,0,0,0" VerticalAlignment="Top" Width="574">
             <ListView x:Name="listview" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_MouseLeftButtonUp" MouseRightButtonUp="listview_MouseRightButtonUp" SelectionChanged="listview_SelectionChanged" Margin="10">
@@ -55,6 +61,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Количество на складе:" Width="128"/>
                                 <TextBlock Text="{Binding in_stock}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Ед. измерения:" Width="128"/>
+                                <TextBlock Text="{Binding measure}" />
                             </StackPanel>
 
                         </StackPanel>

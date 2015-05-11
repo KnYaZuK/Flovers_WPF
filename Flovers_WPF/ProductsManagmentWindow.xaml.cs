@@ -94,11 +94,11 @@ namespace Flovers_WPF
         {
             if (combobox_Type.SelectedIndex == 0)
             {
-                await oFlowersRepository.Insert_Flowers_Async(new Flowers(textbox_name.Text, Double.Parse(textbox_cost.Text), (decimal) numericupdown_count.Value));
+                await oFlowersRepository.Insert_Flowers_Async(new Flowers(textbox_name.Text, (double)numericupdown_price.Value, (decimal)numericupdown_count.Value, textbox_measure.Text));
             }
             if (combobox_Type.SelectedIndex == 1)
             {
-                await oAccessoriesRepository.Insert_Accessories_Async(new Accessories(textbox_name.Text, Double.Parse(textbox_cost.Text), (decimal)numericupdown_count.Value));
+                await oAccessoriesRepository.Insert_Accessories_Async(new Accessories(textbox_name.Text, (double)numericupdown_price.Value, (decimal)numericupdown_count.Value, textbox_measure.Text));
             }
 
             await Update_ListView();
@@ -116,16 +116,18 @@ namespace Flovers_WPF
             if (combobox_Type.SelectedIndex == 0)
             {
                 oFlowers.name = textbox_name.Text;
-                oFlowers.price = Double.Parse(textbox_cost.Text);
+                oFlowers.price = (double)numericupdown_price.Value;
                 oFlowers.in_stock = (decimal)numericupdown_count.Value;
+                oFlowers.measure = textbox_measure.Text;
 
                 await oFlowersRepository.Update_Flowers_Async(oFlowers);
             }
             if (combobox_Type.SelectedIndex == 1)
             {
                 oAccessories.name = textbox_name.Text;
-                oAccessories.price = Double.Parse(textbox_cost.Text);
+                oAccessories.price = (double)numericupdown_price.Value;
                 oAccessories.in_stock = (decimal)numericupdown_count.Value;
+                oAccessories.measure = textbox_measure.Text;
 
                 await oAccessoriesRepository.Update_Accessories_Async(oAccessories);
             }
