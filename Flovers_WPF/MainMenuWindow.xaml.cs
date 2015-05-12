@@ -70,15 +70,13 @@ namespace Flovers_WPF
             CreateFlowerWindow new_flav = new CreateFlowerWindow();
             new_flav.ShowDialog();
         }
-<<<<<<< HEAD
-=======
 
         private void bt_deals_Click(object sender, RoutedEventArgs e)
         {
             Special_Deal_Window spec_deal = new Special_Deal_Window();
-            spec_deal.Show();
+            spec_deal.ShowDialog();
         }
         
->>>>>>> origin/Andrew_metroui
+
     }
 }

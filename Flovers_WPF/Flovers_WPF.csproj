@@ -155,6 +155,7 @@
     <Compile Include="Repository\OrdersRepository.cs" />
     <Compile Include="Repository\PaymentsRepository.cs" />
     <Compile Include="Repository\UsersRepository.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Special_Deal_Window.xaml.cs">
       <DependentUpon>Special_Deal_Window.xaml</DependentUpon>
     </Compile>
