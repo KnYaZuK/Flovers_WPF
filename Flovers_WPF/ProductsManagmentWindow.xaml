@@ -20,7 +20,7 @@
                 </TextBox.Effect>
             </TextBox>
 
-            <Controls:NumericUpDown x:Name="numericupdown_price"  Minimum="0" StringFormat="c2" Controls:TextBoxHelper.Watermark="Стоимость за единицу измерения" Value="{Binding price}" Margin="10,126,10,168">
+            <Controls:NumericUpDown x:Name="numericupdown_price" Minimum="0" Interval="0.01" StringFormat="c2" Controls:TextBoxHelper.Watermark="Стоимость за единицу измерения" Value="{Binding price}" Margin="10,126,10,168">
                 <Controls:NumericUpDown.Effect>
                     <DropShadowEffect ShadowDepth="1"/>
                 </Controls:NumericUpDown.Effect>
@@ -32,7 +32,7 @@
                 </TextBox.Effect>
             </TextBox>
 
-            <Controls:NumericUpDown x:Name="numericupdown_count" Minimum="0" Controls:TextBoxHelper.Watermark="Количество" Value="{Binding in_stock}" Margin="10,188,10,106">
+            <Controls:NumericUpDown x:Name="numericupdown_count" Minimum="0" Interval="1" Controls:TextBoxHelper.Watermark="Количество" Value="{Binding in_stock}" Margin="10,188,10,106">
                 <Controls:NumericUpDown.Effect>
                     <DropShadowEffect ShadowDepth="1"/>
                 </Controls:NumericUpDown.Effect>
