@@ -56,19 +56,19 @@ namespace Flovers_WPF
         private void bt_Orders_Click(object sender, RoutedEventArgs e)
         {
             Order_Window ord_win = new Order_Window();
-            ord_win.Show();
+            ord_win.ShowDialog();
         }
 
         private void bt_records_Click(object sender, RoutedEventArgs e)
         {
             Records_goods rec_good = new Records_goods();
-            rec_good.Show();
+            rec_good.ShowDialog();
         }
 
         private void bt_flowers_Click(object sender, RoutedEventArgs e)
         {
             CreateFlowerWindow new_flav = new CreateFlowerWindow();
-            new_flav.Show();
+            new_flav.ShowDialog();
         }
     }
 }
