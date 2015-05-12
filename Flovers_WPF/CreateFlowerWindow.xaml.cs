@@ -40,6 +40,7 @@ namespace Flovers_WPF
             public int type_index { get; set; } // Хранит индекс типа компонента в комбобоксе. Необходимо для биндингов.
             public int component_index { get; set; } // Хранит индекс компонента в комбобоксе. Необходимо для биндингов.
         }
+<<<<<<< HEAD
 
         BouquetsRepository oBouquetsRepository;         //
         ContentsRepository oContentsRepository;         // Контроллеры
@@ -53,6 +54,21 @@ namespace Flovers_WPF
 
         SQLite.SQLiteAsyncConnection conn;
 
+=======
+
+        BouquetsRepository oBouquetsRepository;         //
+        ContentsRepository oContentsRepository;         // Контроллеры
+        AccessoriesRepository oAccessoriesRepository;   // Таблиц
+        FlowersRepository oFlowersRepository;           //
+
+        Bouquets bouquet; // Храним выделенный букет.
+        object component; // Храним выделенный в комбобоксе аксессуар или цветок.
+
+        Accessories_Flowers accessories_flowers; // Храним данные для вывода их в listview компонентов
+
+        SQLite.SQLiteAsyncConnection conn;
+
+>>>>>>> origin/Andrew_metroui
         /// <summary>
         /// Инициализация переменных при загрузке формы
         /// </summary>
@@ -68,9 +84,15 @@ namespace Flovers_WPF
             oContentsRepository = new ContentsRepository(oDBConnection);
             oAccessoriesRepository = new AccessoriesRepository(oDBConnection);
             oFlowersRepository = new FlowersRepository(oDBConnection);
+<<<<<<< HEAD
 
             conn = oDBConnection.GetAsyncConnection();
 
+=======
+
+            conn = oDBConnection.GetAsyncConnection();
+
+>>>>>>> origin/Andrew_metroui
             await Update_ListView_Bouquets();
 
             Clear_Control_Bouquet();

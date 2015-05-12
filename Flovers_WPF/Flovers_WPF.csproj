@@ -44,6 +44,10 @@
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.6\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +81,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WebCam_Capture, Version=1.0.2395.24959, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\WebCam_Capture.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -86,6 +94,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Camera_Control.cs" />
+    <Compile Include="Camera_HelperClass.cs" />
     <Compile Include="CreateFlowerWindow.xaml.cs">
       <DependentUpon>CreateFlowerWindow.xaml</DependentUpon>
     </Compile>
@@ -145,7 +155,9 @@
     <Compile Include="Repository\OrdersRepository.cs" />
     <Compile Include="Repository\PaymentsRepository.cs" />
     <Compile Include="Repository\UsersRepository.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Special_Deal_Window.xaml.cs">
+      <DependentUpon>Special_Deal_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Page Include="CreateFlowerWindow.xaml">
@@ -185,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Special_Deal_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
