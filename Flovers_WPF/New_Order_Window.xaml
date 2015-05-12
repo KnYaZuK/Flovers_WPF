@@ -2,8 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Новый Заказ" Height="600" Width="800" GlowBrush="#FF06E0F5" EnableDWMDropShadow="True">
-    <Grid>
+        Title="Новый Заказ" Height="600" Width="800" GlowBrush="#FF06E0F5" EnableDWMDropShadow="True" Loaded="MetroWindow_Loaded">
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button x:Name="button_New_Client" Content="Зарегистрировать нового клиента..." Click="button_New_Client_Click"></Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    
+    <Grid x:Name="grid">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -11,15 +18,27 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1">
+        <ListView Name="listview_Clients" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Clients_MouseLeftButtonUp" MouseRightButtonUp="listview_Clients_MouseRightButtonUp">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
                     <StackPanel Orientation="Vertical">
 
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Название:" Width="128"/>
-                            <TextBlock Text="{Binding name}" />
+                            <TextBlock Text="ФИО:" Width="128"/>
+                            <TextBlock Text="{Binding client.full_name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Номер Телефона:" Width="128"/>
+                            <TextBlock Text="{Binding client.phone_number}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Email:" Width="128"/>
+                            <TextBlock Text="{Binding client.email}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Бонус Баллы:" Width="128"/>
+                            <TextBlock Text="{Binding card.bonus_card_points}" />
                         </StackPanel>
 
                     </StackPanel>
@@ -28,7 +47,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView HorizontalAlignment="Left" Height="170" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1" Background="#FFF2FFFC" BorderThickness="1">
+        <ListView Name="listview_Carts" HorizontalAlignment="Left" Height="170" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Carts_MouseLeftButtonUp" MouseRightButtonUp="listview_Carts_MouseRightButtonUp">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
@@ -36,7 +55,15 @@
 
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Название:" Width="128"/>
-                            <TextBlock Text="{Binding name}" />
+                            <TextBlock Text="{Binding bouquet.name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Количество:" Width="128"/>
+                            <TextBlock Text="{Binding cart.count}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Стоимость:" Width="128"/>
+                            <TextBlock Text="{Binding cost}" />
                         </StackPanel>
 
                     </StackPanel>
@@ -45,7 +72,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="2" Background="#FFF2FFFC" BorderThickness="1">
+        <ListView Name="listview_Bouquets" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="2" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Bouquets_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquets_MouseRightButtonUp">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
@@ -53,7 +80,11 @@
 
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Название:" Width="128"/>
-                            <TextBlock Text="{Binding name}" />
+                            <TextBlock Text="{Binding bouquet.name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Стоимость:" Width="128"/>
+                            <TextBlock Text="{Binding cost}" />
                         </StackPanel>
 
                     </StackPanel>
@@ -62,22 +93,24 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Content="Добавить" Grid.Column="1" HorizontalAlignment="Left" Margin="40,242,0,0" VerticalAlignment="Top" Width="180" Height="38"/>
-        <Button Content="Удалить" Grid.Column="1" HorizontalAlignment="Left" Margin="40,284,0,0" VerticalAlignment="Top" Width="180" Height="36"/>
+        <Controls:NumericUpDown Name="numeric_Count" Interval="1" Minimum="1" Controls:TextBoxHelper.Watermark="Количество" Value="{Binding count}" Grid.Column="1" Margin="10,216,10,327"/>
 
-        <Button Content="Завершить заказ" Grid.Column="1" HorizontalAlignment="Left" Margin="10,518,0,0" VerticalAlignment="Top" Width="244" Height="41"/>
+        <Button Name="button_Create" Content="Добавить" Grid.Column="1" HorizontalAlignment="Left" Margin="40,251,0,0" VerticalAlignment="Top" Width="180" Height="38" Click="button_Create_Click"/>
+        <Button Name="button_Delete" Content="Удалить" Grid.Column="1" HorizontalAlignment="Left" Margin="40,293,0,0" VerticalAlignment="Top" Width="180" Height="36" Click="button_Delete_Click"/>
 
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="10,349,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Адрес" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <Button Name="button__Complete" Content="Завершить заказ" Grid.Column="1" HorizontalAlignment="Left" Margin="10,518,0,0" VerticalAlignment="Top" Width="244" Height="41" Click="button__Complete_Click"/>
 
-        <Label Content="Общая стоимость:" HorizontalAlignment="Left" Margin="10,397,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <TextBox Name="textbox_Address" HorizontalAlignment="Left" Height="22" Margin="10,349,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Адрес" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
-        <Label Content="Скидка:" HorizontalAlignment="Left" Margin="10,427,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <Label Name="label_Cost" Content="Общая стоимость:" HorizontalAlignment="Left" Margin="10,397,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
-        <Label Content="Итого:" HorizontalAlignment="Left" Margin="10,459,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <Label Name="label_Discount" Content="Скидка:" HorizontalAlignment="Left" Margin="10,427,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244"/>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="1"/>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="2"/>
+        <Label Name="label_Total_Cost" Content="Итого:" HorizontalAlignment="Left" Margin="10,459,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+
+        <TextBox Name="textbox_Search_Client" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244"/>
+        <TextBox Name="textbox_Search_Cart" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <TextBox Name="textbox_Search_Bouquet" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="2"/>
 
     </Grid>
 
