@@ -194,3 +194,5 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+/Flovers_WPF/bin/Debug/Flovers_WPF.vshost.exe.manifest
+/Flovers_WPF/bin/Debug/Settings.xml
