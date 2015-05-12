@@ -145,6 +145,7 @@
     <Compile Include="Repository\OrdersRepository.cs" />
     <Compile Include="Repository\PaymentsRepository.cs" />
     <Compile Include="Repository\UsersRepository.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Page Include="CreateFlowerWindow.xaml">
