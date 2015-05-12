@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 using Flovers_WPF.DataModel;
 using Flovers_WPF.DataAccess;
 using Flovers_WPF.Repository;
@@ -231,7 +232,7 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void button_CreateBouquet_Click(object sender, RoutedEventArgs e)
         {
-            await oBouquetsRepository.Insert_Bouquets_Async(new Bouquets(textbox_NameBouquet.Text, Double.Parse(textbox_PriceExtraBouquet.Text)));
+            await oBouquetsRepository.Insert_Bouquets_Async(new Bouquets(textbox_NameBouquet.Text, (Double) numeric_Bouquet_CostExtra.Value));
 
 
             await Update_ListView_Bouquets();
@@ -247,7 +248,7 @@ namespace Flovers_WPF
         private async void button_UpdateBouquet_Click(object sender, RoutedEventArgs e)
         {
             bouquet.name = textbox_NameBouquet.Text;
-            bouquet.price_extra = Double.Parse(textbox_PriceExtraBouquet.Text);
+            bouquet.price_extra = (Double) numeric_Bouquet_CostExtra.Value;
 
             await oBouquetsRepository.Update_Bouquets_Async(bouquet);
 
