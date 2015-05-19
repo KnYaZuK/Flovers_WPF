@@ -1,0 +1,6 @@
+﻿<UserControl x:Name="Red_marker1" x:Class="Flovers_WPF.Custom_Markers.Red_marker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="40" Width="30" Opacity="10" Loaded="Red_marker_Loaded" SizeChanged="Red_marker_SizeChanged" MouseEnter="Red_marker_MouseEnter" MouseLeave="Red_marker_MouseLeave" MouseMove="Red_marker_MouseMove" MouseLeftButtonUp="Red_marker_MouseLeftButtonUp" MouseLeftButtonDown="Red_marker_MouseLeftButtonDown">
+    <Image Name="icon" Source="/Flovers_WPF;component/Resources/red-dot.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
+</UserControl>

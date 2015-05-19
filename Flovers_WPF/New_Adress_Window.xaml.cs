@@ -38,7 +38,7 @@ namespace Flovers_WPF
             gmap_adress.Zoom = 5;
             gmap_adress.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-            button_find.IsEnabled = false;
+            
         }
 
         private void button_find_Click(object sender, RoutedEventArgs e)
@@ -73,8 +73,16 @@ namespace Flovers_WPF
                 {
                     dataMarker += word +";"+ Environment.NewLine;
                 }
-                GMap.NET.WindowsPresentation.GMapMarker address = new GMapMarker(new GMap.NET.PointLatLng(latitude, longitude));
-                
+       
+                var address = new GMapMarker(new GMap.NET.PointLatLng(latitude, longitude));
+                {
+                    address.Shape = new Custom_Markers.Red_marker(this, address, dataMarker);
+                    address.Offset = new Point(-15, -15);
+                }
+                gmap_adress.Markers.Add(address);
+                gmap_adress.Position = new GMap.NET.PointLatLng(latitude, longitude);
+                gmap_adress.Zoom = 17;
+      
             }
         }
 

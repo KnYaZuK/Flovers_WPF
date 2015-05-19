@@ -107,6 +107,9 @@
     <Compile Include="CreateFlowerWindow.xaml.cs">
       <DependentUpon>CreateFlowerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Custom Markers\Red_marker.xaml.cs">
+      <DependentUpon>Red_marker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\DBConnection.cs" />
     <Compile Include="DataAccess\IDBConnection.cs" />
     <Compile Include="DataModel\Cards.cs" />
@@ -173,6 +176,10 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Page Include="CreateFlowerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Custom Markers\Red_marker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -253,7 +260,9 @@
     <None Include="Resources\controlpanel.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\red-dot.png" />
+    <Resource Include="Resources\red-dot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
