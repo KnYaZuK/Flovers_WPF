@@ -19,10 +19,9 @@ namespace Flovers_WPF.DataModel
 
         public Carts() { }
 
-        public Carts( decimal count, int orders_id, int bouquets_id )
+        public Carts( decimal count, int bouquets_id )
         {
             this.count = count;
-            this.orders_id = orders_id;
             this.bouquets_id = bouquets_id;
         }
     }
