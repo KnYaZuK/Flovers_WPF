@@ -2,19 +2,85 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Заказы" Height="700" Width="900" EnableDWMDropShadow="True" GlowBrush="#FF17DCF0">
+        Title="Заказы" Height="600" Width="800" EnableDWMDropShadow="True" GlowBrush="#FF17DCF0" Loaded="MetroWindow_Loaded" Activated="MetroWindow_Activated">
     <Grid>
-        <Label Content="Совершенные заказы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="228" Padding="13,5,5,5" FontSize="20"/>
-        <ListView x:Name="lv_orders" HorizontalAlignment="Left" Height="566" Margin="10,52,0,0" VerticalAlignment="Top" Width="872" Background="#FFDFF3F9" BorderThickness="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Совершенные заказы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="215" Padding="13,5,5,5" FontSize="20" HorizontalContentAlignment="Center"/>
+
+        <ListView Name="listview_Orders" HorizontalAlignment="Left" Height="507" Margin="10,52,0,0" VerticalAlignment="Top" Width="190" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Orders_MouseLeftButtonUp" MouseRightButtonUp="listview_Orders_MouseRightButtonUp">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <StackPanel Orientation="Vertical">
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Дата\Время:" Width="128"/>
+                            <TextBlock Text="{Binding order.datetime}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="ФИО:" Width="128"/>
+                            <TextBlock Text="{Binding client.full_name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Адрес:" Width="128"/>
+                            <TextBlock Text="{Binding order.address}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Стоимость:" Width="128"/>
+                            <TextBlock Text="{Binding order.price}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Статус:" Width="128"/>
+                            <TextBlock Text="{Binding order.status}" />
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="bt_refresh" Content="Обновить" HorizontalAlignment="Left" Margin="81,632,0,0" VerticalAlignment="Top" Width="157" Style="{StaticResource AccentedSquareButtonStyle}" OpacityMask="#FF07C7FF"/>
-        <Button x:Name="bt_delete" Content="Удалить" HorizontalAlignment="Left" Margin="389,632,0,0" VerticalAlignment="Top" Width="157" Style="{StaticResource AccentedSquareButtonStyle}" OpacityMask="#FF07C7FF"/>
-        <Button x:Name="bt_new" Content="Новый заказ" HorizontalAlignment="Left" Margin="680,632,0,0" VerticalAlignment="Top" Width="157" Style="{StaticResource AccentedSquareButtonStyle}" OpacityMask="#FF07C7FF" Click="bt_new_Click"/>
+
+        <TextBox Name="textbox_Search_Orders" Controls:TextBoxHelper.Watermark="Поиск..." VerticalContentAlignment="Center" Margin="230,10,10,522"/>
+
+        <ComboBox Name="combobox_Status" Margin="10,52,157,478" Grid.Column="1">
+            <ComboBoxItem Content="Ожидает оплаты"></ComboBoxItem>
+            <ComboBoxItem Content="Оплачен, в обработке"></ComboBoxItem>
+            <ComboBoxItem Content="Оплачен, готовится к отправке"></ComboBoxItem>
+            <ComboBoxItem Content="Отправлен"></ComboBoxItem>
+            <ComboBoxItem Content="Завершён"></ComboBoxItem>
+        </ComboBox>
+        <Button x:Name="button_Status_Change" Content="Изменить статус" Click="button_New_Order_Click" Margin="249,52,10,478" Grid.Column="1"/>
+
+        <Button x:Name="button_Delete" Content="Удалить" Click="button_Delete_Click" Margin="129,306,130,234" Grid.Column="1"/>
+
+        <Button x:Name="button_New_Order" Content="Новый заказ" Click="button_New_Order_Click" Margin="10,480,10,10" Grid.Column="1"/>
+
+        <ListView x:Name="listview_Carts" HorizontalAlignment="Left" Height="507" Margin="200,52,0,0" VerticalAlignment="Top" Width="196" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" IsEnabled="False">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <StackPanel Orientation="Vertical">
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Название:" Width="128"/>
+                            <TextBlock Text="{Binding bouquet.name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Количество:" Width="128"/>
+                            <TextBlock Text="{Binding cart.count}" />
+                        </StackPanel>
+                        
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
 
     </Grid>
 </Controls:MetroWindow>
