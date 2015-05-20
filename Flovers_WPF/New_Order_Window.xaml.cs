@@ -58,6 +58,7 @@ namespace Flovers_WPF
             public double cost { get; set; }
         }
 
+        OrdersRepository oOrdersRepository;         //
         ClientsRepository oClientsRepository;       //
         BouquetsRepository oBouquetsRepository;     // Контроллеры
         CartsRepository oCartsRepository;           // Таблиц
@@ -67,7 +68,7 @@ namespace Flovers_WPF
         SQLite.SQLiteAsyncConnection conn; // Прямой коннект к БД для выдачи записей из таблиц по ID
 
         Client_Card oClient_Card;           //
-        Cart_Bouquet oCart_Bouquet;         // Объекты для работы
+        Cart_Bouquet oCart_Bouquet;         // Выделенные в списках объекты
         Bouquet_Content oBouquet_Content;   //
 
         List<Cart_Bouquet> lCart_Bouquet;   // Список покупок клиента
@@ -83,6 +84,7 @@ namespace Flovers_WPF
 
             await oDBConnection.InitializeDatabase();
 
+            oOrdersRepository = new OrdersRepository(oDBConnection);
             oClientsRepository = new ClientsRepository(oDBConnection);
             oCartsRepository = new CartsRepository(oDBConnection);
             oBouquetsRepository = new BouquetsRepository(oDBConnection);
@@ -177,24 +179,28 @@ namespace Flovers_WPF
 
             label_Cost.Content = "Общая стоимость: " + cost.ToString();
             label_Discount.Content = "Скидка: 0%";
-            label_Total_Cost.Content = "Итого: " + cost;
+            oCart_Bouquet.cost = cost;
+            label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
 
             if ( cost > 1000 )
             {
                 label_Discount.Content = "Скидка: 5%";
-                label_Total_Cost.Content = "Итого: " + cost * 0.95;
+                oCart_Bouquet.cost = cost * 0.95;
+                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
             }
 
             if (cost > 5000)
             {
                 label_Discount.Content = "Скидка: 10%";
-                label_Total_Cost.Content = "Итого: " + cost * 0.9;
+                oCart_Bouquet.cost = cost * 0.9;
+                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
             }
 
             if (cost > 10000)
             {
                 label_Discount.Content = "Скидка: 20%";
-                label_Total_Cost.Content = "Итого: " + cost * 0.8;
+                oCart_Bouquet.cost = cost * 0.8;
+                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
             }
         }
 
@@ -281,8 +287,21 @@ namespace Flovers_WPF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button__Complete_Click(object sender, RoutedEventArgs e)
+        private async void button__Complete_Click(object sender, RoutedEventArgs e)
         {
+            Orders order = new Orders(oClient_Card.client.clients_id, DateTime.Now, textbox_Address.Text, oCart_Bouquet.cost, "Ожидает оплаты");
+
+            await oOrdersRepository.Insert_Orders_Async(order);
+
+            foreach ( var c in lCart_Bouquet )
+            {
+                c.cart.orders_id = order.orders_id;
+
+                await oCartsRepository.Insert_Carts_Async(c.cart);
+            }
+
+            Clear_Control_All();
+
             this.Close();
             System.Windows.Forms.MessageBox.Show("Заказ успешно создан!");
         }
