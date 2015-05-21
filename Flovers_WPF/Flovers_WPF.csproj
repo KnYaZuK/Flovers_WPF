@@ -125,8 +125,8 @@
     <Compile Include="Order_Window.xaml.cs">
       <DependentUpon>Order_Window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProductsManagmentWindow.xaml.cs">
-      <DependentUpon>ProductsManagmentWindow.xaml</DependentUpon>
+    <Compile Include="Components_Window.xaml.cs">
+      <DependentUpon>Components_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="Задачи.cs" />
     <Page Include="CreateFlowerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,7 +194,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProductsManagmentWindow.xaml">
+    <Page Include="Components_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
