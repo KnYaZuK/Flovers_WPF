@@ -5,66 +5,74 @@
         Title="Регистрация клиента" Height="270" Width="700" GlowBrush="#FF00DCFF" EnableDWMDropShadow="True" Loaded="MetroWindow_Loaded">
     <Grid>
         <Grid x:Name="grid" Margin="0,0,345,0">
-            
+
             <Label Content="Пожалуйста, заполните все поля ниже" HorizontalAlignment="Left" Margin="24,10,0,0" VerticalAlignment="Top" Width="294" Padding="44,5,5,5" Grid.ColumnSpan="2"/>
-            
-            <TextBox x:Name="tb_name" HorizontalAlignment="Left" Height="25" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325"  BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="ФИО" Grid.ColumnSpan="2" Text="{Binding full_name}">
+
+            <TextBox x:Name="textbox_Full_Name" HorizontalAlignment="Left" Height="25" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325"  BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="ФИО" Grid.ColumnSpan="2" Text="{Binding client.full_name}">
                 <TextBox.Effect>
                     <DropShadowEffect Color="#FFCAFFFD" Opacity="0.94" ShadowDepth="2" BlurRadius="8"/>
                 </TextBox.Effect>
             </TextBox>
-            <TextBox x:Name="tb_phone" HorizontalAlignment="Left" Height="25" Margin="10,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Телефон" Text="{Binding phone_number}">
+            <TextBox x:Name="textbox_Phone_Number" HorizontalAlignment="Left" Height="25" Margin="10,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Телефон" Text="{Binding client.phone_number}">
                 <TextBox.Effect>
                     <DropShadowEffect Color="#FFCAFFFD" Opacity="0.94" ShadowDepth="2" BlurRadius="8"/>
                 </TextBox.Effect>
             </TextBox>
-            <TextBox x:Name="tb_email" HorizontalAlignment="Left" Height="25" Margin="10,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Почта" Text="{Binding email}">
+            <TextBox x:Name="textbox_Email" HorizontalAlignment="Left" Height="25" Margin="10,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Почта" Text="{Binding client.email}">
                 <TextBox.Effect>
                     <DropShadowEffect Color="#FFCAFFFD" Opacity="0.94" ShadowDepth="2" BlurRadius="8"/>
                 </TextBox.Effect>
             </TextBox>
-            <TextBox x:Name="tb_referer_" HorizontalAlignment="Left" Height="25" Margin="10,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Реферальный номер друга">
+            <TextBox x:Name="textbox_Referer_Number" HorizontalAlignment="Left" Height="25" Margin="10,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" BorderThickness="3,1,1,1" Controls:TextBoxHelper.Watermark="Реферальный номер друга" Text="{Binding referer.full_name}">
                 <TextBox.Effect>
                     <DropShadowEffect Color="#FFCAFFFD" Opacity="0.94" ShadowDepth="2" BlurRadius="8"/>
                 </TextBox.Effect>
             </TextBox>
-            
+
             <Button x:Name="button_Create" Content="Зарегистрировать" HorizontalAlignment="Left" Margin="24,170,0,0" VerticalAlignment="Top" Width="300" Style="{StaticResource AccentedSquareButtonStyle}" Click="button_Create_Click"/>
             <Button x:Name="button_Update" Content="Изменить" HorizontalAlignment="Left" Margin="24,200,0,0" VerticalAlignment="Top" Width="300" Style="{StaticResource AccentedSquareButtonStyle}" Click="button_Update_Click"/>
-            
+
         </Grid>
 
-        <ListView x:Name="listview_Clients_Cards" Margin="350,10,10,10" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseRightButtonUp="listview_MouseRightButtonUp" MouseLeftButtonUp="listview_MouseLeftButtonUp">
+        <ListView x:Name="listview_Clients_Cards" Margin="350,10,10,10" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseRightButtonUp="listview_MouseRightButtonUp" MouseLeftButtonUp="listview_MouseLeftButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     
-                    <StackPanel Orientation="Horizontal">
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
                         
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="ФИО:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding client.full_name}" ></TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="ФИО:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding client.full_name}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Номер телефона:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding client.phone_number}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Email:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding client.email}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Баллы:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding card.bonus_card_points}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Referal_Numb:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding client.referal_number}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Пригласил:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding client.referer_id}" ></TextBlock>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Номер телефона:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding client.phone_number}" ></TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Email:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding client.email}" ></TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Баллы:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding card.bonus_card_points}" ></TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Пригласил:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding client.referer_number}" ></TextBlock>
-                            </StackPanel>
+
                         </StackPanel>
-                        
-                    </StackPanel>
-                    
+                    </Border>
+
+
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
