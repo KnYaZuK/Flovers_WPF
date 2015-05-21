@@ -27,7 +27,7 @@ namespace Flovers_WPF.DataAccess
 
         private void Load_Connection()
         {
-            if (File.Exists("Settings.xml"))
+            if (File.Exists("Settings.xml") && File.Exists("Flowers.sqlite"))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof (Settings));
 
