@@ -17,13 +17,13 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
+        
         <ListView Name="listview_Clients" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Clients_MouseLeftButtonUp" MouseRightButtonUp="listview_Clients_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    
+
                     <Border BorderBrush="Black" BorderThickness="1" Margin="1">
-                        
+
                         <StackPanel Orientation="Vertical" Margin="5">
 
                             <StackPanel Orientation="Horizontal">
@@ -44,9 +44,9 @@
                             </StackPanel>
 
                         </StackPanel>
-                        
+
                     </Border>
-                    
+
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -54,9 +54,9 @@
         <ListView Name="listview_Carts" HorizontalAlignment="Left" Height="170" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Carts_MouseLeftButtonUp" MouseRightButtonUp="listview_Carts_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    
+
                     <Border BorderBrush="Black" BorderThickness="1" Margin="1">
-                        
+
                         <StackPanel Orientation="Vertical" Margin="5">
 
                             <StackPanel Orientation="Horizontal">
@@ -73,9 +73,9 @@
                             </StackPanel>
 
                         </StackPanel>
-                        
+
                     </Border>
-                    
+
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -83,9 +83,9 @@
         <ListView Name="listview_Bouquets" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="2" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Bouquets_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquets_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    
+
                     <Border BorderBrush="Black" BorderThickness="1" Margin="1">
-                        
+
                         <StackPanel Orientation="Vertical" Margin="5">
 
                             <StackPanel Orientation="Horizontal">
@@ -98,9 +98,9 @@
                             </StackPanel>
 
                         </StackPanel>
-                        
+
                     </Border>
-                    
+
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -123,6 +123,8 @@
         <TextBox Name="textbox_Search_Client" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244"/>
         <TextBox Name="textbox_Search_Cart" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="1"/>
         <TextBox Name="textbox_Search_Bouquet" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="2"/>
+
+        <Button x:Name="button_choose_adress" Content="Указать адрес на карте" Grid.Column="1" HorizontalAlignment="Left" Margin="10,380,0,0" VerticalAlignment="Top" Width="244" Click="button_choose_adress_Click"/>
 
     </Grid>
 

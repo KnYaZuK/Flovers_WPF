@@ -29,6 +29,7 @@ namespace Flovers_WPF
             InitializeComponent();
         }
 
+
         /// <summary>
         /// Структура для работы с клиентом и его картой
         /// </summary>
@@ -37,6 +38,7 @@ namespace Flovers_WPF
             public Clients client { get; set; }
             public Cards card { get; set; }
         }
+
 
         /// <summary>
         /// Структура для работы с корзиной и букетом
@@ -47,6 +49,7 @@ namespace Flovers_WPF
             public Carts cart { get; set; }
             public double cost { get; set; }
         }
+
 
         /// <summary>
         /// Структура для работы с букетом и его компонентами
@@ -83,6 +86,7 @@ namespace Flovers_WPF
             DBConnection oDBConnection = new DBConnection();
 
             await oDBConnection.InitializeDatabase();
+
 
             oOrdersRepository = new OrdersRepository(oDBConnection);
             oClientsRepository = new ClientsRepository(oDBConnection);
@@ -424,6 +428,13 @@ namespace Flovers_WPF
             NewClientWindow ncw = new NewClientWindow();
 
             ncw.ShowDialog();
+        }
+
+        private void button_choose_adress_Click(object sender, RoutedEventArgs e)
+        {
+            New_Adress_Window adress_window = new New_Adress_Window();
+            adress_window.ShowDialog();
+
         }
     }
 }

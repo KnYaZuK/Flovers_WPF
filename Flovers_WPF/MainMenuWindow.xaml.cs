@@ -76,6 +76,11 @@ namespace Flovers_WPF
             Special_Deal_Window spec_deal = new Special_Deal_Window();
             spec_deal.ShowDialog();
         }
+
+        private void bt_route_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         
 
     }

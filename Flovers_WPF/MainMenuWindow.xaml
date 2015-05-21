@@ -17,6 +17,6 @@
         <Button x:Name="bt_flowers" Content="Составление Букета" HorizontalAlignment="Left" Margin="597,10,0,0" VerticalAlignment="Top" Width="285" Height="200" Background="#FFB900FF" Foreground="White" FontWeight="Normal" FontSize="18" Click="bt_flowers_Click"/>
         <Button x:Name="bt_records" Content="Учет товаров" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Width="285" Height="200" Background="#FFF79E1C" Foreground="White" FontWeight="Normal" FontSize="20" Click="bt_records_Click"/>
         <Button x:Name="bt_deals" Content="Спецпредложения" HorizontalAlignment="Left" Margin="300,215,0,0" VerticalAlignment="Top" Width="292" Height="200" Background="#FFF51717" Foreground="White" FontWeight="Normal" FontSize="18" Click="bt_deals_Click"/>
-        <Button x:Name="bt_route" Content="Маршрут" HorizontalAlignment="Left" Margin="597,215,0,0" VerticalAlignment="Top" Width="285" Height="200" Background="#FF3BA052" Foreground="White" FontWeight="Normal" FontSize="20"/>
+        <Button x:Name="bt_route" Content="Маршрут" HorizontalAlignment="Left" Margin="597,215,0,0" VerticalAlignment="Top" Width="285" Height="200" Background="#FF3BA052" Foreground="White" FontWeight="Normal" FontSize="20" Click="bt_route_Click"/>
     </Grid>
 </Controls:MetroWindow>

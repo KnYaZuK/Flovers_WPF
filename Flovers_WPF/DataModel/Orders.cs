@@ -25,8 +25,6 @@ namespace Flovers_WPF.DataModel
         [NotNull]
         public string status { get; set; }
 
-
-
         public Orders() { }
 
         public Orders( int clients_id, DateTime datetime, string address, double price, string status )

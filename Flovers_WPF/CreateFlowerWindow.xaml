@@ -20,7 +20,7 @@
             <Label Content="Компоненты" HorizontalAlignment="Left" Margin="65,0,0,0" VerticalAlignment="Top" FontSize="16"/>
 
             <Label Content="Выберите тип компонента:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="158"/>
-
+            
             <ComboBox x:Name="combobox_TypeContent" SelectedIndex="{Binding type_index}" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_TypeContent_SelectionChanged">
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Аксессуар" Cursor="Hand"/>
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Цветок" Cursor="Hand"/>
@@ -35,7 +35,6 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-
 
             <Controls:NumericUpDown x:Name="numericupdown_CountContent" Interval="1" Value="{Binding count}" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество"></Controls:NumericUpDown>
 
@@ -102,7 +101,6 @@
 
                     </Border>
                 </DataTemplate>
-
             </ListView.ItemTemplate>
         </ListView>
 
