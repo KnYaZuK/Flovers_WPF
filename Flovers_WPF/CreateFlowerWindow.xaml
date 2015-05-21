@@ -20,7 +20,7 @@
             <Label Content="Компоненты" HorizontalAlignment="Left" Margin="65,0,0,0" VerticalAlignment="Top" FontSize="16"/>
 
             <Label Content="Выберите тип компонента:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="158"/>
-            
+
             <ComboBox x:Name="combobox_TypeContent" SelectedIndex="{Binding type_index}" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_TypeContent_SelectionChanged">
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Аксессуар" Cursor="Hand"/>
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Цветок" Cursor="Hand"/>
@@ -36,9 +36,9 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            
+
             <Controls:NumericUpDown x:Name="numericupdown_CountContent" Interval="1" Value="{Binding count}" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество"></Controls:NumericUpDown>
-            
+
             <Button x:Name="button_CreateContent" Content="Добавить" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="222" Click="button_CreateContent_Click"/>
 
             <Button x:Name="button_UpdateContent" Content="Изменить" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" Width="222" Click="button_UpdateContent_Click"/>
@@ -46,55 +46,63 @@
 
         </Grid>
 
-        <ListView x:Name="listview_Bouquet" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Bouquet_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquet_MouseRightButtonUp">
+        <ListView x:Name="listview_Bouquet" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Bouquet_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquet_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
-                    <StackPanel Orientation="Horizontal">
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
 
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Название:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding name}" ></TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Название:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding name}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Доп.Цена:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding price_extra}" ></TextBlock>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Доп.Цена:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding price_extra}" ></TextBlock>
-                            </StackPanel>
+
                         </StackPanel>
 
-                    </StackPanel>
+                    </Border>
 
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView x:Name="listview_Content" HorizontalAlignment="Left" Height="430" Margin="572,10,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Content_MouseLeftButtonUp" MouseRightButtonUp="listview_Content_MouseRightButtonUp">
+        <ListView x:Name="listview_Content" HorizontalAlignment="Left" Height="430" Margin="572,10,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Content_MouseLeftButtonUp" MouseRightButtonUp="listview_Content_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
-                    <StackPanel Orientation="Horizontal">
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
 
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="5">
 
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Тип компонента:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding type}" ></TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Название:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding component.name}" ></TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Количество:" Width="128"></TextBlock>
-                                <TextBlock Text="{Binding count}" ></TextBlock>
+                            <StackPanel Orientation="Vertical">
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Тип компонента:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding type}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Название:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding component.name}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Количество:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding count}" ></TextBlock>
+                                </StackPanel>
+
                             </StackPanel>
 
                         </StackPanel>
 
-                    </StackPanel>
-
+                    </Border>
                 </DataTemplate>
+
             </ListView.ItemTemplate>
         </ListView>
 
