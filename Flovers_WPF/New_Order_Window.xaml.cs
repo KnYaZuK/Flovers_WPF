@@ -255,7 +255,7 @@ namespace Flovers_WPF
             Cart_Bouquet cart_bouquet = new Cart_Bouquet();
             cart_bouquet.bouquet = oBouquet_Content.bouquet;
             cart_bouquet.cart = new Carts((decimal) numeric_Count.Value, oBouquet_Content.bouquet.bouquets_id);
-            cart_bouquet.cost = oBouquet_Content.cost;
+            cart_bouquet.cost = oBouquet_Content.cost * (double)cart_bouquet.cart.count;
 
             lCart_Bouquet.Add(cart_bouquet);
 
@@ -313,19 +313,27 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private void listview_Clients_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            oClient_Card = (Client_Card) listview_Clients.SelectedItem;
+            try
+            {
+                oClient_Card = (Client_Card) listview_Clients.SelectedItem;
 
-            textbox_Address.IsEnabled = true;
+                textbox_Address.IsEnabled = true;
 
-            label_Cost.IsEnabled = true;
-            label_Discount.IsEnabled = true;
-            label_Total_Cost.IsEnabled = true;
+                label_Cost.IsEnabled = true;
+                label_Discount.IsEnabled = true;
+                label_Total_Cost.IsEnabled = true;
 
-            textbox_Search_Cart.IsEnabled = true;
-            textbox_Search_Bouquet.IsEnabled = true;
+                textbox_Search_Cart.IsEnabled = true;
+                textbox_Search_Bouquet.IsEnabled = true;
 
-            listview_Carts.IsEnabled = true;
-            listview_Bouquets.IsEnabled = true;
+                listview_Carts.IsEnabled = true;
+                listview_Bouquets.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Клиент не выбран!");
+            }
+
         }
 
         /// <summary>
@@ -347,9 +355,17 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private void listview_Carts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            oCart_Bouquet = (Cart_Bouquet)listview_Carts.SelectedItem;
+            try
+            {
+                oCart_Bouquet = (Cart_Bouquet)listview_Carts.SelectedItem;
 
-            button_Delete.IsEnabled = true;
+                 button_Delete.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Букет не выбран!");
+            }
+            
         }
 
         /// <summary>
@@ -371,13 +387,19 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private void listview_Bouquets_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            oBouquet_Content = (Bouquet_Content)listview_Bouquets.SelectedItem;
+            try
+            {
+                oBouquet_Content = (Bouquet_Content)listview_Bouquets.SelectedItem;
 
-            numeric_Count.IsEnabled = true;
-            numeric_Count.Value = 1;
+                numeric_Count.IsEnabled = true;
+                numeric_Count.Value = 1;
 
-            button_Create.IsEnabled = true;
-
+                button_Create.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Букет не выбран!");
+            }
         }
 
         /// <summary>

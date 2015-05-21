@@ -9,7 +9,7 @@
             <Button x:Name="button_New_Client" Content="Зарегистрировать нового клиента..." Click="button_New_Client_Click"></Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
-    
+
     <Grid x:Name="grid">
 
         <Grid.ColumnDefinitions>
@@ -18,77 +18,89 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView Name="listview_Clients" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Clients_MouseLeftButtonUp" MouseRightButtonUp="listview_Clients_MouseRightButtonUp">
+        <ListView Name="listview_Clients" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Clients_MouseLeftButtonUp" MouseRightButtonUp="listview_Clients_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
+                        
+                        <StackPanel Orientation="Vertical" Margin="5">
 
-                    <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ФИО:" Width="128"/>
+                                <TextBlock Text="{Binding client.full_name}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Номер Телефона:" Width="128"/>
+                                <TextBlock Text="{Binding client.phone_number}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Email:" Width="128"/>
+                                <TextBlock Text="{Binding client.email}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Бонус Баллы:" Width="128"/>
+                                <TextBlock Text="{Binding card.bonus_card_points}" />
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="ФИО:" Width="128"/>
-                            <TextBlock Text="{Binding client.full_name}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Номер Телефона:" Width="128"/>
-                            <TextBlock Text="{Binding client.phone_number}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Email:" Width="128"/>
-                            <TextBlock Text="{Binding client.email}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Бонус Баллы:" Width="128"/>
-                            <TextBlock Text="{Binding card.bonus_card_points}" />
-                        </StackPanel>
-
-                    </StackPanel>
-
+                        
+                    </Border>
+                    
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Name="listview_Carts" HorizontalAlignment="Left" Height="170" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Carts_MouseLeftButtonUp" MouseRightButtonUp="listview_Carts_MouseRightButtonUp">
+        <ListView Name="listview_Carts" HorizontalAlignment="Left" Height="170" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Carts_MouseLeftButtonUp" MouseRightButtonUp="listview_Carts_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
+                        
+                        <StackPanel Orientation="Vertical" Margin="5">
 
-                    <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Название:" Width="128"/>
+                                <TextBlock Text="{Binding bouquet.name}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Количество:" Width="128"/>
+                                <TextBlock Text="{Binding cart.count}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Стоимость:" Width="128"/>
+                                <TextBlock Text="{Binding cost}" />
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Название:" Width="128"/>
-                            <TextBlock Text="{Binding bouquet.name}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Количество:" Width="128"/>
-                            <TextBlock Text="{Binding cart.count}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Стоимость:" Width="128"/>
-                            <TextBlock Text="{Binding cost}" />
-                        </StackPanel>
-
-                    </StackPanel>
-
+                        
+                    </Border>
+                    
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Name="listview_Bouquets" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="2" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Bouquets_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquets_MouseRightButtonUp">
+        <ListView Name="listview_Bouquets" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="2" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Bouquets_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquets_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
+                        
+                        <StackPanel Orientation="Vertical" Margin="5">
 
-                    <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Название:" Width="128"/>
+                                <TextBlock Text="{Binding bouquet.name}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Стоимость:" Width="128"/>
+                                <TextBlock Text="{Binding cost}" />
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Название:" Width="128"/>
-                            <TextBlock Text="{Binding bouquet.name}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Стоимость:" Width="128"/>
-                            <TextBlock Text="{Binding cost}" />
-                        </StackPanel>
-
-                    </StackPanel>
-
+                        
+                    </Border>
+                    
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
