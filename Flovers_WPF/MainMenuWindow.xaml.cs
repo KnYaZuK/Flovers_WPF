@@ -61,7 +61,7 @@ namespace Flovers_WPF
 
         private void bt_records_Click(object sender, RoutedEventArgs e)
         {
-            Records_goods rec_good = new Records_goods();
+            Components_Window rec_good = new Components_Window();
             rec_good.ShowDialog();
         }
 
