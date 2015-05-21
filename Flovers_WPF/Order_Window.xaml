@@ -8,79 +8,89 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Совершенные заказы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="215" Padding="13,5,5,5" FontSize="20" HorizontalContentAlignment="Center"/>
+        <Label Content="Совершенные заказы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="244" Padding="13,5,5,5" FontSize="20" HorizontalContentAlignment="Center" Grid.Column="1"/>
 
-        <ListView Name="listview_Orders" HorizontalAlignment="Left" Height="507" Margin="10,52,0,0" VerticalAlignment="Top" Width="190" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Orders_MouseLeftButtonUp" MouseRightButtonUp="listview_Orders_MouseRightButtonUp">
+        <ListView Name="listview_Orders" HorizontalAlignment="Left" Height="507" Margin="10,52,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Orders_MouseLeftButtonUp" MouseRightButtonUp="listview_Orders_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
-                    <StackPanel Orientation="Vertical">
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Дата\Время:" Width="128"/>
-                            <TextBlock Text="{Binding order.datetime}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="ФИО:" Width="128"/>
-                            <TextBlock Text="{Binding client.full_name}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Адрес:" Width="128"/>
-                            <TextBlock Text="{Binding order.address}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Стоимость:" Width="128"/>
-                            <TextBlock Text="{Binding order.price}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Статус:" Width="128"/>
-                            <TextBlock Text="{Binding order.status}" />
+                        <StackPanel Orientation="Vertical" Margin="5">
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Дата\Время:" Width="128"/>
+                                <TextBlock Text="{Binding order.datetime}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ФИО:" Width="128"/>
+                                <TextBlock Text="{Binding client.full_name}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Адрес:" Width="128"/>
+                                <TextBlock Text="{Binding order.address}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Стоимость:" Width="128"/>
+                                <TextBlock Text="{Binding order.price}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Статус:" Width="128"/>
+                                <TextBlock Text="{Binding order.status}" />
+                            </StackPanel>
+
                         </StackPanel>
 
-                    </StackPanel>
+                    </Border>
 
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <TextBox Name="textbox_Search_Orders" Controls:TextBoxHelper.Watermark="Поиск..." VerticalContentAlignment="Center" Margin="230,10,10,522"/>
+        <ListView x:Name="listview_Carts" HorizontalAlignment="Left" Height="507" Margin="10,52,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1" Background="#FFF2FFFC" BorderThickness="1" IsEnabled="False" Padding="5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
 
-        <ComboBox Name="combobox_Status" Margin="10,52,157,478" Grid.Column="1">
+                        <StackPanel Orientation="Vertical" Margin="5">
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Название:" Width="128"/>
+                                <TextBlock Text="{Binding bouquet.name}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Количество:" Width="128"/>
+                                <TextBlock Text="{Binding cart.count}" />
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBox Name="textbox_Search_Orders" Controls:TextBoxHelper.Watermark="Поиск..." VerticalContentAlignment="Center" Margin="10,10,10,522"/>
+
+        <ComboBox Name="combobox_Status" Margin="10,52,10,478" Grid.Column="2">
             <ComboBoxItem Content="Ожидает оплаты"></ComboBoxItem>
             <ComboBoxItem Content="Оплачен, в обработке"></ComboBoxItem>
             <ComboBoxItem Content="Оплачен, готовится к отправке"></ComboBoxItem>
             <ComboBoxItem Content="Отправлен"></ComboBoxItem>
             <ComboBoxItem Content="Завершён"></ComboBoxItem>
         </ComboBox>
-        <Button x:Name="button_Status_Change" Content="Изменить статус" Click="button_New_Order_Click" Margin="249,52,10,478" Grid.Column="1"/>
 
-        <Button x:Name="button_Delete" Content="Удалить" Click="button_Delete_Click" Margin="129,306,130,234" Grid.Column="1"/>
+        <Button x:Name="button_Status_Change" Content="Изменить статус" Click="button_Status_Change_Click" Margin="10,96,10,434" Grid.Column="2"/>
 
-        <Button x:Name="button_New_Order" Content="Новый заказ" Click="button_New_Order_Click" Margin="10,480,10,10" Grid.Column="1"/>
+        <Button x:Name="button_Delete" Content="Удалить" Click="button_Delete_Click" Margin="150,446,10,94" Grid.Column="2"/>
 
-        <ListView x:Name="listview_Carts" HorizontalAlignment="Left" Height="507" Margin="200,52,0,0" VerticalAlignment="Top" Width="196" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" IsEnabled="False">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-
-                    <StackPanel Orientation="Vertical">
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Название:" Width="128"/>
-                            <TextBlock Text="{Binding bouquet.name}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Количество:" Width="128"/>
-                            <TextBlock Text="{Binding cart.count}" />
-                        </StackPanel>
-                        
-                    </StackPanel>
-
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
+        <Button x:Name="button_New_Order" Content="Новый заказ" Click="button_New_Order_Click" Margin="10,480,10,10" Grid.Column="2"/>
 
     </Grid>
 </Controls:MetroWindow>

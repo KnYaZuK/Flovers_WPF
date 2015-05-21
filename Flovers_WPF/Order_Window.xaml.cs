@@ -53,6 +53,7 @@ namespace Flovers_WPF
         OrdersRepository oOrdersRepository;     //  Контроллеры
         CartsRepository oCartsRepository;       //  Таблиц
         BouquetsRepository oBouquetsRepository; //
+        CardsRepository oCardsRepository;       //
 
         SQLite.SQLiteAsyncConnection conn;      //  Прямой коннект к БД для выдачи записей из таблиц по ID
 
@@ -74,6 +75,7 @@ namespace Flovers_WPF
             oOrdersRepository = new OrdersRepository(oDBConnection);
             oCartsRepository = new CartsRepository(oDBConnection);
             oBouquetsRepository = new BouquetsRepository(oDBConnection);
+            oCardsRepository = new CardsRepository(oDBConnection);
 
             conn = oDBConnection.GetAsyncConnection();
 
@@ -134,6 +136,8 @@ namespace Flovers_WPF
         {
             listview_Carts.ItemsSource = null;
 
+            combobox_Status.SelectedIndex = -1;
+
             button_Status_Change.IsEnabled = false;
             button_Delete.IsEnabled = false;
         }
@@ -156,12 +160,50 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void listview_Orders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            oClients_Orders = (Clients_Orders)listview_Orders.SelectedItem;
+            try
+            {
+                oClients_Orders = (Clients_Orders)listview_Orders.SelectedItem;
 
-            await Update_ListView_Carts();
+                switch (oClients_Orders.order.status)
+                {
+                    case "Ожидает оплаты":
+                        {
+                            combobox_Status.SelectedIndex = 0;
+                        }
+                        break;
+                    case "Оплачен, в обработке":
+                        {
+                            combobox_Status.SelectedIndex = 1;
+                        }
+                        break;
+                    case "Оплачен, готовится к отправке":
+                        {
+                            combobox_Status.SelectedIndex = 2;
+                        }
+                        break;
+                    case "Отправлен":
+                        {
+                            combobox_Status.SelectedIndex = 3;
+                        }
+                        break;
+                    case "Завершён":
+                        {
+                            combobox_Status.SelectedIndex = 4;
+                        }
+                        break;
+                }
 
-            button_Status_Change.IsEnabled = true;
-            button_Delete.IsEnabled = true;
+                await Update_ListView_Carts();
+
+                button_Status_Change.IsEnabled = true;
+                button_Delete.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Клиент не выбран!");
+            }
+
+            
         }
 
         /// <summary>
@@ -206,6 +248,86 @@ namespace Flovers_WPF
             }
 
             await Update_ListView_Orders();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void button_Status_Change_Click(object sender, RoutedEventArgs e)
+        {
+            switch ( combobox_Status.SelectedIndex )
+            {
+                case 0: // Ожидает оплаты
+                    {
+                        oClients_Orders.order.status = combobox_Status.Text;
+                    }
+                    break;
+                case 1: // Оплачен, в обработке
+                    {
+                        // Начисление баллов вышестоящим по иерархии людям. 7%, 2% и 1%.
+                        // Мой реферер получает 7%, его 3% и сл. 1%.
+
+                        oClients_Orders.order.status = combobox_Status.Text;
+
+                        if ( oClients_Orders.client.referer_id != -1 )
+                        {
+                            // Начисление баллов первому клиенту по иерархии. 7%
+                            Clients client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
+                            Cards card = await conn.GetAsync<Cards>(client.cards_id);
+                            card.bonus_card_points += (int) (oClients_Orders.order.price * 0.07);
+
+                            await oCardsRepository.Update_Cards_Async(card);
+
+                            if (client.referer_id != -1)
+                            {
+                                // Начисление баллов второму клиенту по иерархии. 2%
+                                client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
+                                card = await conn.GetAsync<Cards>(client.cards_id);
+                                card.bonus_card_points += (int)(oClients_Orders.order.price * 0.02);
+                                
+                                await oCardsRepository.Update_Cards_Async(card);
+
+                                if (client.referer_id != -1)
+                                {
+                                    // Начисление баллов третьему клиенту по иерархии. 1%
+                                    client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
+                                    card = await conn.GetAsync<Cards>(client.cards_id);
+                                    card.bonus_card_points += (int)(oClients_Orders.order.price * 0.01);
+
+                                    await oCardsRepository.Update_Cards_Async(card);
+                                }
+                            }
+                        }
+
+                    }
+                    break;
+
+                case 2: // Оплачен, готовится к отправке
+                    {
+                        oClients_Orders.order.status = combobox_Status.Text;
+                    }
+                    break;
+
+                case 3: // Отправлен
+                    {
+                        oClients_Orders.order.status = combobox_Status.Text;
+                    }
+                    break;
+
+                case 4: // Завершён
+                    {
+                        oClients_Orders.order.status = combobox_Status.Text;
+                    }
+                    break;
+            }
+
+            await oOrdersRepository.Update_Orders_Async(oClients_Orders.order);
+
+            await Update_ListView_Orders();
+
+            Clear_Control();
         }
     }
 }
