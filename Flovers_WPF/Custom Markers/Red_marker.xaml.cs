@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GMap.NET.WindowsPresentation;
 using System.Windows.Controls.Primitives;
+using Flovers_WPF;
 
 namespace Flovers_WPF.Custom_Markers
 {
@@ -26,7 +27,7 @@ namespace Flovers_WPF.Custom_Markers
         Label Label;
         GMapMarker Marker;
         New_Adress_Window win;
-
+        
         public Red_marker(New_Adress_Window window,GMapMarker marker, string title)
         {
             this.InitializeComponent();
@@ -87,11 +88,16 @@ namespace Flovers_WPF.Custom_Markers
 
         void Red_marker_MouseMove(object sender, MouseEventArgs e)
         {
-            //if (e.LeftButton == MouseButtonState.Pressed && IsMouseCaptured)
-            //{
-            //    Point p = e.GetPosition(New_Adress_Window );
-            //    Marker.Position = MainWindow.MainMap.FromLocalToLatLng((int)(p.X), (int)(p.Y));
-            //}
+            if (e.LeftButton == MouseButtonState.Pressed && IsMouseCaptured)
+            {
+                var pos = e.GetPosition(win.gmap_adress);
+                Marker.Position = win.gmap_adress.FromLocalToLatLng((int)pos.X,(int)pos.Y);
+                double lat = win.gmap_adress.FromLocalToLatLng((int)pos.X,(int)pos.Y).Lat;
+                double lng = win.gmap_adress.FromLocalToLatLng((int)pos.X,(int)pos.Y).Lng;
+                win.gmap_adress.Markers.Clear();
+                win.Reverse_Geocoding(lat, lng);
+                win.DB_address = win.textbox_adres.Text;
+            }
         }
 
         void Red_marker_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

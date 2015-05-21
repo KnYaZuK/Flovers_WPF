@@ -2,12 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Name="New_Address_Window" x:Class="Flovers_WPF.New_Adress_Window"
-        Title="Адрес заказа" Height="361" Width="500" GlowBrush="#FFD4FBF9" EnableDWMDropShadow="True">
+        x:Name="New_Address_Window" x:Class="Flovers_WPF.New_Adress_Window"
+        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+    Title="Адрес заказа" Height="361" Width="500" GlowBrush="#FFD4FBF9" EnableDWMDropShadow="True">
     <Grid>
         <TextBox x:Name="textbox_adres" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" Controls:TextBoxHelper.Watermark="Адрес"/>
         <Button x:Name="button_find" Content="Найти" HorizontalAlignment="Left" Margin="402,10,0,0" VerticalAlignment="Top" Width="80" Click="button_find_Click"/>
         <WindowsPresentation:GMapControl x:Name="gmap_adress" HorizontalAlignment="Left" Height="238" Margin="10,58,0,0" VerticalAlignment="Top" Width="472" BorderBrush="Black" BorderThickness="1"/>
+        
         <Button x:Name="button_choose" Content="Выбрать отмеченный адрес" HorizontalAlignment="Left" Margin="10,301,0,0" VerticalAlignment="Top" Width="472"/>
         <Label Content="Формат адреса : Город , Улица , Номер дома" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="472"/>
     </Grid>
