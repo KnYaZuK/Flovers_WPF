@@ -20,20 +20,21 @@ namespace Flovers_WPF.DataModel
         [NotNull]
         public string referal_number { get; set; }
 
-        public string referer_number { get; set; }
+        [Indexed]
+        public int referer_id { get; set; }
 
         [Indexed, NotNull]
         public int cards_id { get; set; }
 
         public Clients() { }
 
-        public Clients(string full_name, string phone_number, string email, string referer_number, int cards_id )
+        public Clients(string full_name, string phone_number, string email, int cards_id, int referer_id = -1)
         {
             this.full_name = full_name;
             this.phone_number = phone_number;
             this.email = email;
             this.referal_number = Guid.NewGuid().ToString();
-            this.referer_number = referer_number;
+            this.referer_id = referer_id;
             this.cards_id = cards_id;
         }
     }
