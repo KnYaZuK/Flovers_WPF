@@ -27,7 +27,12 @@ namespace Flovers_WPF.Custom_Markers
         Label Label;
         GMapMarker Marker;
         New_Adress_Window win;
-        
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="window">Родительское окно</param>
+        /// <param name="marker">Маркер</param>
+        /// <param name="title">Описание маркера</param>
         public Red_marker(New_Adress_Window window,GMapMarker marker, string title)
         {
             this.InitializeComponent();
@@ -56,10 +61,6 @@ namespace Flovers_WPF.Custom_Markers
             }
             Popup.Child = Label;
         }
-
-
-
-        
 
         void Red_marker_Loaded(object sender, RoutedEventArgs e)
         {

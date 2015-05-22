@@ -10,6 +10,9 @@ namespace Flovers_WPF.DataModel
         [PrimaryKey, AutoIncrement, NotNull]
         public int orders_id { get; set; }
 
+        [Indexed, NotNull]
+        public int clients_id { get; set; }
+
         [NotNull]
         public DateTime datetime { get; set; }
 
@@ -22,13 +25,12 @@ namespace Flovers_WPF.DataModel
         [NotNull]
         public string status { get; set; }
 
-        [Indexed, NotNull]
-        public int clients_id { get; set; }
-
         public Orders() { }
 
-        public Orders( string address, double price, string status )
+        public Orders( int clients_id, DateTime datetime, string address, double price, string status )
         {
+            this.clients_id = clients_id;
+            this.datetime = datetime;
             this.address = address;
             this.price = price;
             this.status = status;

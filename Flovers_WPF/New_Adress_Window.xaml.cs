@@ -27,6 +27,10 @@ namespace Flovers_WPF
     public partial class New_Adress_Window : MetroWindow
     {
         public string DB_address = "";
+        public string NewAddress = "";
+        /// <summary>
+        /// конструктор(включает в себя настройку карты)
+        /// </summary>
         public New_Adress_Window()
         {
             InitializeComponent();
@@ -42,7 +46,11 @@ namespace Flovers_WPF
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             gmap_adress.MouseDoubleClick += new MouseButtonEventHandler(map_MouseClick);
         }
-
+        /// <summary>
+        /// Метод геокодирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_find_Click(object sender, RoutedEventArgs e)
         {
             gmap_adress.Markers.Clear();
@@ -88,7 +96,11 @@ namespace Flovers_WPF
                 DB_address = textbox_adres.Text;
             }
         }
-
+        /// <summary>
+        /// событие нажатия на карту (двойной клик)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void map_MouseClick(object sender,MouseEventArgs e)
         {
             gmap_adress.Markers.Clear();
@@ -105,7 +117,11 @@ namespace Flovers_WPF
                 DB_address = textbox_adres.Text;
             }
         }
-
+        /// <summary>
+        /// метод обратного геокодирования
+        /// </summary>
+        /// <param name="lat">Широта</param>
+        /// <param name="lng">Долгота</param>
         public void Reverse_Geocoding(double lat, double lng)
         {
             string url = string.Format("http://maps.google.com/maps/api/geocode/xml?latlng={0},{1}&sensor=true_or_false&language=ru", lat.ToString().Replace(",", "."), lng.ToString().Replace(",", "."));
@@ -146,6 +162,16 @@ namespace Flovers_WPF
                 gmap_adress.Position = new GMap.NET.PointLatLng(lat, lng);
                 gmap_adress.Zoom = 17;
             }
+        }
+        /// <summary>
+        /// Метод выбора окнчательного адреса
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_choose_Click(object sender, RoutedEventArgs e)
+        {
+            NewAddress = DB_address;
+            this.Close();
         }
     }
 }

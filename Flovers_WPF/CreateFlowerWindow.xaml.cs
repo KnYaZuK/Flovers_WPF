@@ -332,17 +332,25 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void listview_Bouquet_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            bouquet = listview_Bouquet.SelectedItem as Bouquets;
+            try
+            {
+                bouquet = listview_Bouquet.SelectedItem as Bouquets;
 
-            grid_Bouquet.DataContext = bouquet;
+                grid_Bouquet.DataContext = bouquet;
 
-            button_CreateBouquet.IsEnabled = false;
-            button_UpdateBouquet.IsEnabled = true;
-            grid_Content.IsEnabled = true;
+                button_CreateBouquet.IsEnabled = false;
+                button_UpdateBouquet.IsEnabled = true;
+                grid_Content.IsEnabled = true;
 
-            await Update_ListView_Contents();
+                await Update_ListView_Contents();
 
-            Clear_Control_Content();
+                Clear_Control_Content();
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Клиент не выбран!");
+            }
+
         }
 
         /// <summary>
@@ -362,16 +370,23 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private void listview_Content_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            try
+            {
+                accessories_flowers = (Accessories_Flowers)listview_Content.SelectedItem;
 
-            accessories_flowers = (Accessories_Flowers) listview_Content.SelectedItem;
+                Clear_Control_Content();
 
-            Clear_Control_Content();
+                grid_Content.DataContext = accessories_flowers;
 
-            grid_Content.DataContext = accessories_flowers;
+                button_CreateContent.IsEnabled = false;
+                button_UpdateContent.IsEnabled = true;
+                button_DeleteContent.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Букет не выбран!");
+            }
 
-            button_CreateContent.IsEnabled = false;
-            button_UpdateContent.IsEnabled = true;
-            button_DeleteContent.IsEnabled = true;
         }
 
         /// <summary>

@@ -27,9 +27,9 @@ namespace Flovers_WPF.DataAccess
 
         private void Load_Connection()
         {
-            if (File.Exists("Settings.xml"))
+            if (File.Exists("Settings.xml") && File.Exists("Flowers.sqlite"))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof (Settings));
+                XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
                 FileStream fs = new FileStream("Settings.xml", FileMode.Open);
 
@@ -43,7 +43,7 @@ namespace Flovers_WPF.DataAccess
                 System.Windows.Forms.MessageBox.Show("Пожалуйста, укажите путь до базы данных.");
             }
 
-            if (settings == null) settings = new Settings( true );
+            if (settings == null) settings = new Settings(true);
 
             if (!File.Exists("Settings.xml"))
             {
@@ -53,7 +53,7 @@ namespace Flovers_WPF.DataAccess
 
         public static void Save_Connection(Settings settings)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof (Settings));
+            XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
             if (File.Exists("Settings.xml"))
             {

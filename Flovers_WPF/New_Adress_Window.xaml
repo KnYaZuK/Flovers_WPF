@@ -10,7 +10,7 @@
         <Button x:Name="button_find" Content="Найти" HorizontalAlignment="Left" Margin="402,10,0,0" VerticalAlignment="Top" Width="80" Click="button_find_Click"/>
         <WindowsPresentation:GMapControl x:Name="gmap_adress" HorizontalAlignment="Left" Height="238" Margin="10,58,0,0" VerticalAlignment="Top" Width="472" BorderBrush="Black" BorderThickness="1"/>
         
-        <Button x:Name="button_choose" Content="Выбрать отмеченный адрес" HorizontalAlignment="Left" Margin="10,301,0,0" VerticalAlignment="Top" Width="472"/>
+        <Button x:Name="button_choose" Content="Выбрать отмеченный адрес" HorizontalAlignment="Left" Margin="10,301,0,0" VerticalAlignment="Top" Width="472" Click="button_choose_Click"/>
         <Label Content="Формат адреса : Город , Улица , Номер дома" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="472"/>
     </Grid>
 </Controls:MetroWindow>

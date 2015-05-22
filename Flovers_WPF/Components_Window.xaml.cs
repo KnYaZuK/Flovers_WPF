@@ -19,11 +19,11 @@ using Flovers_WPF.Repository;
 namespace Flovers_WPF
 {
     /// <summary>
-    /// Interaction logic for Records_goods.xaml
+    /// Interaction logic for Components_Window.xaml
     /// </summary>
-    public partial class Records_goods : MetroWindow
+    public partial class Components_Window : MetroWindow
     {
-        public Records_goods()
+        public Components_Window()
         {
             InitializeComponent();
         }
@@ -79,6 +79,11 @@ namespace Flovers_WPF
         private void Clear_Controls()
         {
             grid.DataContext = null;
+
+            textbox_name.Text = "";
+            numericupdown_price.Value = null;
+            textbox_measure.Text = "";
+            numericupdown_count.Value = null;
 
             button_insert.IsEnabled = true;
             button_update.IsEnabled = false;

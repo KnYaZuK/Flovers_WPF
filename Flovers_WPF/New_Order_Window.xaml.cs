@@ -24,17 +24,26 @@ namespace Flovers_WPF
     /// </summary>
     public partial class New_Order_Window : MetroWindow
     {
+        New_Adress_Window adress_window;
         public New_Order_Window()
         {
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// Структура для работы с клиентом и его картой
+        /// </summary>
         struct Client_Card
         {
             public Clients client { get; set; }
             public Cards card { get; set; }
         }
 
+
+        /// <summary>
+        /// Структура для работы с корзиной и букетом
+        /// </summary>
         struct Cart_Bouquet
         {
             public Bouquets bouquet { get; set; }
@@ -42,6 +51,10 @@ namespace Flovers_WPF
             public double cost { get; set; }
         }
 
+
+        /// <summary>
+        /// Структура для работы с букетом и его компонентами
+        /// </summary>
         struct Bouquet_Content
         {
             public Bouquets bouquet { get; set; }
@@ -49,26 +62,34 @@ namespace Flovers_WPF
             public double cost { get; set; }
         }
 
-        ClientsRepository oClientsRepository;
-        BouquetsRepository oBouquetsRepository;
-        CartsRepository oCartsRepository;
-        ContentsRepository oContentsRepository;
-        CardsRepository oCardsRepository;
+        OrdersRepository oOrdersRepository;         //
+        ClientsRepository oClientsRepository;       //
+        BouquetsRepository oBouquetsRepository;     // Контроллеры
+        CartsRepository oCartsRepository;           // Таблиц
+        ContentsRepository oContentsRepository;     //
+        CardsRepository oCardsRepository;           //
 
-        SQLite.SQLiteAsyncConnection conn;
+        SQLite.SQLiteAsyncConnection conn; // Прямой коннект к БД для выдачи записей из таблиц по ID
 
-        Client_Card oClient_Card;
-        Cart_Bouquet oCart_Bouquet;
-        Bouquet_Content oBouquet_Content;
+        Client_Card oClient_Card;           //
+        Cart_Bouquet oCart_Bouquet;         // Выделенные в списках объекты
+        Bouquet_Content oBouquet_Content;   //
 
-        List<Cart_Bouquet> lCart_Bouquet;
+        List<Cart_Bouquet> lCart_Bouquet;   // Список покупок клиента
 
+        /// <summary>
+        /// Загрузка окна, инициализация контроллеров, загрузка в listview данных и сброс управления.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             DBConnection oDBConnection = new DBConnection();
 
             await oDBConnection.InitializeDatabase();
 
+
+            oOrdersRepository = new OrdersRepository(oDBConnection);
             oClientsRepository = new ClientsRepository(oDBConnection);
             oCartsRepository = new CartsRepository(oDBConnection);
             oBouquetsRepository = new BouquetsRepository(oDBConnection);
@@ -85,6 +106,10 @@ namespace Flovers_WPF
             Clear_Control_All();
         }
 
+        /// <summary>
+        /// Обновление listview с Клиентами. Каждому клиенту ставится в соответствие его бонусная карта
+        /// </summary>
+        /// <returns></returns>
         private async Task Update_ListView_Clients()
         {
             List<Client_Card> lClient_Card = new List<Client_Card>();
@@ -104,6 +129,10 @@ namespace Flovers_WPF
             listview_Clients.ItemsSource = lClient_Card;
         }
 
+        /// <summary>
+        /// Обновление listview с букетами. Для каждого букета ставится в соответствие список его кмпонентов. Подсчитывается стоимость букета.
+        /// </summary>
+        /// <returns></returns>
         private async Task Update_ListView_Bouquets()
         {
             List<Bouquet_Content> lBouquet_Content = new List<Bouquet_Content>();
@@ -138,6 +167,9 @@ namespace Flovers_WPF
             listview_Bouquets.ItemsSource = lBouquet_Content;
         }
 
+        /// <summary>
+        /// Обновление listview с Корзиной ( Покупками ) клиента. Подсчитывается общая стоимость корзины. Расчитывается скидка ( В будущем необходимо сделать расчёт скидки посредством выборки скидок из БД ).
+        /// </summary>
         private void Update_ListView_Carts()
         {
             listview_Carts.ItemsSource = null;
@@ -152,27 +184,34 @@ namespace Flovers_WPF
 
             label_Cost.Content = "Общая стоимость: " + cost.ToString();
             label_Discount.Content = "Скидка: 0%";
-            label_Total_Cost.Content = "Итого: " + cost;
+            oCart_Bouquet.cost = cost;
+            label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
 
             if ( cost > 1000 )
             {
                 label_Discount.Content = "Скидка: 5%";
-                label_Total_Cost.Content = "Итого: " + cost * 0.95;
+                oCart_Bouquet.cost = cost * 0.95;
+                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
             }
 
             if (cost > 5000)
             {
                 label_Discount.Content = "Скидка: 10%";
-                label_Total_Cost.Content = "Итого: " + cost * 0.9;
+                oCart_Bouquet.cost = cost * 0.9;
+                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
             }
 
             if (cost > 10000)
             {
                 label_Discount.Content = "Скидка: 20%";
-                label_Total_Cost.Content = "Итого: " + cost * 0.8;
+                oCart_Bouquet.cost = cost * 0.8;
+                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
             }
         }
 
+        /// <summary>
+        /// Сброс управления на ноль.
+        /// </summary>
         private void Clear_Control_All()
         {
             grid.DataContext = null;
@@ -196,6 +235,9 @@ namespace Flovers_WPF
             listview_Bouquets.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Сброс управления при выбраном клиенте.
+        /// </summary>
         private void Clear_Control()
         {
             grid.DataContext = null;
@@ -208,12 +250,17 @@ namespace Flovers_WPF
             listview_Bouquets.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Добавление букета в корзину.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_Create_Click(object sender, RoutedEventArgs e)
         {
             Cart_Bouquet cart_bouquet = new Cart_Bouquet();
             cart_bouquet.bouquet = oBouquet_Content.bouquet;
             cart_bouquet.cart = new Carts((decimal) numeric_Count.Value, oBouquet_Content.bouquet.bouquets_id);
-            cart_bouquet.cost = oBouquet_Content.cost;
+            cart_bouquet.cost = oBouquet_Content.cost * (double)cart_bouquet.cart.count;
 
             lCart_Bouquet.Add(cart_bouquet);
 
@@ -224,6 +271,11 @@ namespace Flovers_WPF
             button__Complete.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Удаление букета из корзины
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_Delete_Click(object sender, RoutedEventArgs e)
         {
             lCart_Bouquet.Remove(oCart_Bouquet);
@@ -235,29 +287,65 @@ namespace Flovers_WPF
             listview_Carts.SelectedIndex = -1;
         }
 
-        private void button__Complete_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Завершение заказа.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void button__Complete_Click(object sender, RoutedEventArgs e)
         {
+            Orders order = new Orders(oClient_Card.client.clients_id, DateTime.Now, textbox_Address.Text, oCart_Bouquet.cost, "Ожидает оплаты");
+
+            await oOrdersRepository.Insert_Orders_Async(order);
+
+            foreach ( var c in lCart_Bouquet )
+            {
+                c.cart.orders_id = order.orders_id;
+
+                await oCartsRepository.Insert_Carts_Async(c.cart);
+            }
+
+            Clear_Control_All();
+
             this.Close();
             System.Windows.Forms.MessageBox.Show("Заказ успешно создан!");
         }
 
+        /// <summary>
+        /// Выделение клиента ЛКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listview_Clients_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            oClient_Card = (Client_Card) listview_Clients.SelectedItem;
+            try
+            {
+                oClient_Card = (Client_Card) listview_Clients.SelectedItem;
 
-            textbox_Address.IsEnabled = true;
+                textbox_Address.IsEnabled = true;
 
-            label_Cost.IsEnabled = true;
-            label_Discount.IsEnabled = true;
-            label_Total_Cost.IsEnabled = true;
+                label_Cost.IsEnabled = true;
+                label_Discount.IsEnabled = true;
+                label_Total_Cost.IsEnabled = true;
 
-            textbox_Search_Cart.IsEnabled = true;
-            textbox_Search_Bouquet.IsEnabled = true;
+                textbox_Search_Cart.IsEnabled = true;
+                textbox_Search_Bouquet.IsEnabled = true;
 
-            listview_Carts.IsEnabled = true;
-            listview_Bouquets.IsEnabled = true;
+                listview_Carts.IsEnabled = true;
+                listview_Bouquets.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Клиент не выбран!");
+            }
+
         }
 
+        /// <summary>
+        /// Сброс выделения с клиента ПКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listview_Clients_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             listview_Clients.SelectedIndex = -1;
@@ -265,13 +353,31 @@ namespace Flovers_WPF
             Clear_Control_All();
         }
 
+        /// <summary>
+        /// Выделение букета в listview Корзины ЛКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listview_Carts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            oCart_Bouquet = (Cart_Bouquet)listview_Carts.SelectedItem;
+            try
+            {
+                oCart_Bouquet = (Cart_Bouquet)listview_Carts.SelectedItem;
 
-            button_Delete.IsEnabled = true;
+                 button_Delete.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Букет не выбран!");
+            }
+            
         }
 
+        /// <summary>
+        /// Снятие выделения с букета в listview Корзины ПКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listview_Carts_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             listview_Carts.SelectedIndex = -1;
@@ -279,17 +385,33 @@ namespace Flovers_WPF
             button_Delete.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Выделение букета в listview Букетов ЛКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listview_Bouquets_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            oBouquet_Content = (Bouquet_Content)listview_Bouquets.SelectedItem;
+            try
+            {
+                oBouquet_Content = (Bouquet_Content)listview_Bouquets.SelectedItem;
 
-            numeric_Count.IsEnabled = true;
-            numeric_Count.Value = 1;
+                numeric_Count.IsEnabled = true;
+                numeric_Count.Value = 1;
 
-            button_Create.IsEnabled = true;
-
+                button_Create.IsEnabled = true;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Букет не выбран!");
+            }
         }
 
+        /// <summary>
+        /// Снятие выделения с букета в listview Букетов ПКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listview_Bouquets_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             listview_Bouquets.SelectedIndex = -1;
@@ -297,6 +419,11 @@ namespace Flovers_WPF
             Clear_Control();
         }
 
+        /// <summary>
+        /// Переход к окну создания нового клиента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_New_Client_Click(object sender, RoutedEventArgs e)
         {
             NewClientWindow ncw = new NewClientWindow();
@@ -304,10 +431,26 @@ namespace Flovers_WPF
             ncw.ShowDialog();
         }
 
+
+        /// <summary>
+        /// Переход к выбору адреса на карте
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_choose_adress_Click(object sender, RoutedEventArgs e)
         {
-            New_Adress_Window adress_window = new New_Adress_Window();
-            adress_window.ShowDialog();
+            adress_window = new New_Adress_Window();
+            adress_window.Closed += new EventHandler(address_closed);
+            adress_window.Show();
+        }
+        /// <summary>
+        /// Событие закрытия формы нахождения адреса на карте (передает адрес на форму заказа)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void address_closed(object sender, EventArgs e)
+        {
+            textbox_Address.Text = adress_window.NewAddress;
         }
     }
 }

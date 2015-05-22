@@ -31,13 +31,14 @@ namespace Flovers_WPF
         struct Clients_Cards
         {
             public Clients client { get; set; }
+            public Clients referer { get; set; }
             public Cards card { get; set; }
         }
 
         ClientsRepository oClientsRepository;
         CardsRepository oCardsRepository;
 
-        Clients_Cards cc;
+        Clients_Cards oClents_Cards;
 
         SQLite.SQLiteAsyncConnection conn;
 
@@ -58,8 +59,6 @@ namespace Flovers_WPF
             conn = oDBConnection.GetAsyncConnection();
 
             await Update_ListView();
-
-            Clear_Controls();
         }
 
         /// <summary>
@@ -77,10 +76,18 @@ namespace Flovers_WPF
                 Clients_Cards cc = new Clients_Cards();
                 cc.client = client;
                 cc.card = await conn.GetAsync<Cards>(client.cards_id);
+
+                if ( client.referer_id != -1 )
+                {
+                    cc.referer = await conn.GetAsync<Clients>(client.referer_id);
+                }
+
                 clientcard.Add(cc);
             }
 
             listview_Clients_Cards.ItemsSource = clientcard;
+
+            Clear_Controls();
         }
 
         /// <summary>
@@ -90,27 +97,49 @@ namespace Flovers_WPF
         {
             grid.DataContext = null;
 
+            textbox_Full_Name.Text = "";
+            textbox_Phone_Number.Text = "";
+            textbox_Email.Text = "";
+            textbox_Referer_Number.Text = "";
+
+            listview_Clients_Cards.SelectedIndex = -1;
+
             button_Create.IsEnabled = true;
             button_Update.IsEnabled = false;
-            tb_referer_.IsEnabled = true;
+            textbox_Referer_Number.IsEnabled = true;
         }
 
         /// <summary>
-        /// Нажатие клавиши регистрации клиента. Создаёт в таблице запись Cards и Clients. Связывает записи Cards и Clients.
+        /// Нажатие клавиши регистрации клиента. Создаёт в таблице запись Cards и Clients. Связывает записи Cards и Clients. Связывает Клиента с его реферером.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void button_Create_Click(object sender, RoutedEventArgs e)
         {
             Cards card = new Cards();
+
             await oCardsRepository.Insert_Cards_Async(card);
 
-            Clients client = new Clients(tb_name.Text, tb_phone.Text, tb_email.Text, tb_referer_.Text, card.cards_id);
+            Clients client = new Clients(textbox_Full_Name.Text, textbox_Phone_Number.Text, textbox_Email.Text, card.cards_id);
+
+            if ( !String.IsNullOrWhiteSpace( textbox_Referer_Number.Text ) )
+            {
+                List<Clients> lClients = await oClientsRepository.Select_All_Clients_Async();
+
+                foreach( var c in lClients )
+                {
+                    if (c.referal_number.StartsWith(textbox_Referer_Number.Text))
+                    {
+                        client.referer_id = c.clients_id;
+
+                        break;
+                    }
+                }
+            }
+
             await oClientsRepository.Insert_Clients_Async(client);
 
             await Update_ListView();
-
-            Clear_Controls();
         }
 
         /// <summary>
@@ -120,11 +149,13 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void button_Update_Click(object sender, RoutedEventArgs e)
         {
-            cc.client.full_name = tb_name.Text;
-            cc.client.phone_number = tb_phone.Text;
-            cc.client.email = tb_email.Text;
+            oClents_Cards.client.full_name = textbox_Full_Name.Text;
+            oClents_Cards.client.phone_number = textbox_Phone_Number.Text;
+            oClents_Cards.client.email = textbox_Email.Text;
 
-            await oClientsRepository.Update_Clients_Async(cc.client);
+            await oClientsRepository.Update_Clients_Async(oClents_Cards.client);
+
+            await Update_ListView();
         }
 
         /// <summary>
@@ -148,30 +179,39 @@ namespace Flovers_WPF
         //}
 
         /// <summary>
+        /// Выделение Клиента в listview Клиентов ЛКМ. Заполнение полей texbox`ов данными выделенного клиента. Поиск и отображение ФИО реферера в textbox_Referer_Number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listview_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                oClents_Cards = (Clients_Cards)listview_Clients_Cards.SelectedItem;
+
+                grid.DataContext = oClents_Cards;
+
+                button_Create.IsEnabled = false;
+                button_Update.IsEnabled = true;
+                textbox_Referer_Number.IsEnabled = false;
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Клиент не выбран!");
+            }
+
+        }
+
+        /// <summary>
         /// Очищает запись от выделения.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void listview_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            listview_Clients_Cards.SelectedIndex = -1;
             Clear_Controls();
         }
 
-        /// <summary>
-        /// Сохраняет в памяти данные выделенной записи.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void listview_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            cc = (Clients_Cards) listview_Clients_Cards.SelectedItem;
 
-            grid.DataContext = cc.client;
-
-            button_Create.IsEnabled = false;
-            button_Update.IsEnabled = true;
-            tb_referer_.IsEnabled = false;
-        }
     }
 }
