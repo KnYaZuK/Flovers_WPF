@@ -120,9 +120,9 @@
 
         <Label Name="label_Total_Cost" Content="Итого:" HorizontalAlignment="Left" Margin="10,475,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
-        <TextBox Name="textbox_Search_Client" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244"/>
-        <TextBox Name="textbox_Search_Cart" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="1"/>
-        <TextBox Name="textbox_Search_Bouquet" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="2"/>
+        <TextBox Name="textbox_Search_Client" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" TextChanged="textbox_Search_Client_TextChanged"/>
+        <TextBox Name="textbox_Search_Cart" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="1" TextChanged="textbox_Search_Cart_TextChanged"/>
+        <TextBox Name="textbox_Search_Bouquet" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="2" TextChanged="textbox_Search_Bouquet_TextChanged"/>
 
         <Button x:Name="button_choose_adress" Content="Указать адрес на карте" Grid.Column="1" HorizontalAlignment="Left" Margin="10,380,0,0" VerticalAlignment="Top" Width="244" Click="button_choose_adress_Click"/>
 

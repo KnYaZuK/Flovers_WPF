@@ -134,6 +134,34 @@ namespace Flovers_WPF
         }
 
         /// <summary>
+        /// Обновление listview с Клиентами с фильтром поисковой строки по ФИО. Каждому клиенту ставится в соответствие его бонусная карта
+        /// </summary>
+        /// <param name="full_name"></param>
+        /// <returns></returns>
+        private async Task Update_ListView_Clients(string full_name)
+        {
+            List<Client_Card> lClient_Card = new List<Client_Card>();
+
+            List<Clients> lClients = await oClientsRepository.Select_All_Clients_Async();
+
+            foreach (var c in lClients)
+            {
+                Client_Card client_card = new Client_Card();
+
+                if (c.full_name.ToLower().Contains(full_name.ToLower()))
+                {
+                    client_card.client = c;
+                    client_card.card = await conn.GetAsync<Cards>(c.cards_id);
+
+                    lClient_Card.Add(client_card);
+                }
+            }
+
+            listview_Clients.ItemsSource = lClient_Card;
+
+        }
+
+        /// <summary>
         /// Обновление listview с букетами. Для каждого букета ставится в соответствие список его кмпонентов. Подсчитывается стоимость букета.
         /// </summary>
         /// <returns></returns>
@@ -166,6 +194,48 @@ namespace Flovers_WPF
                 bouquet_content.cost += bouquet_content.bouquet.price_extra;
 
                 lBouquet_Content.Add(bouquet_content);
+            }
+
+            listview_Bouquets.ItemsSource = lBouquet_Content;
+        }
+
+        /// <summary>
+        /// Обновление listview с букетами. Для каждого букета ставится в соответствие список его кмпонентов. Подсчитывается стоимость букета.
+        /// </summary>
+        /// <returns></returns>
+        private async Task Update_ListView_Bouquets( string name )
+        {
+            List<Bouquet_Content> lBouquet_Content = new List<Bouquet_Content>();
+
+            List<Bouquets> lBouquets = await oBouquetsRepository.Select_All_Bouquets_Async();
+
+            foreach (var b in lBouquets)
+            {
+                Bouquet_Content bouquet_content = new Bouquet_Content();
+
+                if (b.name.ToLower().Contains(name.ToLower()))
+                {
+                    bouquet_content.bouquet = b;
+                    bouquet_content.lContent = await oContentsRepository.Select_Contents_Async("select * from contents where bouquets_id = " + b.bouquets_id);
+                    bouquet_content.cost = 0;
+
+                    foreach (var c in bouquet_content.lContent)
+                    {
+                        if (c.accessories_id != -1)
+                        {
+                            bouquet_content.cost += (double)c.count * conn.GetAsync<Accessories>(c.accessories_id).Result.price;
+                        }
+                        else
+                        {
+                            bouquet_content.cost += (double)c.count * conn.GetAsync<Flowers>(c.flowers_id).Result.price;
+                        }
+                    }
+
+                    bouquet_content.cost += bouquet_content.bouquet.price_extra;
+
+                    lBouquet_Content.Add(bouquet_content);
+                }
+                
             }
 
             listview_Bouquets.ItemsSource = lBouquet_Content;
@@ -211,6 +281,22 @@ namespace Flovers_WPF
                 oCart_Bouquet.cost = cost * 0.8;
                 label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
             }
+        }
+
+        private void Update_ListView_Carts( string name )
+        {
+            List<Cart_Bouquet> result = new List<Cart_Bouquet>();
+
+            foreach ( var b in lCart_Bouquet )
+            {
+                if (b.bouquet.name.ToLower().Contains(name.ToLower()))
+                {
+                    result.Add(b);
+                }
+            }
+
+            listview_Carts.ItemsSource = null;
+            listview_Carts.ItemsSource = result;
         }
 
         /// <summary>
@@ -535,6 +621,43 @@ namespace Flovers_WPF
         private void address_closed(object sender, EventArgs e)
         {
             textbox_Address.Text = adress_window.NewAddress;
+        }
+
+        private async void textbox_Search_Client_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if ( textbox_Search_Client.Text != "")
+            {
+                await Update_ListView_Clients(textbox_Search_Client.Text);
+            }
+            else
+            {
+                await Update_ListView_Clients();
+            }
+            
+        }
+
+        private async void textbox_Search_Bouquet_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if ( textbox_Search_Bouquet.Text != "" )
+            {
+                await Update_ListView_Bouquets(textbox_Search_Bouquet.Text);
+            }
+            else
+            {
+                await Update_ListView_Bouquets();
+            }
+        }
+
+        private void textbox_Search_Cart_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (textbox_Search_Cart.Text != "")
+            {
+                Update_ListView_Carts(textbox_Search_Cart.Text);
+            }
+            else
+            {
+                Update_ListView_Carts();
+            }
         }
     }
 }
