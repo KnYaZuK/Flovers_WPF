@@ -73,6 +73,44 @@ namespace Flovers_WPF
             }
         }
 
+        private async Task Update_ListView(string name)
+        {
+            listview.ItemsSource = null;
+
+            if (combobox_Type.SelectedIndex == 0)
+            {
+                List<Flowers> query = await oFlowersRepository.Select_All_Flowers_Async();
+
+                List<Flowers> result = new List<Flowers>();
+
+                foreach ( var f in query )
+                {
+                    if ( f.name.ToLower().Contains(name.ToLower()))
+                    {
+                        result.Add(f);
+                    }
+                }
+
+                listview.ItemsSource = result;
+            }
+            if (combobox_Type.SelectedIndex == 1)
+            {
+                List<Accessories> query = await oAccessoriesRepository.Select_All_Accessories_Async();
+
+                List<Accessories> result = new List<Accessories>();
+
+                foreach (var a in query)
+                {
+                    if (a.name.ToLower().Contains(name.ToLower()))
+                    {
+                        result.Add(a);
+                    }
+                }
+
+                listview.ItemsSource = result;
+            }
+        }
+
         /// <summary>
         /// Сбрасывает значения textbox и состояние кнопок
         /// </summary>
@@ -218,6 +256,18 @@ namespace Flovers_WPF
             await Update_ListView();
 
             Clear_Controls();
+        }
+
+        private async void texbox_Search_Component_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if ( texbox_Search_Component.Text != "")
+            {
+                await Update_ListView(texbox_Search_Component.Text);
+            }
+            else
+            {
+                await Update_ListView();
+            }
         }
 
     }

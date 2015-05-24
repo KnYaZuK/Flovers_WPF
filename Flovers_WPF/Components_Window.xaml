@@ -40,8 +40,12 @@
             <Button x:Name="button_delete" Content="Удалить" Click="button_delete_Click" Margin="10,282,10,10" />
 
         </Grid>
+        
         <Grid HorizontalAlignment="Left" Height="320" Margin="320,0,0,-1" VerticalAlignment="Top" Width="320">
-            <ListView x:Name="listview" Background="#FFF2FFFC" BorderBrush="Black" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_MouseLeftButtonUp" MouseRightButtonUp="listview_MouseRightButtonUp" SelectionChanged="listview_SelectionChanged" Margin="5" Padding="5">
+            
+            <TextBox Name="texbox_Search_Component" Margin="5,25,5,267" Controls:TextBoxHelper.Watermark="Поиск..." VerticalContentAlignment="Center" TextChanged="texbox_Search_Component_TextChanged"></TextBox>
+            
+            <ListView x:Name="listview" Background="#FFF2FFFC" BorderBrush="Black" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_MouseLeftButtonUp" MouseRightButtonUp="listview_MouseRightButtonUp" SelectionChanged="listview_SelectionChanged" Margin="5,58,5,5" Padding="5">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         
