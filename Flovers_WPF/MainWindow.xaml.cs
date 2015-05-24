@@ -47,6 +47,12 @@ namespace Flovers_WPF
         {
             DBConnection oDBConnection = new DBConnection();
 
+            if ( !oDBConnection.Successful)
+            {
+                this.Close();
+
+                MessageBox.Show("Путь до БД не выбран!\nПриложение закрыто.");
+            }
             await oDBConnection.InitializeDatabase();
 
             oUsersRepository = new UsersRepository(oDBConnection);

@@ -14,18 +14,23 @@ namespace Flovers_WPF.DataAccess
 {
     class DBConnection : IDBConnection
     {
+        public bool Successful { get; set; }
+
         Settings settings;
 
         SQLiteAsyncConnection conn;
 
         public DBConnection()
         {
-            Load_Connection();
+            Successful = Load_Connection();
 
             conn = new SQLiteAsyncConnection(settings.dbpath);
         }
 
-        private void Load_Connection()
+        /// <summary>
+        /// Загрузка пути до БД из файла с настройками. Если файл с настройкмаи не найден, то указать путь до папки с БД.
+        /// </summary>
+        private bool Load_Connection()
         {
             if (File.Exists("Settings.xml") && File.Exists("Flowers.sqlite"))
             {
@@ -38,19 +43,30 @@ namespace Flovers_WPF.DataAccess
                     settings = serializer.Deserialize(sr) as Settings;
                 }
             }
-            else
+
+            if (settings == null)
             {
                 System.Windows.Forms.MessageBox.Show("Пожалуйста, укажите путь до базы данных.");
+                settings = new Settings();
+
+                if (!settings.Set_DB_Path())
+                {
+                    return false;
+                }
+
+                if (!File.Exists("Settings.xml"))
+                {
+                    Save_Connection(settings);
+                }
             }
 
-            if (settings == null) settings = new Settings(true);
-
-            if (!File.Exists("Settings.xml"))
-            {
-                Save_Connection(settings);
-            }
+            return true;
         }
 
+        /// <summary>
+        /// Сохранение пути до БД в файл.
+        /// </summary>
+        /// <param name="settings"></param>
         public static void Save_Connection(Settings settings)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
@@ -68,6 +84,10 @@ namespace Flovers_WPF.DataAccess
             }
         }
 
+        /// <summary>
+        /// Создание Таблиц в БД
+        /// </summary>
+        /// <returns></returns>
         public async Task InitializeDatabase()
         {
             await conn.CreateTableAsync<Accessories>();

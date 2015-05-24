@@ -15,17 +15,22 @@ namespace Flovers_WPF
 
         public Settings() { }
 
-        public Settings( bool flag )
+        public bool Set_DB_Path( )
         {
-            
-
             FolderBrowserDialog fbd = new FolderBrowserDialog();
+
             fbd.SelectedPath = Directory.GetCurrentDirectory();
 
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 dbpath = fbd.SelectedPath + "\\Flowers.sqlite";
             }
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
