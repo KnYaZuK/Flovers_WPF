@@ -10,7 +10,7 @@
             <Button x:Name="bt_settings" Content="Путь к БД" Click="bt_settings_Click"></Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
-
+    
     <Grid x:Name="gr_orders">
         <Button x:Name="bt_Orders" Content="Заказы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="285" Height="200" Background="#FF063EB6" Foreground="White" FontSize="20" FontWeight="Normal" Click="bt_Orders_Click"/>
         <Button x:Name="bt_reports" Content="Отчеты" HorizontalAlignment="Left" Margin="300,10,0,0" VerticalAlignment="Top" Width="292" Height="200" FontSize="20" FontWeight="Normal" Background="#FF20DC0D" Foreground="White"/>
