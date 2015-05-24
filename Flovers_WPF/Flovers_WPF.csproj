@@ -104,6 +104,9 @@
     </ApplicationDefinition>
     <Compile Include="Camera_Control.cs" />
     <Compile Include="Camera_HelperClass.cs" />
+    <Compile Include="Constants_Window.xaml.cs">
+      <DependentUpon>Constants_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateFlowerWindow.xaml.cs">
       <DependentUpon>CreateFlowerWindow.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="Задачи.cs" />
+    <Page Include="Constants_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateFlowerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
