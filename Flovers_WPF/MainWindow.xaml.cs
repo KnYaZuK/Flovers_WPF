@@ -53,10 +53,12 @@ namespace Flovers_WPF
 
                 MessageBox.Show("Путь до БД не выбран!\nПриложение закрыто.");
             }
+
             await oDBConnection.InitializeDatabase();
 
             oUsersRepository = new UsersRepository(oDBConnection);
         }
+
         /// <summary>
         /// Метод проверки корректности введённых данных
         /// </summary>
@@ -67,16 +69,20 @@ namespace Flovers_WPF
         {
             List<Users> users = await oUsersRepository.Select_All_Users_Async();
 
-            foreach (var c in users)
+            if (users != null)
             {
-                if (login == c.login && password == c.password)
+                foreach (var c in users)
                 {
-                    return true;
+                    if (login == c.login && password == c.password)
+                    {
+                        return true;
+                    }
                 }
             }
 
             return false;
         }
+
         /// <summary>
         /// Вызов метода входа пользователя в систему
         /// </summary>
@@ -95,6 +101,7 @@ namespace Flovers_WPF
                 label_attention.Visibility = System.Windows.Visibility.Visible;
             }
         }
+
         /// <summary>
         /// Вызов окна с регистрацией нового пользователя программы
         /// </summary>
