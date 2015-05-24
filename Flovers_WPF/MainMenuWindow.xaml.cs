@@ -82,6 +82,12 @@ namespace Flovers_WPF
             Routes_Window route = new Routes_Window();
             route.ShowDialog();
         }
+
+        private void button_const_Click(object sender, RoutedEventArgs e)
+        {
+            Constants_Window const_win = new Constants_Window();
+            const_win.ShowDialog();
+        }
         
 
     }
