@@ -24,6 +24,7 @@ namespace Flovers_WPF
     /// </summary>
     public partial class New_Order_Window : MetroWindow
     {
+        New_Adress_Window adress_window;
         public New_Order_Window()
         {
             InitializeComponent();
@@ -430,11 +431,26 @@ namespace Flovers_WPF
             ncw.ShowDialog();
         }
 
+
+        /// <summary>
+        /// Переход к выбору адреса на карте
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_choose_adress_Click(object sender, RoutedEventArgs e)
         {
-            New_Adress_Window adress_window = new New_Adress_Window();
-            adress_window.ShowDialog();
-
+            adress_window = new New_Adress_Window();
+            adress_window.Closed += new EventHandler(address_closed);
+            adress_window.Show();
+        }
+        /// <summary>
+        /// Событие закрытия формы нахождения адреса на карте (передает адрес на форму заказа)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void address_closed(object sender, EventArgs e)
+        {
+            textbox_Address.Text = adress_window.NewAddress;
         }
     }
 }

@@ -73,6 +73,16 @@ namespace Flovers_WPF.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap location_pin {
+            get {
+                object obj = ResourceManager.GetObject("location_pin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap red_dot {
             get {
                 object obj = ResourceManager.GetObject("red_dot", resourceCulture);

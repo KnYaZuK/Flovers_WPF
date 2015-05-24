@@ -1,0 +1,14 @@
+﻿<Controls:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Name="Route_Window" x:Class="Flovers_WPF.Routes_Window"
+        Title="Маршрут" Height="600" Width="800" BorderBrush="#FFCAF5FF" EnableDWMDropShadow="True" Loaded="Route_Window_Loaded">
+    <Grid>
+        <Button x:Name="button_loadPDF" Content="Выгрузить маршрут в PDF файл" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="772"/>
+        <GroupBox x:Name="groupbox_map" Header="Карта" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="520" Width="772">
+            <WindowsPresentation:GMapControl x:Name="gmap_routes" HorizontalAlignment="Left" Height="490" VerticalAlignment="Top" Width="770" Margin="-5,-5,-5,-4" Loaded="gmap_routes_Loaded"/>
+        </GroupBox>
+
+    </Grid>
+</Controls:MetroWindow>

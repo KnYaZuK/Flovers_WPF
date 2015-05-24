@@ -79,7 +79,8 @@ namespace Flovers_WPF
 
         private void bt_route_Click(object sender, RoutedEventArgs e)
         {
-
+            Routes_Window route = new Routes_Window();
+            route.ShowDialog();
         }
         
 

@@ -110,6 +110,9 @@
     <Compile Include="Custom Markers\Red_marker.xaml.cs">
       <DependentUpon>Red_marker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Custom Markers\Route_Orange_Marker.xaml.cs">
+      <DependentUpon>Route_Orange_Marker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\DBConnection.cs" />
     <Compile Include="DataAccess\IDBConnection.cs" />
     <Compile Include="DataModel\Cards.cs" />
@@ -169,6 +172,9 @@
     <Compile Include="Repository\OrdersRepository.cs" />
     <Compile Include="Repository\PaymentsRepository.cs" />
     <Compile Include="Repository\UsersRepository.cs" />
+    <Compile Include="Routes_Window.xaml.cs">
+      <DependentUpon>Routes_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Special_Deal_Window.xaml.cs">
       <DependentUpon>Special_Deal_Window.xaml</DependentUpon>
@@ -181,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Custom Markers\Red_marker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Custom Markers\Route_Orange_Marker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Routes_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -265,7 +279,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\location_pin.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

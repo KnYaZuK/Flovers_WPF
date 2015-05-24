@@ -17,7 +17,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <ListView Name="listview_Clients" HorizontalAlignment="Left" Height="518" Margin="10,41,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Clients_MouseLeftButtonUp" MouseRightButtonUp="listview_Clients_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -114,11 +114,11 @@
 
         <TextBox Name="textbox_Address" HorizontalAlignment="Left" Height="22" Margin="10,349,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Адрес" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
-        <Label Name="label_Cost" Content="Общая стоимость:" HorizontalAlignment="Left" Margin="10,397,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <Label Name="label_Cost" Content="Общая стоимость:" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
-        <Label Name="label_Discount" Content="Скидка:" HorizontalAlignment="Left" Margin="10,427,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <Label Name="label_Discount" Content="Скидка:" HorizontalAlignment="Left" Margin="10,443,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
-        <Label Name="label_Total_Cost" Content="Итого:" HorizontalAlignment="Left" Margin="10,459,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
+        <Label Name="label_Total_Cost" Content="Итого:" HorizontalAlignment="Left" Margin="10,475,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1"/>
 
         <TextBox Name="textbox_Search_Client" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244"/>
         <TextBox Name="textbox_Search_Cart" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." VerticalAlignment="Top" Width="244" Grid.Column="1"/>
