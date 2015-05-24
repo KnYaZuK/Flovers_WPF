@@ -79,9 +79,8 @@
         <TextBox Name="textbox_Search_Orders" Controls:TextBoxHelper.Watermark="Поиск..." VerticalContentAlignment="Center" Margin="10,10,10,522"/>
 
         <ComboBox Name="combobox_Status" Margin="10,52,10,478" Grid.Column="2">
-            <ComboBoxItem Content="Ожидает оплаты"></ComboBoxItem>
-            <ComboBoxItem Content="Оплачен, в обработке"></ComboBoxItem>
-            <ComboBoxItem Content="Оплачен, готовится к отправке"></ComboBoxItem>
+            <ComboBoxItem Content="В обработке"></ComboBoxItem>
+            <ComboBoxItem Content="Готовится к отправке"></ComboBoxItem>
             <ComboBoxItem Content="Отправлен"></ComboBoxItem>
             <ComboBoxItem Content="Завершён"></ComboBoxItem>
         </ComboBox>

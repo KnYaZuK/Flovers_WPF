@@ -166,29 +166,24 @@ namespace Flovers_WPF
 
                 switch (oClients_Orders.order.status)
                 {
-                    case "Ожидает оплаты":
+                    case "В обработке":
                         {
                             combobox_Status.SelectedIndex = 0;
                         }
                         break;
-                    case "Оплачен, в обработке":
+                    case "Готовится к отправке":
                         {
                             combobox_Status.SelectedIndex = 1;
                         }
                         break;
-                    case "Оплачен, готовится к отправке":
+                    case "Отправлен":
                         {
                             combobox_Status.SelectedIndex = 2;
                         }
                         break;
-                    case "Отправлен":
-                        {
-                            combobox_Status.SelectedIndex = 3;
-                        }
-                        break;
                     case "Завершён":
                         {
-                            combobox_Status.SelectedIndex = 4;
+                            combobox_Status.SelectedIndex = 3;
                         }
                         break;
                 }
@@ -259,24 +254,36 @@ namespace Flovers_WPF
         {
             switch ( combobox_Status.SelectedIndex )
             {
-                case 0: // Ожидает оплаты
+                case 0: // В обработке
                     {
                         oClients_Orders.order.status = combobox_Status.Text;
                     }
                     break;
-                case 1: // Оплачен, в обработке
+                case 1: // Готовится к отправке
+                    {
+                        oClients_Orders.order.status = combobox_Status.Text;
+                    }
+                    break;
+
+                case 2: // Отправлен
+                    {
+                        oClients_Orders.order.status = combobox_Status.Text;
+                    }
+                    break;
+
+                case 3: // Завершён
                     {
                         // Начисление баллов вышестоящим по иерархии людям. 7%, 2% и 1%.
                         // Мой реферер получает 7%, его 3% и сл. 1%.
 
                         oClients_Orders.order.status = combobox_Status.Text;
 
-                        if ( oClients_Orders.client.referer_id != -1 )
+                        if (oClients_Orders.client.referer_id != -1)
                         {
                             // Начисление баллов первому клиенту по иерархии. 7%
                             Clients client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
                             Cards card = await conn.GetAsync<Cards>(client.cards_id);
-                            card.bonus_card_points += (int) (oClients_Orders.order.price * 0.07);
+                            card.bonus_card_points += (int)(oClients_Orders.order.price * 0.07);
 
                             await oCardsRepository.Update_Cards_Async(card);
 
@@ -286,7 +293,7 @@ namespace Flovers_WPF
                                 client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
                                 card = await conn.GetAsync<Cards>(client.cards_id);
                                 card.bonus_card_points += (int)(oClients_Orders.order.price * 0.02);
-                                
+
                                 await oCardsRepository.Update_Cards_Async(card);
 
                                 if (client.referer_id != -1)
@@ -301,23 +308,6 @@ namespace Flovers_WPF
                             }
                         }
 
-                    }
-                    break;
-
-                case 2: // Оплачен, готовится к отправке
-                    {
-                        oClients_Orders.order.status = combobox_Status.Text;
-                    }
-                    break;
-
-                case 3: // Отправлен
-                    {
-                        oClients_Orders.order.status = combobox_Status.Text;
-                    }
-                    break;
-
-                case 4: // Завершён
-                    {
                         oClients_Orders.order.status = combobox_Status.Text;
                     }
                     break;
