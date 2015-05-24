@@ -32,7 +32,7 @@ namespace Flovers_WPF
         struct Accessories_Flowers
         {
             public Contents contents { get; set; } // Хранит экземпляр выделенного компонента. Необходимо для обновления и удаления.
-            public decimal count { get; set; } // Хранит количество компонента в составе
+            //public decimal count { get; set; } // Хранит количество компонента в составе
 
             public string type { get; set; } // Хранит символьное название компонента.
             public object component { get; set; } // Хранит компонент ( Аксессуар или Цветок ).
@@ -89,6 +89,23 @@ namespace Flovers_WPF
             listview_Bouquet.ItemsSource = result;
         }
 
+        private async Task Update_ListView_Bouquets(string name)
+        {
+            List<Bouquets> query = await oBouquetsRepository.Select_All_Bouquets_Async();
+
+            List<Bouquets> result = new List<Bouquets>();
+
+            foreach( var b in query)
+            {
+                if (b.name.ToLower().Contains(name.ToLower()))
+                {
+                    result.Add(b);
+                }
+            }
+
+            listview_Bouquet.ItemsSource = result;
+        }
+
         /// <summary>
         /// Обновление списка с Компонентами. В список загружаются только компоненты выбранного букета.
         /// </summary>
@@ -97,14 +114,14 @@ namespace Flovers_WPF
         {
             List<Accessories_Flowers> acc_flo = new List<Accessories_Flowers>();
 
-            List<Contents> result = await oContentsRepository.Select_Contents_Async("select * from contents where contents.bouquets_id = " + bouquet.bouquets_id );
+            List<Contents> result = await oContentsRepository.Select_Contents_Async("select * from contents where bouquets_id = " + bouquet.bouquets_id );
 
             foreach(var c in result)
             {
                 Accessories_Flowers af = new Accessories_Flowers();
 
                 af.contents = c; // Необходимо для реализации обновления и удаления
-                af.count = c.count; // Необходима для корректного отображения количества.
+                //af.count = c.count; // Необходима для корректного отображения количества.
                 
                 if ( c.accessories_id != -1 )
                 {
@@ -124,6 +141,62 @@ namespace Flovers_WPF
                 }
 
                 acc_flo.Add(af);
+            }
+
+            listview_Content.ItemsSource = acc_flo;
+        }
+
+        private async Task Update_ListView_Contents(string name)
+        {
+            List<Accessories_Flowers> acc_flo = new List<Accessories_Flowers>();
+
+            List<Contents> result = await oContentsRepository.Select_Contents_Async("select * from contents where bouquets_id = " + bouquet.bouquets_id);
+
+            foreach (var content in result)
+            {
+                Accessories_Flowers temp_Accessories_Flowers = new Accessories_Flowers();
+
+                temp_Accessories_Flowers.contents = content; // Необходимо для реализации обновления и удаления
+                //temp_Accessories_Flowers.count = content.count; // Необходима для корректного отображения количества.
+
+                if (content.accessories_id != -1)
+                {
+                    Accessories tempAccessories = await conn.GetAsync<Accessories>(content.accessories_id);
+                    
+                    if (tempAccessories.name.ToLower().Contains(name.ToLower()))
+                    {
+                        temp_Accessories_Flowers.component = tempAccessories;
+                        temp_Accessories_Flowers.type = "Аксессуар";
+                        temp_Accessories_Flowers.type_index = 0;
+
+                        temp_Accessories_Flowers.component_index = await Get_Component_Index(true, tempAccessories.accessories_id);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                }
+                else
+                {
+                    Flowers tempFlowers = await conn.GetAsync<Flowers>(content.flowers_id);
+
+                    if ( tempFlowers.name.ToLower().Contains(name.ToLower()))
+                    {
+                        temp_Accessories_Flowers.component = tempFlowers;
+                        temp_Accessories_Flowers.type = "Цветок";
+                        temp_Accessories_Flowers.type_index = 1;
+
+                        temp_Accessories_Flowers.component_index = await Get_Component_Index(false, tempFlowers.flowers_id);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                }
+
+                acc_flo.Add(temp_Accessories_Flowers);
             }
 
             listview_Content.ItemsSource = acc_flo;
@@ -432,6 +505,30 @@ namespace Flovers_WPF
             if (combobox_TypeContent.SelectedIndex == 1)
             {
                 component = combobox_Content.SelectedItem as Flowers;
+            }
+        }
+
+        private async void textbox_Search_Bouquet_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if ( textbox_Search_Bouquet.Text != "")
+            {
+                await Update_ListView_Bouquets(textbox_Search_Bouquet.Text);
+            }
+            else
+            {
+                await Update_ListView_Bouquets();
+            }
+        }
+
+        private async void textbox_Search_Content_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if ( textbox_Search_Content.Text != "")
+            {
+                await Update_ListView_Contents(textbox_Search_Content.Text);
+            }
+            else
+            {
+                await Update_ListView_Contents();
             }
         }
     }
