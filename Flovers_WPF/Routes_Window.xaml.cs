@@ -113,7 +113,7 @@ namespace Flovers_WPF
             LOrders = await oOrdersRepository.Select_All_Orders_Async();
             foreach (var c in LOrders)
             {
-                if (c.status == "Оплачен, готовится к отправке")
+                if (c.status == "Готовится к отправке")
                 {
                     needded_addresses.Add(c.address.ToString());
                     needded_adr_copy.Add(c.address.ToString());

@@ -20,7 +20,7 @@
             <Label Content="Компоненты" HorizontalAlignment="Left" Margin="65,0,0,0" VerticalAlignment="Top" FontSize="16"/>
 
             <Label Content="Выберите тип компонента:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="158"/>
-            
+
             <ComboBox x:Name="combobox_TypeContent" SelectedIndex="{Binding type_index}" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="222" SelectionChanged="combobox_TypeContent_SelectionChanged">
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Аксессуар" Cursor="Hand"/>
                 <ComboBoxItem BorderThickness="1,0,0,0" Content="Цветок" Cursor="Hand"/>
@@ -45,7 +45,9 @@
 
         </Grid>
 
-        <ListView x:Name="listview_Bouquet" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Bouquet_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquet_MouseRightButtonUp" Padding="5">
+        <TextBox x:Name="textbox_Search_Bouquet" Margin="10,9,572,414" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." TextChanged="textbox_Search_Bouquet_TextChanged"/>
+        
+        <ListView x:Name="listview_Bouquet" HorizontalAlignment="Left" Height="400" Margin="10,40,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Bouquet_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquet_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
@@ -72,7 +74,9 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView x:Name="listview_Content" HorizontalAlignment="Left" Height="430" Margin="572,10,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Content_MouseLeftButtonUp" MouseRightButtonUp="listview_Content_MouseRightButtonUp" Padding="5">
+        <TextBox x:Name="textbox_Search_Content" Margin="572,9,10,414" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." TextChanged="textbox_Search_Content_TextChanged"/>
+
+        <ListView x:Name="listview_Content" HorizontalAlignment="Left" Height="400" Margin="572,40,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Content_MouseLeftButtonUp" MouseRightButtonUp="listview_Content_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
@@ -92,7 +96,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Количество:" Width="128"></TextBlock>
-                                    <TextBlock Text="{Binding count}" ></TextBlock>
+                                    <TextBlock Text="{Binding contents.count}" ></TextBlock>
                                 </StackPanel>
 
                             </StackPanel>

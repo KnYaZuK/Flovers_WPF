@@ -40,16 +40,16 @@ namespace Flovers_WPF
         
         private void bt_settings_Click(object sender, RoutedEventArgs e)
         {
-            Settings settings = new Settings( true );
+            Settings settings = new Settings();
 
-            if ( settings.dbpath != "" )
+            if ( settings.Set_DB_Path() )
             {
                 DBConnection.Save_Connection(settings);
-                System.Windows.Forms.MessageBox.Show("Новый путь успешно сохранён.");
+                System.Windows.Forms.MessageBox.Show("Путь успешно сохранён.");
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Новый путь не был задан.");
+                System.Windows.Forms.MessageBox.Show("Путь не был задан.");
             }
         }
 
