@@ -33,6 +33,9 @@ namespace Flovers_WPF
         public Special_Deal_Window()
         {
             InitializeComponent();
+            button_stopVideo.IsEnabled = false;
+            button_SaveImage.IsEnabled = false;
+            button_CaptureImage.IsEnabled = false;
         }
 
         Camera_Control webcam;
@@ -65,16 +68,23 @@ namespace Flovers_WPF
         private void button_startVideo_Click(object sender, RoutedEventArgs e)
         {
             webcam.Start();
+            button_stopVideo.IsEnabled = true;
+            button_startVideo.IsEnabled = false;
+            button_CaptureImage.IsEnabled = true;
         }
 
         private void button_stopVideo_Click(object sender, RoutedEventArgs e)
         {
             webcam.Stop();
+            button_startVideo.IsEnabled = true;
+            button_stopVideo.IsEnabled = false;
+            button_CaptureImage.IsEnabled = false;
         }
 
         private void button_CaptureImage_Click(object sender, RoutedEventArgs e)
         {
             imgCaptured.Source = imgVideo.Source;
+            button_SaveImage.IsEnabled = true;
         }
 
         private void button_SaveImage_Click(object sender, RoutedEventArgs e)

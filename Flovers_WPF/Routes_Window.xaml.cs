@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿#region библиотеки
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,16 @@ using GMap.NET.MapProviders;
 using System.IO;
 using System.Xml;
 using System.Net;
+using iTextSharp.text;
+using iTextSharp;
+using iTextSharp.text.pdf;
 
 using Flovers_WPF.DataModel;
 using Flovers_WPF.DataAccess;
 using Flovers_WPF.Repository;
 using System.Data;
+using System.Windows.Forms;
+#endregion
 
 namespace Flovers_WPF
 {
@@ -33,7 +39,15 @@ namespace Flovers_WPF
     public partial class Routes_Window : MetroWindow
     {
         OrdersRepository oOrdersRepository;
+        ConstantsRepository oConstantsRepository;
         public List<Orders> LOrders;
+        SaveFileDialog sf;
+        public string Start_address;
+        private List<string> needded_addresses = new List<string>();
+        public List<string> needded_adr_copy = new List<string>();
+        public List<string> sorted_addresses = new List<string>();
+        public List<GMap.NET.PointLatLng> sorted_points = new List<GMap.NET.PointLatLng>();
+
         public Routes_Window()
         {
             InitializeComponent();
@@ -48,21 +62,9 @@ namespace Flovers_WPF
             gmap_routes.MapProvider = GMap.NET.MapProviders.GMapProviders.OpenStreetMap;
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             gmap_routes.Markers.Clear();
-        } 
-
-        private void gmap_routes_Loaded(object sender, RoutedEventArgs e)
-        {
-            
         }
 
-
-        /* Сделать выбор адреса из таблицы констант */
-        public string Start_address = "Ульяновск Авиастроителей 7";
-        private List<string> needded_addresses = new List<string>();
-        public List<string> needded_adr_copy = new List<string>();
-        public List<string> sorted_addresses = new List<string>();
-        public List<GMap.NET.PointLatLng> sorted_points = new List<GMap.NET.PointLatLng>();
-
+        #region Работа с картами 
         /// <summary>
         /// Метод геокодирования
         /// </summary>
@@ -96,21 +98,24 @@ namespace Flovers_WPF
             latlng.Add(longitude);
             return latlng;
         }
-
+        /// <summary>
+        /// Метод сортировки адресов по мере удаленности и построения маршрута
+        /// </summary>
+        /// <returns></returns>
         private async Task Sort_Addresses()
         {
+            List<Constants> start_list = await oConstantsRepository.Select_Constants_Async("select value from Constants where name=\'Address\'");
+            Start_address = start_list.First().value.ToString();
+
             needded_addresses.Add(Start_address);
             needded_adr_copy.Add(Start_address);
             sorted_addresses.Add(Start_address);
 
-            DataTable dtRouter = new DataTable();
-            dtRouter.Columns.Add("Нач. точка (latitude)");
-            dtRouter.Columns.Add("Нач. точка (longitude)");
-            dtRouter.Columns.Add("Кон. точка (latitude)");
-            dtRouter.Columns.Add("Кон. точка (longitude)");
-
             List<GMapRoute> routes_list = new List<GMapRoute>();
             LOrders = await oOrdersRepository.Select_All_Orders_Async();
+
+            #region выборка всех нужных адресов из БД
+
             foreach (var c in LOrders)
             {
                 if (c.status == "Готовится к отправке")
@@ -119,7 +124,12 @@ namespace Flovers_WPF
                     needded_adr_copy.Add(c.address.ToString());
                 }
             }
+
+            #endregion
+
             string Close_position = needded_addresses[0].ToString();
+
+            #region Сортировка адресов по мере удаленности от адреса компании
 
             for (int i = 0; i < needded_addresses.Count - 1; i++)
             {
@@ -153,12 +163,17 @@ namespace Flovers_WPF
                 Close_position = Closest_Adr;
             }
 
+            #endregion
+
             GMap.NET.RoutingProvider rp = gmap_routes.MapProvider as GMap.NET.RoutingProvider;
             if (rp == null)
             {
                 rp = GMapProviders.OpenStreetMap;
             }
             GMap.NET.MapRoute route;
+
+            #region построение маршрута по отсортированным адресам
+
             for (int i = 0; i < sorted_addresses.Count - 1; i++)
             {
                 List<double> first = Geocoding(sorted_addresses[i]);
@@ -170,8 +185,6 @@ namespace Flovers_WPF
                     {
                         mRoute.ZIndex = -1;
                     }
-                    //gmap_routes.Markers.Add(mRoute);
-                    //mRoute.RegenerateShape(gmap_routes);
                     routes_list.Add(mRoute);
                 }
             }
@@ -181,7 +194,10 @@ namespace Flovers_WPF
                 gmap_routes.Markers.Add(l);
                 l.RegenerateShape(gmap_routes);
             }
+
+            #endregion
         }
+        #endregion
 
         private async Task Initialize_Database()
         {
@@ -190,6 +206,7 @@ namespace Flovers_WPF
             await oDBConnection.InitializeDatabase();
 
             oOrdersRepository = new OrdersRepository(oDBConnection);
+            oConstantsRepository = new ConstantsRepository(oDBConnection);
         }
 
         private async void Route_Window_Loaded(object sender, RoutedEventArgs e)
@@ -198,5 +215,45 @@ namespace Flovers_WPF
 
             await Sort_Addresses();
         }
+
+        #region Работа с PDF
+
+        public void Create_PDF_File(string path)
+        {
+            var doc = new Document();
+            PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
+            doc.Open();
+
+            BaseFont base_font = BaseFont.CreateFont("arialn.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Phrase head = new Phrase("Маршрут", new iTextSharp.text.Font(base_font, 18, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Red)));
+            iTextSharp.text.Paragraph header = new iTextSharp.text.Paragraph(head);
+            header.Alignment = Element.ALIGN_CENTER;
+            doc.Add(header);
+
+            for (int i = 0; i < sorted_addresses.Count; i++)
+            {
+                string row = i.ToString() + ")" + sorted_addresses[i].ToString();
+                iTextSharp.text.Phrase text = new Phrase(row, new iTextSharp.text.Font(base_font, 14, iTextSharp.text.Font.NORMAL, new BaseColor(System.Drawing.Color.Black)));
+                iTextSharp.text.Paragraph main_text = new iTextSharp.text.Paragraph(text);
+                doc.Add(main_text);
+            }
+
+            doc.Close();
+        }
+
+        private void button_loadPDF_Click(object sender, RoutedEventArgs e)
+        {
+            sf = new SaveFileDialog();
+            sf.FileName = "Route_List";
+            sf.DefaultExt = ".pdf";
+            sf.Filter = "(.pdf) | *.pdf";
+            if(sf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Create_PDF_File(sf.FileName);
+                System.Windows.MessageBox.Show("Файл успешно создан");
+            }
+        }
+
+        #endregion
     }
 }
