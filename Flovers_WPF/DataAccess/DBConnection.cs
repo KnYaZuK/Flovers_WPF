@@ -98,6 +98,7 @@ namespace Flovers_WPF.DataAccess
             await conn.CreateTableAsync<Constants>();
             await conn.CreateTableAsync<Contents>();
             await conn.CreateTableAsync<Discounts>();
+            await conn.CreateTableAsync<SpecialDeals>();
             await conn.CreateTableAsync<Flowers>();
             await conn.CreateTableAsync<Orders>();
             await conn.CreateTableAsync<Payments>();
