@@ -73,8 +73,11 @@ namespace Flovers_WPF
 
         private void bt_deals_Click(object sender, RoutedEventArgs e)
         {
-            Special_Deal_Window spec_deal = new Special_Deal_Window();
-            spec_deal.ShowDialog();
+            //Special_Deal_Window spec_deal = new Special_Deal_Window();
+            //spec_deal.ShowDialog();
+
+            SpecialDealDiscountWindow oSpecialDealDiscountWindow = new SpecialDealDiscountWindow();
+            oSpecialDealDiscountWindow.ShowDialog();
         }
 
         private void bt_route_Click(object sender, RoutedEventArgs e)
@@ -87,6 +90,12 @@ namespace Flovers_WPF
         {
             Constants_Window const_win = new Constants_Window();
             const_win.ShowDialog();
+        }
+
+        private void button_Discounts_Click(object sender, RoutedEventArgs e)
+        {
+            Discounts_Window oDiscounts_Window = new Discounts_Window();
+            oDiscounts_Window.ShowDialog();
         }
         
 
