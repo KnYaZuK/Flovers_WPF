@@ -70,6 +70,8 @@ namespace Flovers_WPF
         CardsRepository oCardsRepository;           //
         AccessoriesRepository oAccessoriesRepository;
         FlowersRepository oFlowersRepository;
+        SpecialDealsRepository oSpecialDealsRepository;
+        DiscountsRepository oDiscountRepository;
 
         SQLite.SQLiteAsyncConnection conn; // Прямой коннект к БД для выдачи записей из таблиц по ID
 
@@ -79,6 +81,7 @@ namespace Flovers_WPF
 
         List<Cart_Bouquet> lCart_Bouquet;   // Список покупок клиента
 
+        private bool Firts_Start;
         /// <summary>
         /// Загрузка окна, инициализация контроллеров, загрузка в listview данных и сброс управления.
         /// </summary>
@@ -86,19 +89,28 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            Firts_Start = true;
+
             DBConnection oDBConnection = new DBConnection();
 
             await oDBConnection.InitializeDatabase();
 
 
             oOrdersRepository = new OrdersRepository(oDBConnection);
+
             oClientsRepository = new ClientsRepository(oDBConnection);
-            oCartsRepository = new CartsRepository(oDBConnection);
+            oCardsRepository = new CardsRepository(oDBConnection);
+
             oBouquetsRepository = new BouquetsRepository(oDBConnection);
             oContentsRepository = new ContentsRepository(oDBConnection);
-            oCardsRepository = new CardsRepository(oDBConnection);
+
+            oCartsRepository = new CartsRepository(oDBConnection);
+
             oAccessoriesRepository = new AccessoriesRepository(oDBConnection);
             oFlowersRepository = new FlowersRepository(oDBConnection);
+
+            oSpecialDealsRepository = new SpecialDealsRepository(oDBConnection);
+            oDiscountRepository = new DiscountsRepository(oDBConnection);
 
             conn = oDBConnection.GetAsyncConnection();
 
@@ -134,11 +146,11 @@ namespace Flovers_WPF
         }
 
         /// <summary>
-        /// Обновление listview с Клиентами с фильтром поисковой строки по ФИО. Каждому клиенту ставится в соответствие его бонусная карта
+        /// Обновление listview с Клиентами с фильтром поисковой строки по ФИО, Телефону или Email. Каждому клиенту ставится в соответствие его бонусная карта
         /// </summary>
         /// <param name="full_name"></param>
         /// <returns></returns>
-        private async Task Update_ListView_Clients(string full_name)
+        private async Task Update_ListView_Clients(string text)
         {
             List<Client_Card> lClient_Card = new List<Client_Card>();
 
@@ -148,7 +160,7 @@ namespace Flovers_WPF
             {
                 Client_Card client_card = new Client_Card();
 
-                if (c.full_name.ToLower().Contains(full_name.ToLower()))
+                if (c.full_name.ToLower().Contains(text.ToLower()) || c.phone_number.ToLower().Contains(text.ToLower()) || c.email.ToLower().Contains(text.ToLower()))
                 {
                     client_card.client = c;
                     client_card.card = await conn.GetAsync<Cards>(c.cards_id);
@@ -162,7 +174,7 @@ namespace Flovers_WPF
         }
 
         /// <summary>
-        /// Обновление listview с букетами. Для каждого букета ставится в соответствие список его кмпонентов. Подсчитывается стоимость букета.
+        /// Обновление listview с букетами. Для каждого букета ставится в соответствие список его кмпонентов. Подсчитывается стоимость букета с учётом скидок Специальных Предложений
         /// </summary>
         /// <returns></returns>
         private async Task Update_ListView_Bouquets()
@@ -193,6 +205,21 @@ namespace Flovers_WPF
 
                 bouquet_content.cost += bouquet_content.bouquet.price_extra;
 
+                // Обработка скидок по спец. предложениям
+                try
+                {
+                    SpecialDeals oSpecialDeals = (await oSpecialDealsRepository.Select_SpecialDeals_Async("select * from specialdeals where bouquets_id = " + b.bouquets_id))[0];
+
+                    if (oSpecialDeals != null && oSpecialDeals.datetime >= DateTime.Now)
+                    {
+                        bouquet_content.cost = bouquet_content.cost * (1 - oSpecialDeals.discount / 100);
+                    }
+                }
+                catch
+                {
+
+                }
+
                 lBouquet_Content.Add(bouquet_content);
             }
 
@@ -200,10 +227,10 @@ namespace Flovers_WPF
         }
 
         /// <summary>
-        /// Обновление listview с букетами. Для каждого букета ставится в соответствие список его кмпонентов. Подсчитывается стоимость букета.
+        /// Обновление listview с букетами. Для каждого букета ставится в соответствие список его кмпонентов. Подсчитывается стоимость букета с учётом скидок Специальных Предложений
         /// </summary>
         /// <returns></returns>
-        private async Task Update_ListView_Bouquets( string name )
+        private async Task Update_ListView_Bouquets(string name)
         {
             List<Bouquet_Content> lBouquet_Content = new List<Bouquet_Content>();
 
@@ -233,18 +260,33 @@ namespace Flovers_WPF
 
                     bouquet_content.cost += bouquet_content.bouquet.price_extra;
 
+                    // Обработка скидок по спец. предложениям
+                    try
+                    {
+                        SpecialDeals oSpecialDeals = (await oSpecialDealsRepository.Select_SpecialDeals_Async("select * from specialdeals where bouquets_id = " + b.bouquets_id))[0];
+
+                        if (oSpecialDeals != null && oSpecialDeals.datetime >= DateTime.Now)
+                        {
+                            bouquet_content.cost = bouquet_content.cost * (1 - oSpecialDeals.discount / 100);
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+
                     lBouquet_Content.Add(bouquet_content);
                 }
-                
+
             }
 
             listview_Bouquets.ItemsSource = lBouquet_Content;
         }
 
         /// <summary>
-        /// Обновление listview с Корзиной ( Покупками ) клиента. Подсчитывается общая стоимость корзины. Расчитывается скидка ( В будущем необходимо сделать расчёт скидки посредством выборки скидок из БД ).
+        /// Обновление listview с Корзиной ( Покупками ) клиента. Подсчитывается общая стоимость корзины. Расчитывается скидка от общей суммы заказа.
         /// </summary>
-        private void Update_ListView_Carts()
+        private async void Update_ListView_Carts()
         {
             listview_Carts.ItemsSource = null;
             listview_Carts.ItemsSource = lCart_Bouquet;
@@ -257,37 +299,43 @@ namespace Flovers_WPF
             }
 
             label_Cost.Content = "Общая стоимость: " + cost.ToString();
-            label_Discount.Content = "Скидка: 0%";
-            oCart_Bouquet.cost = cost;
+
+            List<Discounts> lDiscounts = await oDiscountRepository.Select_All_Discounts_Async();
+
+            Discounts oDiscount = new Discounts(0, 0);
+
+            foreach (var d in lDiscounts)
+            {
+                if (cost > d.value && oDiscount.value < d.value && oDiscount.percent < d.percent) // Находим наибольшую скидку для заказа.
+                {
+                    oDiscount = d;
+                }
+            }
+
+            label_Discount.Content = "Скидка:" + oDiscount.percent.ToString() + "%";
+
+            if (oDiscount.percent != 0)
+            {
+                oCart_Bouquet.cost = cost * (1 - oDiscount.percent / 100);
+            }
+            else
+            {
+                oCart_Bouquet.cost = cost;
+            }
+
             label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
 
-            if (cost > 1000)
-            {
-                label_Discount.Content = "Скидка: 5%";
-                oCart_Bouquet.cost = cost * 0.95;
-                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
-            }
-
-            if (cost > 5000)
-            {
-                label_Discount.Content = "Скидка: 10%";
-                oCart_Bouquet.cost = cost * 0.9;
-                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
-            }
-
-            if (cost > 10000)
-            {
-                label_Discount.Content = "Скидка: 20%";
-                oCart_Bouquet.cost = cost * 0.8;
-                label_Total_Cost.Content = "Итого: " + oCart_Bouquet.cost;
-            }
         }
 
-        private void Update_ListView_Carts( string name )
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        private void Update_ListView_Carts(string name)
         {
             List<Cart_Bouquet> result = new List<Cart_Bouquet>();
 
-            foreach ( var b in lCart_Bouquet )
+            foreach (var b in lCart_Bouquet)
             {
                 if (b.bouquet.name.ToLower().Contains(name.ToLower()))
                 {
@@ -350,13 +398,13 @@ namespace Flovers_WPF
             bool Components_Enough = true;
 
             // Проверяем на достаточное кол-во компонентов для букета на складе.
-            foreach ( var c in oBouquet_Content.lContent )
+            foreach (var c in oBouquet_Content.lContent)
             {
-                if ( c.accessories_id != -1)
+                if (c.accessories_id != -1)
                 {
                     Accessories result = await conn.GetAsync<Accessories>(c.accessories_id);
 
-                    if ( result.in_stock < (c.count * (decimal)numeric_Count.Value) )
+                    if (result.in_stock < (c.count * (decimal)numeric_Count.Value))
                     {
                         MessageBox.Show("Недостаточно Аксессуаров \"" + result.name + "\" на складе для составления данного букета!");
 
@@ -425,7 +473,7 @@ namespace Flovers_WPF
         private async void button__Complete_Click(object sender, RoutedEventArgs e)
         {
             // Составляем соотношение букета и его компонентов.
-            foreach ( var b in lCart_Bouquet )
+            foreach (var b in lCart_Bouquet)
             {
                 Bouquet_Content current_bouquet = new Bouquet_Content();
 
@@ -440,7 +488,7 @@ namespace Flovers_WPF
                     {
                         Accessories result = await conn.GetAsync<Accessories>(c.accessories_id);
 
-                        for (int i = 0; i < b.cart.count; i++ )
+                        for (int i = 0; i < b.cart.count; i++)
                         {
                             result.in_stock -= c.count;
                         }
@@ -462,7 +510,7 @@ namespace Flovers_WPF
             }
 
             // Добавляем данные о заказе в БД
-            Orders order = new Orders(oClient_Card.client.clients_id, DateTime.Now, textbox_Address.Text, oCart_Bouquet.cost, "Ожидает оплаты");
+            Orders order = new Orders(oClient_Card.client.clients_id, DateTime.Now, textbox_Address.Text, oCart_Bouquet.cost, "В обработке");
 
             await oOrdersRepository.Insert_Orders_Async(order);
 
@@ -625,7 +673,7 @@ namespace Flovers_WPF
 
         private async void textbox_Search_Client_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if ( textbox_Search_Client.Text != "")
+            if (textbox_Search_Client.Text != "")
             {
                 await Update_ListView_Clients(textbox_Search_Client.Text);
             }
@@ -633,12 +681,12 @@ namespace Flovers_WPF
             {
                 await Update_ListView_Clients();
             }
-            
+
         }
 
         private async void textbox_Search_Bouquet_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if ( textbox_Search_Bouquet.Text != "" )
+            if (textbox_Search_Bouquet.Text != "")
             {
                 await Update_ListView_Bouquets(textbox_Search_Bouquet.Text);
             }
@@ -657,6 +705,18 @@ namespace Flovers_WPF
             else
             {
                 Update_ListView_Carts();
+            }
+        }
+
+        private async void MetroWindow_Activated(object sender, EventArgs e)
+        {
+            if (!Firts_Start)
+            {
+                await Update_ListView_Clients();
+            }
+            else
+            {
+                Firts_Start = false;
             }
         }
     }
