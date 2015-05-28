@@ -1,19 +1,20 @@
-﻿<Controls:MetroWindow x:Class="Flovers_WPF.Order_Window"
+﻿<Controls:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Заказы" Height="600" Width="800" EnableDWMDropShadow="True" GlowBrush="#FF17DCF0" Loaded="MetroWindow_Loaded" Activated="MetroWindow_Activated">
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Flovers_WPF.Order_Window"
+        Title="Заказы" Height="600" Width="864" EnableDWMDropShadow="True" GlowBrush="#FF17DCF0" Loaded="MetroWindow_Loaded" Activated="MetroWindow_Activated">
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="320*"/>
+            <ColumnDefinition Width="251*"/>
+            <ColumnDefinition Width="285*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Совершенные заказы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="244" Padding="13,5,5,5" FontSize="20" HorizontalContentAlignment="Center" Grid.Column="1"/>
+        <Label Content="Совершенные заказы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="231" Padding="13,5,5,5" FontSize="20" HorizontalContentAlignment="Center" Grid.Column="1" Height="37"/>
 
-        <ListView Name="listview_Orders" HorizontalAlignment="Left" Height="507" Margin="10,52,0,0" VerticalAlignment="Top" Width="244" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Orders_MouseLeftButtonUp" MouseRightButtonUp="listview_Orders_MouseRightButtonUp" Padding="5">
+        <ListView x:Name="listview_Orders" HorizontalAlignment="Left" Height="507" Margin="10,52,0,0" VerticalAlignment="Top" Width="310" Grid.Column="0" Background="#FFF2FFFC" BorderThickness="1" MouseLeftButtonUp="listview_Orders_MouseLeftButtonUp" MouseRightButtonUp="listview_Orders_MouseRightButtonUp" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
 
@@ -50,10 +51,10 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView x:Name="listview_Carts" HorizontalAlignment="Left" Height="507" Margin="10,52,0,0" VerticalAlignment="Top" Width="244" Grid.Column="1" Background="#FFF2FFFC" BorderThickness="1" IsEnabled="False" Padding="5">
+        <ListView x:Name="listview_Carts" HorizontalAlignment="Left" Height="517" Margin="10,52,0,0" VerticalAlignment="Top" Width="231" Grid.Column="1" Background="#FFF2FFFC" BorderBrush="Black" BorderThickness="1" IsEnabled="False" Padding="5">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    
+
                     <Border BorderBrush="Black" BorderThickness="1" Margin="1">
 
                         <StackPanel Orientation="Vertical" Margin="5">
@@ -76,20 +77,67 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <TextBox Name="textbox_Search_Orders" Controls:TextBoxHelper.Watermark="Поиск..." VerticalContentAlignment="Center" Margin="10,10,10,522"/>
+        <TextBox x:Name="textbox_Search_Orders" Controls:TextBoxHelper.Watermark="Поиск..." VerticalContentAlignment="Center" Margin="10,10,0,522" Grid.Column="0" TextChanged="textbox_Search_Orders_TextChanged"/>
 
-        <ComboBox Name="combobox_Status" Margin="10,52,10,478" Grid.Column="2">
-            <ComboBoxItem Content="В обработке"></ComboBoxItem>
-            <ComboBoxItem Content="Готовится к отправке"></ComboBoxItem>
-            <ComboBoxItem Content="Отправлен"></ComboBoxItem>
-            <ComboBoxItem Content="Завершён"></ComboBoxItem>
-        </ComboBox>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="10,112,10,364" Grid.Column="2">
+            <Grid x:Name="grid_Status">
+                <ComboBox x:Name="combobox_Status" Margin="10,10,10,49" SelectionChanged="combobox_Status_SelectionChanged">
+                    <ComboBoxItem Content="В обработке"/>
+                    <ComboBoxItem Content="Готовится к отправке"/>
+                    <ComboBoxItem Content="Отправлен"/>
+                    <ComboBoxItem Content="Завершён"/>
+                </ComboBox>
 
-        <Button x:Name="button_Status_Change" Content="Изменить статус" Click="button_Status_Change_Click" Margin="10,96,10,434" Grid.Column="2"/>
+                <Button x:Name="button_Status_Change" Content="Изменить статус" Click="button_Status_Change_Click" Margin="10,47,10,10"/>
+            </Grid>
+        </Border>
 
-        <Button x:Name="button_Delete" Content="Удалить" Click="button_Delete_Click" Margin="150,446,10,94" Grid.Column="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="10,210,10,164">
+            <Grid x:Name="grid_Payments">
 
-        <Button x:Name="button_New_Order" Content="Новый заказ" Click="button_New_Order_Click" Margin="10,480,10,10" Grid.Column="2"/>
+                <Controls:NumericUpDown x:Name="numericUD_Orders_Price" StringFormat="c2" Interval="0.01" Minimum="0" Maximum="{Binding order.price}" Controls:TextBoxHelper.Watermark="Сумма денег: 0.00" Margin="10,10,72,157"/>
+                <Button x:Name="button_Orders_Price_Max" Content="MAX" Margin="196,10,10,158" Click="button_Orders_Price_Max_Click"/>
+
+                <Controls:NumericUpDown x:Name="numericUD_Cards_Points" Interval="1" Minimum="0" Controls:TextBoxHelper.Watermark="Количество баллов: 0" Margin="10,41,72,126" />
+                <Button x:Name="button_Cards_Points_Max" Content="MAX" Margin="196,40,10,126" Click="button_Cards_Points_Max_Click"/>
+
+                <Button x:Name="button_Insert_Payments" Content="Совершить оплату" Click="button_Insert_Payments_Click" Margin="10,74,10,90"/>
+
+                <ListView x:Name="listview_Payments" HorizontalAlignment="Left" Height="69" Margin="0,114,0,0" VerticalAlignment="Top" Width="263" Background="#FFF2FFFC" BorderBrush="Black" BorderThickness="1" IsEnabled="False" Padding="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="1">
+
+                                <StackPanel Orientation="Vertical" Margin="5">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Время:" Width="128"/>
+                                        <TextBlock Text="{Binding time}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Денег:" Width="128"/>
+                                        <TextBlock Text="{Binding value_money}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Баллов:" Width="128"/>
+                                        <TextBlock Text="{Binding value_points}" />
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Border>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </Grid>
+        </Border>
+
+        <Button x:Name="button_Delete" Content="Удалить Заказ" Click="button_Delete_Click" Margin="10,509,10,10" Grid.Column="2"/>
+
+        <Button x:Name="button_New_Order" Content="Новый заказ" Click="button_New_Order_Click" Margin="10,425,10,94" Grid.Column="2"/>
 
     </Grid>
 </Controls:MetroWindow>
