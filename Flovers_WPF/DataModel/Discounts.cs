@@ -9,7 +9,7 @@ namespace Flovers_WPF.DataModel
         public int discounts_id { get; set; }
 
         [NotNull]
-        public double percents { get; set; }
+        public double percent { get; set; }
 
         [NotNull]
         public double value { get; set; }
@@ -18,7 +18,7 @@ namespace Flovers_WPF.DataModel
 
         public Discounts( double percents, double value )
         {
-            this.percents = percents;
+            this.percent = percent;
             this.value = value;
         }
     }
