@@ -104,6 +104,12 @@
     </ApplicationDefinition>
     <Compile Include="Camera_Control.cs" />
     <Compile Include="Camera_HelperClass.cs" />
+    <Compile Include="SpecialDealDiscount_Window.xaml.cs">
+      <DependentUpon>SpecialDealDiscount_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Discounts_Window.xaml.cs">
+      <DependentUpon>Discounts_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Constants_Window.xaml.cs">
       <DependentUpon>Constants_Window.xaml</DependentUpon>
     </Compile>
@@ -129,6 +135,7 @@
     <Compile Include="DataModel\Carts.cs" />
     <Compile Include="DataModel\Bouquets.cs" />
     <Compile Include="DataModel\Accessories.cs" />
+    <Compile Include="DataModel\SpecialDeals.cs" />
     <Compile Include="DataModel\Users.cs" />
     <Compile Include="MainMenuWindow.xaml.cs">
       <DependentUpon>MainMenuWindow.xaml</DependentUpon>
@@ -151,6 +158,7 @@
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Repository\SpecialDealsRepository.cs" />
     <Compile Include="Repository\AccessoriesRepository.cs" />
     <Compile Include="Repository\BouquetsRepository.cs" />
     <Compile Include="Repository\CardsRepository.cs" />
@@ -160,6 +168,7 @@
     <Compile Include="Repository\ContentsRepository.cs" />
     <Compile Include="Repository\DiscountsRepository.cs" />
     <Compile Include="Repository\FlowersRepository.cs" />
+    <Compile Include="Repository\ISpecialDealsRepository.cs" />
     <Compile Include="Repository\ICardsRepository.cs" />
     <Compile Include="Repository\IPaymentsRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
@@ -185,6 +194,14 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="Задачи.cs" />
+    <Page Include="SpecialDealDiscount_Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Discounts_Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Constants_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
