@@ -389,22 +389,48 @@ namespace Flovers_WPF
         }
 
         /// <summary>
-        /// Добавление букета в корзину. Проверка наличия на складе достаточного количества компонентов перед осуществлением добавления
+        /// Добавление букета в корзину. Проверка наличия на складе достаточного количества компонентов перед осуществлением добавления. Проверка наличия в корзине букетов такого же типа.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void button_Create_Click(object sender, RoutedEventArgs e)
         {
-            bool Components_Enough = true;
+            // Создаём букет и корзину и заполняем поля данными.
+            Cart_Bouquet cart_bouquet = new Cart_Bouquet();
+
+            cart_bouquet.bouquet = oBouquet_Content.bouquet;
+
+            cart_bouquet.cart = new Carts((decimal)numeric_Count.Value, oBouquet_Content.bouquet.bouquets_id);
+            cart_bouquet.cost = oBouquet_Content.cost * (double)cart_bouquet.cart.count;
+
+            // Проверка на наличие записи с букетом в корзине
+            bool bouquet_found = false;
+            int bouquet_i = 0;
+
+            for (int i = 0; i < lCart_Bouquet.Count; i++)
+            {
+                if (lCart_Bouquet[i].bouquet.bouquets_id == cart_bouquet.bouquet.bouquets_id)
+                {
+                    bouquet_found = true;
+                    bouquet_i = i;
+
+                    cart_bouquet.cost += lCart_Bouquet[i].cost;
+                    cart_bouquet.cart.count += lCart_Bouquet[i].cart.count;
+
+                    break;
+                }
+            }
 
             // Проверяем на достаточное кол-во компонентов для букета на складе.
+            bool Components_Enough = true;
+
             foreach (var c in oBouquet_Content.lContent)
             {
                 if (c.accessories_id != -1)
                 {
                     Accessories result = await conn.GetAsync<Accessories>(c.accessories_id);
 
-                    if (result.in_stock < (c.count * (decimal)numeric_Count.Value))
+                    if (result.in_stock < (c.count * cart_bouquet.cart.count))
                     {
                         MessageBox.Show("Недостаточно Аксессуаров \"" + result.name + "\" на складе для составления данного букета!");
 
@@ -417,7 +443,7 @@ namespace Flovers_WPF
                 {
                     Flowers result = await conn.GetAsync<Flowers>(c.flowers_id);
 
-                    if (result.in_stock < (c.count * (decimal)numeric_Count.Value))
+                    if (result.in_stock < (c.count * cart_bouquet.cart.count))
                     {
                         MessageBox.Show("Недостаточно Цветов \"" + result.name + "\" на складе для составления данного букета!");
 
@@ -431,15 +457,14 @@ namespace Flovers_WPF
             // Если компонентов достаточно
             if (Components_Enough)
             {
-                // Добавляем букет в корзинку
-                Cart_Bouquet cart_bouquet = new Cart_Bouquet();
-
-                cart_bouquet.bouquet = oBouquet_Content.bouquet;
-
-                cart_bouquet.cart = new Carts((decimal)numeric_Count.Value, oBouquet_Content.bouquet.bouquets_id);
-                cart_bouquet.cost = oBouquet_Content.cost * (double)cart_bouquet.cart.count;
-
-                lCart_Bouquet.Add(cart_bouquet);
+                if (bouquet_found)
+                {
+                    lCart_Bouquet[bouquet_i] = cart_bouquet;
+                }
+                else
+                {
+                    lCart_Bouquet.Add(cart_bouquet);
+                }
 
                 Update_ListView_Carts();
 
