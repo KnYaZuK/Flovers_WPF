@@ -263,8 +263,21 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void button_Insert_Payments_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка на внесение в оплату корректной суммы денег + баллов
             if ((numericUD_Orders_Price.Value + numericUD_Cards_Points.Value) == oClients_Orders.order.price)
             {
+                // Создание записи оплаты
+                Payments oPayment = new Payments(DateTime.Now, (double)numericUD_Orders_Price.Value, (decimal)numericUD_Cards_Points.Value, oClients_Orders.order.orders_id);
+
+                // Вставка в БД записи об оплате и проверка на точную сумму
+                await oPaymentsRepository.Insert_Payments_Async(oPayment);
+
+                // Вычитание из карточки клиента баллов, использованных в оплате заказа.
+                Cards card_of_client = await conn.GetAsync<Cards>(oClients_Orders.client.cards_id);
+                card_of_client.bonus_card_points -= (int)oPayment.value_points;
+
+                await oCardsRepository.Update_Cards_Async(card_of_client);
+
                 // Начисление баллов вышестоящим по иерархии людям. 7%, 2% и 1%.
                 // Мой реферер получает 7%, его 3% и сл. 1%.
                 if (oClients_Orders.client.referer_id != -1)
@@ -272,7 +285,8 @@ namespace Flovers_WPF
                     // Начисление баллов первому клиенту по иерархии. 7%
                     Clients client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
                     Cards card = await conn.GetAsync<Cards>(client.cards_id);
-                    card.bonus_card_points += (int)(oClients_Orders.order.price * 0.07);
+
+                    card.bonus_card_points += (int)(oPayment.value_money * 0.07);
 
                     await oCardsRepository.Update_Cards_Async(card);
 
@@ -281,7 +295,8 @@ namespace Flovers_WPF
                         // Начисление баллов второму клиенту по иерархии. 2%
                         client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
                         card = await conn.GetAsync<Cards>(client.cards_id);
-                        card.bonus_card_points += (int)(oClients_Orders.order.price * 0.02);
+
+                        card.bonus_card_points += (int)(oPayment.value_money * 0.02);
 
                         await oCardsRepository.Update_Cards_Async(card);
 
@@ -290,19 +305,18 @@ namespace Flovers_WPF
                             // Начисление баллов третьему клиенту по иерархии. 1%
                             client = await conn.GetAsync<Clients>(oClients_Orders.client.referer_id);
                             card = await conn.GetAsync<Cards>(client.cards_id);
-                            card.bonus_card_points += (int)(oClients_Orders.order.price * 0.01);
+
+                            card.bonus_card_points += (int)(oPayment.value_money * 0.01);
 
                             await oCardsRepository.Update_Cards_Async(card);
                         }
                     }
                 }
-
-                // Вставка в БД записи об оплате и проверка на точную сумму
-                await oPaymentsRepository.Insert_Payments_Async(new Payments(DateTime.Now, (double)numericUD_Orders_Price.Value, (decimal)numericUD_Cards_Points.Value, oClients_Orders.order.orders_id));
                 
                 // Изменение статуса заказа
                 oClients_Orders.order.status = combobox_Status.Text;
                 await oOrdersRepository.Update_Orders_Async(oClients_Orders.order);
+
                 await Update_ListView_Orders();
             }
             else
