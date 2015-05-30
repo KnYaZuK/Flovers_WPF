@@ -88,6 +88,12 @@ namespace Flovers_WPF
             Constants_Window const_win = new Constants_Window();
             const_win.ShowDialog();
         }
+
+        private void bt_reports_Click(object sender, RoutedEventArgs e)
+        {
+            Reply_Window replies = new Reply_Window();
+            replies.ShowDialog();
+        }
         
 
     }
