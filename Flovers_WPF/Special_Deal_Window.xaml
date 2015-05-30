@@ -19,11 +19,12 @@
         <Button x:Name="button_stopVideo" Content="Ост.Камеру" HorizontalAlignment="Left" Margin="61,481,0,0" VerticalAlignment="Top" Width="113" Click="button_stopVideo_Click"/>
         <Button x:Name="button_CaptureImage" Content="Сделать снимок" HorizontalAlignment="Left" Margin="215,451,0,0" VerticalAlignment="Top" Width="113" Click="button_CaptureImage_Click"/>
         <Button x:Name="button_SaveImage" Content="Сохранить" HorizontalAlignment="Left" Margin="215,481,0,0" VerticalAlignment="Top" Width="113" Click="button_SaveImage_Click"/>
-        <Button x:Name="button_SaveAsPDF" Content="Сохранить в PDF" HorizontalAlignment="Left" Margin="10,520,0,0" VerticalAlignment="Top" Width="390" Click="button_SaveAsPDF_Click"/>
+        <Button x:Name="button_SaveAsPDF" Content="Сохранить в PDF" HorizontalAlignment="Left" Margin="10,520,0,0" VerticalAlignment="Top" Width="164" Click="button_SaveAsPDF_Click"/>
         <Button x:Name="button_SendMail" Content="Сделать рассылку" HorizontalAlignment="Left" Margin="480,520,0,0" VerticalAlignment="Top" Width="402" Click="button_SendMail_Click"/>
         <Button x:Name="add_photo" Content="Добавить фото" HorizontalAlignment="Left" Margin="480,333,0,0" VerticalAlignment="Top" Width="178" Click="add_photo_Click"/>
         <Button x:Name="delete_photo" Content="Убрать фото" HorizontalAlignment="Left" Margin="702,333,0,0" VerticalAlignment="Top" Width="178" Click="delete_photo_Click"/>
         <ListBox x:Name="pictures" HorizontalAlignment="Left" Height="143" Margin="480,363,0,0" VerticalAlignment="Top" Width="400" BorderThickness="1"/>
+        <Button x:Name="button_add_pdf" Content="Добавить сущ. PDF" HorizontalAlignment="Left" Margin="215,520,0,0" VerticalAlignment="Top" Width="164" Click="button_add_pdf_Click"/>
 
     </Grid>
 </Controls:MetroWindow>

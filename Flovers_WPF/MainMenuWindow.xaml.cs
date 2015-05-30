@@ -91,11 +91,17 @@ namespace Flovers_WPF
             Constants_Window const_win = new Constants_Window();
             const_win.ShowDialog();
         }
-
+        
         private void button_Discounts_Click(object sender, RoutedEventArgs e)
         {
             Discounts_Window oDiscounts_Window = new Discounts_Window();
             oDiscounts_Window.ShowDialog();
+        }
+        
+        private void bt_reports_Click(object sender, RoutedEventArgs e)
+        {
+            Reply_Window replies = new Reply_Window();
+            replies.ShowDialog();
         }
         
 

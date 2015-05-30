@@ -21,7 +21,6 @@ namespace Flovers_WPF
         ///</summary>
         ///<param name="Img">Ссылка на входное изображение</param>
         ///
-
         public void Ini_Web_Camera(ref System.Windows.Controls.Image Img)
         {
             camera = new WebCamCapture();
@@ -30,18 +29,26 @@ namespace Flovers_WPF
             camera.ImageCaptured += new WebCamCapture.WebCamEventHandler(webcam_ImageCaptured);
             Frame_Img = Img;
         }
-
+        /// <summary>
+        /// Захват изображения
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         void webcam_ImageCaptured(object source, WebcamEventArgs e)
         {
             Frame_Img.Source = Camera_HelperClass.LoadBitmap((System.Drawing.Bitmap)e.WebCamImage);
         }
-
+        /// <summary>
+        /// включение камеры
+        /// </summary>
         public void Start()
         {
             camera.TimeToCapture_milliseconds = Framerate;
             camera.Start(0);
         }
-
+        /// <summary>
+        /// остановка камеры
+        /// </summary>
         public void Stop()
         {
             camera.Stop();

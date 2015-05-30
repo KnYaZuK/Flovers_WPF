@@ -2,5 +2,5 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             Height="40" Width="30" Opacity="10" Loaded="Route_Orange_Marker_Loaded" SizeChanged="Route_Orange_Marker_SizeChanged" MouseEnter="Route_Orange_Marker_MouseEnter" MouseLeave="Route_Orange_Marker_MouseLeave">
-    <Image Name="icon" Source="/Flovers_WPF;component/Resources/location_pin.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
+    <Image Name="icon" Source="/Flovers_WPF;component/Resources/location_pin.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 </UserControl>
