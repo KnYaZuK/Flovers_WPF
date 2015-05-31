@@ -27,6 +27,7 @@ namespace Flovers_WPF.Custom_Markers
         Label Label;
         GMapMarker Marker;
         New_Adress_Window win;
+        Maps m = new Maps();
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -96,7 +97,7 @@ namespace Flovers_WPF.Custom_Markers
                 double lat = win.gmap_adress.FromLocalToLatLng((int)pos.X,(int)pos.Y).Lat;
                 double lng = win.gmap_adress.FromLocalToLatLng((int)pos.X,(int)pos.Y).Lng;
                 win.gmap_adress.Markers.Clear();
-                win.Reverse_Geocoding(lat, lng);
+                m.Reverse_Geocoding(lat, lng, win.gmap_adress, win);
                 win.DB_address = win.textbox_adres.Text;
             }
         }
