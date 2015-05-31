@@ -123,6 +123,7 @@
     <Compile Include="MailClass.cs" />
     <Compile Include="Maps.cs" />
     <Compile Include="PDF_creater.cs" />
+    <Compile Include="Replies.cs" />
     <Compile Include="SpecialDealDiscount_Window.xaml.cs">
       <DependentUpon>SpecialDealDiscount_Window.xaml</DependentUpon>
     </Compile>

@@ -30,13 +30,15 @@ namespace Flovers_WPF
         OrdersRepository oOrdersRepository;
         CartsRepository oCartsRepository;
         BouquetsRepository oBouquetsRepository;
-        List<KeyValuePair<string, int>> values;
-        List<KeyValuePair<string, int>> pie_values;
-        List<PieData> list_pie;
-        List<Data> list_day_data;
-        List<Data> list_week_data;
-        List<Data> list_month_data;
-        List<Data> list_quater_data;
+        public List<KeyValuePair<string, int>> values;
+        public List<KeyValuePair<string, int>> pie_values;
+        public List<PieData> list_pie;
+        public List<Data> list_day_data;
+        public List<Data> list_week_data;
+        public List<Data> list_month_data;
+        public List<Data> list_quater_data;
+        Replies r = new Replies();
+
 
         public struct Data
         {
@@ -97,21 +99,21 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private async void button_build_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < day_chart.Series.Count; i++)
+            for (int i = 0; i < day_chart.Series.Count; i++)
             {
                 day_chart.Series.Remove(day_chart.Series[i]);
             }
             values = new List<KeyValuePair<string, int>>();
             List<Orders> list_orders = await oOrdersRepository.Select_All_Orders_Async();
             List<Data> list_data = new List<Data>();
-            for(int i = 0; i < list_orders.Count; i++)
+            for (int i = 0; i < list_orders.Count; i++)
             {
                 Data d = new Data();
-                if(list_orders[i].datetime.Date == datepicker.SelectedDate)
+                if (list_orders[i].datetime.Date == datepicker.SelectedDate)
                 {
                     List<Carts> list_carts = await oCartsRepository.Select_Carts_Async("select count,bouquets_id from Carts where orders_id=" + list_orders[i].orders_id);
                     d.time = list_orders[i].datetime.TimeOfDay.ToString();
-                    foreach(var c in list_carts)
+                    foreach (var c in list_carts)
                     {
                         d.count = (int)c.count;
                         d.bouqet_id = c.bouquets_id;
@@ -121,12 +123,12 @@ namespace Flovers_WPF
             }
             list_day_data = list_data;
             List<Bouquets> list_bouq = await oBouquetsRepository.Select_All_Bouquets_Async();
-            for(int i = 0; i < list_bouq.Count; i++)
+            for (int i = 0; i < list_bouq.Count; i++)
             {
                 values = new List<KeyValuePair<string, int>>();
                 for (int j = 0; j < list_data.Count; j++)
                 {
-                    if(list_data[j].bouqet_id == list_bouq[i].bouquets_id)
+                    if (list_data[j].bouqet_id == list_bouq[i].bouquets_id)
                     {
                         values.Add(new KeyValuePair<string, int>(list_data[j].time, list_data[j].count));
                     }
@@ -439,199 +441,29 @@ namespace Flovers_WPF
             button_excel_stat.IsEnabled = true;
         }
 
-        /// <summary>
-        /// Создание Excel файла для отчетов
-        /// </summary>
-        /// <param name="values"></param>
-        /// 
-        public async void Create_Excel_Doc(List<Data> values)
-        {
-            Excel.Application exapp = new Excel.Application();
-            exapp.SheetsInNewWorkbook = 1;
-            exapp.Workbooks.Add(Type.Missing);
-            exapp.DisplayAlerts = true;
-            exapp.Visible = true;
-            Excel.Workbooks exappworkbooks = exapp.Workbooks;
-            Excel.Workbook exappworkbook = exappworkbooks[1];
-            exappworkbook.Saved = false;
-            Excel.Sheets excellsheets = exappworkbook.Worksheets;
-            Excel.Worksheet excellworksheet = (Excel.Worksheet)excellsheets.get_Item(1);
-            excellworksheet.Activate();
-            Excel.Range excelcells;
-            for (int j = 1; j < 4; j++)
-            {
-                if (j == 1)
-                {
-                    excelcells = (Excel.Range)excellworksheet.Cells[1, j];
-                    excelcells.Value2 = "время/дата";
-                    excelcells.Font.Size = 12;
-                    excelcells.Font.Italic = true;
-                    excelcells.Font.Bold = true;
-                    excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                    excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                }
-                if (j == 2)
-                {
-                    excelcells = (Excel.Range)excellworksheet.Cells[1, j];
-                    excelcells.Value2 = "Количество";
-                    excelcells.Font.Size = 12;
-                    excelcells.Font.Italic = true;
-                    excelcells.Font.Bold = true;
-                    excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                    excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                }
-                if (j == 3)
-                {
-                    excelcells = (Excel.Range)excellworksheet.Cells[1, j];
-                    excelcells.Value2 = "Букет";
-                    excelcells.Font.Size = 12;
-                    excelcells.Font.Italic = true;
-                    excelcells.Font.Bold = true;
-                    excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                    excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                }
-            }
-            if (values != null)
-            {
-                for (int m = 2; m < values.Count + 2; m++)
-                {
-                    for (int n = 1; n < 4; n++)
-                    {
-                        if (n == 1)
-                        {
-                            excelcells = (Excel.Range)excellworksheet.Cells[m, n];
-                            excelcells.Value2 = values[m - 2].time.ToString();
-                            excelcells.Font.Size = 12;
-                            excelcells.Font.Italic = true;
-                            excelcells.Font.Bold = false;
-                            excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                            excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                        }
-                        if (n == 2)
-                        {
-                            excelcells = (Excel.Range)excellworksheet.Cells[m, n];
-                            excelcells.Value2 = values[m - 2].count.ToString();
-                            excelcells.Font.Size = 12;
-                            excelcells.Font.Italic = true;
-                            excelcells.Font.Bold = false;
-                            excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                            excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                        }
-                        if (n == 3)
-                        {
-                            Bouquets b = await conn.GetAsync<Bouquets>(values[m - 2].bouqet_id);
-                            excelcells = (Excel.Range)excellworksheet.Cells[m, n];
-                            excelcells.Value2 = b.name.ToString();
-                            excelcells.Font.Size = 12;
-                            excelcells.Font.Italic = true;
-                            excelcells.Font.Bold = false;
-                            excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                            excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                        }
-                    }
-                }
-
-
-                Excel.ChartObjects chartsobjrcts = (Excel.ChartObjects)excellworksheet.ChartObjects(Type.Missing);
-                Excel.ChartObject chartsobj = chartsobjrcts.Add(10, 200, 500, 300);
-                Excel.Chart excelchart = chartsobj.Chart;
-                excelcells = excellworksheet.get_Range("A1", "B" + (values.Count + 1).ToString());
-                excelchart.SetSourceData(excelcells, Type.Missing);
-                excelchart.ChartType = Excel.XlChartType.xlLine;
-                excelchart.HasTitle = true;
-                if (values == list_day_data)
-                {
-                    excelchart.ChartTitle.Text = "Продажи за день";
-                }
-                if (values == list_week_data)
-                {
-                    excelchart.ChartTitle.Text = "Продажи за неделю";
-                }
-                if (values == list_month_data)
-                {
-                    excelchart.ChartTitle.Text = "Продажи за месяц";
-                }
-                if (values == list_quater_data)
-                {
-                    excelchart.ChartTitle.Text = "Продажи за квартал";
-                }
-                excelchart.ChartTitle.Font.Size = 14;
-                excelchart.ChartTitle.Font.Color = 255;
-                excelchart.ChartTitle.Shadow = true;
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("нет данных для отчета");
-                exapp.Quit();
-            }
-        }
-        /// <summary>
-        /// Создание Excel файла для статистики продажи
-        /// </summary>
-        /// <param name="pie_values"></param>
-        /// 
-        public void Create_Excel_Doc(List<KeyValuePair<string, int>> pie_values)
-        {
-            if (pie_values != null)
-            {
-                Excel.Application exapp = new Excel.Application();
-                exapp.SheetsInNewWorkbook = 1;
-                exapp.Workbooks.Add(Type.Missing);
-                exapp.DisplayAlerts = true;
-                exapp.Visible = true;
-                Excel.Workbooks exappworkbooks = exapp.Workbooks;
-                Excel.Workbook exappworkbook = exappworkbooks[1];
-                exappworkbook.Saved = false;
-                Excel.Sheets excellsheets = exappworkbook.Worksheets;
-                Excel.Worksheet excellworksheet = (Excel.Worksheet)excellsheets.get_Item(1);
-                excellworksheet.Activate();
-                Excel.Range excelcells;
-
-                exapp.Cells[1, 1] = "Букет";
-                exapp.Cells[1, 2] = "Количество";
-                exapp.Cells[2, 1] = pie_values[0].Key;
-                exapp.Cells[2, 2] = pie_values[0].Value;
-                exapp.Cells[3, 1] = pie_values[1].Key;
-                exapp.Cells[3, 2] = pie_values[1].Value;
-
-                Excel.ChartObjects chartsobjrcts = (Excel.ChartObjects)excellworksheet.ChartObjects(Type.Missing);
-                Excel.ChartObject chartsobj = chartsobjrcts.Add(10, 200, 500, 300);
-                Excel.Chart excelchart = chartsobj.Chart;
-                excelcells = excellworksheet.get_Range("A1", "B3");
-                excelchart.SetSourceData(excelcells, Type.Missing);
-                excelchart.ChartType = Excel.XlChartType.xlPie;
-                excelchart.HasTitle = true;
-                excelchart.ChartTitle.Text = "Наиболее/наименее продаваемый букет";
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("нет данных для отчета");
-            }
-        }
-
         private void button_createExcel_Click(object sender, RoutedEventArgs e)
         {
-            Create_Excel_Doc(list_day_data);
+            r.Create_Excel_Doc(list_day_data, this, conn, list_day_data, list_week_data, list_month_data, list_quater_data);
         }
 
         private void button_excel_month_Click(object sender, RoutedEventArgs e)
         {
-            Create_Excel_Doc(list_month_data);
+            r.Create_Excel_Doc(list_month_data, this, conn, list_day_data, list_week_data, list_month_data, list_quater_data);
         }
 
         private void button_excel_week_Click(object sender, RoutedEventArgs e)
         {
-            Create_Excel_Doc(list_week_data);
+            r.Create_Excel_Doc(list_week_data, this, conn, list_day_data, list_week_data, list_month_data, list_quater_data);
         }
 
         private void button_excel_quater_Click(object sender, RoutedEventArgs e)
         {
-            Create_Excel_Doc(list_quater_data);
+            r.Create_Excel_Doc(list_quater_data, this, conn, list_day_data, list_week_data, list_month_data, list_quater_data);
         }
 
         private void button_excel_stat_Click(object sender, RoutedEventArgs e)
         {
-            Create_Excel_Doc(pie_values);
+            r.Create_Excel_Doc(pie_values);
         }
     }
 }
