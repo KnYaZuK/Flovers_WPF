@@ -441,11 +441,11 @@ namespace Flovers_WPF
                             combobox_Status.SelectedIndex = 3;
 
                             grid_Payments.IsEnabled = false;
-
-                            await Update_ListView_Payments();
                         }
                         break;
                 }
+
+                await Update_ListView_Payments();
 
                 await Update_ListView_Carts();
 

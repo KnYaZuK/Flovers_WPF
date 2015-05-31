@@ -56,10 +56,12 @@ namespace Flovers_WPF
         /// </summary>
         private async Task Check_Address_and_Phone()
         {
-            List<Constants> lConstants = await oConstantsRepository.Select_Constants_Async("select * from constants where name = 'Address' or name = 'Phone_Number'");
+            List<Constants> lConstants = await oConstantsRepository.Select_Constants_Async("select * from constants where name = 'Address' or name = 'Phone_Number' or name = 'e_mail_address' or name = 'e_mail_pass'");
 
             bool Address = true;
             bool Phone_Number = true;
+            bool e_mail_address = true;
+            bool e_mail_pass = true;
             
             foreach ( var c in lConstants )
             {
@@ -72,6 +74,16 @@ namespace Flovers_WPF
                 {
                     Phone_Number = false;
                 }
+
+                if(c.name == "e_mail_address")
+                {
+                    e_mail_address = false;
+                }
+
+                if(c.name == "e_mail_pass")
+                {
+                    e_mail_pass = false;
+                }
             }
 
             if ( Address )
@@ -82,6 +94,16 @@ namespace Flovers_WPF
             if (Phone_Number)
             {
                 await oConstantsRepository.Insert_Constants_Async(new Constants("Phone_Number", "Phone_Number"));
+            }
+
+            if(e_mail_address)
+            {
+                await oConstantsRepository.Insert_Constants_Async(new Constants("e_mail_address", "e_mail"));
+            }
+
+            if(e_mail_pass)
+            {
+                await oConstantsRepository.Insert_Constants_Async(new Constants("e_mail_pass", "pass"));
             }
         }
 
@@ -167,7 +189,7 @@ namespace Flovers_WPF
 
                 grid.DataContext = oConstants;
 
-                if ((oConstants.name == "Address") || (oConstants.name == "Phone_Number"))
+                if ((oConstants.name == "Address") || (oConstants.name == "Phone_Number") || (oConstants.name == "e_mail_address") || (oConstants.name == "e_mail_pass"))
                 {
                     button_Create.IsEnabled = false;
                     button_Update.IsEnabled = true;
