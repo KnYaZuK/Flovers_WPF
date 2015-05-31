@@ -295,7 +295,11 @@ namespace Flovers_WPF
 
             numericupdown_CountContent.Value = null;
 
-            button_CreateContent.IsEnabled = true;
+            combobox_Content.IsEnabled = false;
+
+            numericupdown_CountContent.IsEnabled = false;
+
+            button_CreateContent.IsEnabled = false;
             button_UpdateContent.IsEnabled = false;
             button_DeleteContent.IsEnabled = false;
         }
@@ -488,6 +492,8 @@ namespace Flovers_WPF
             {
                 await Update_ComboBox_Contents(false);
             }
+
+            combobox_Content.IsEnabled = true;
         }
 
         /// <summary>
@@ -506,8 +512,29 @@ namespace Flovers_WPF
             {
                 component = combobox_Content.SelectedItem as Flowers;
             }
+
+            numericupdown_CountContent.IsEnabled = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void numericupdown_CountContent_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if ( listview_Content.SelectedIndex != -1 )
+            {
+                button_CreateContent.IsEnabled = true;
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void textbox_Search_Bouquet_TextChanged(object sender, TextChangedEventArgs e)
         {
             if ( textbox_Search_Bouquet.Text != "")
@@ -520,6 +547,11 @@ namespace Flovers_WPF
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void textbox_Search_Content_TextChanged(object sender, TextChangedEventArgs e)
         {
             if ( textbox_Search_Content.Text != "")

@@ -1,0 +1,85 @@
+﻿<Controls:MetroWindow x:Class="Flovers_WPF.SpecialDealDiscountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Скидка специального предложения" Height="480" Width="900" EnableDWMDropShadow="True" GlowBrush="#FF84FDE7" Loaded="MetroWindow_Loaded">
+    <Grid>
+        <Grid x:Name="grid" HorizontalAlignment="Left" Height="400" Margin="325,40,0,0" VerticalAlignment="Top" Width="242">
+
+            <Button x:Name="button_SpecialDeal_Create" Content="Добавить" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" Width="222" Click="button_SpecialDeal_Create_Click" Height="30"/>
+            <Button x:Name="button_SpecialDeal_Update" Content="Изменить" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="222" Click="button_SpecialDeal_Update_Click" Height="30"/>
+            <Button x:Name="button_SpecialDeal_Delete" Content="Удалить" HorizontalAlignment="Left" Margin="10,265,0,0" VerticalAlignment="Top" Width="222" Click="button_SpecialDeal_Delete_Click" Height="30"/>
+
+            <Button Name="button_SpecialDeal_Window" Content="перейти к созданию рассылки" Click="button_SpecialDeal_Window_Click" Margin="10,325,10,25"></Button>
+            
+            <Controls:NumericUpDown x:Name="numericUD_SpecialDeal_Percent" Minimum="0" Maximum="100"  Interval="1" Margin="10,100,10,270" Controls:TextBoxHelper.Watermark="Процент: 0" Height="30"/>
+            <DatePicker Name="datepicker" SelectedDate="{x:Static sys:DateTime.Now}" DisplayDateStart="{x:Static sys:DateTime.Now}" Margin="10,135,10,235"></DatePicker>
+
+        </Grid>
+
+        <TextBox x:Name="textbox_Search_Bouquet" Margin="10,9,572,414" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." TextChanged="textbox_Search_Bouquet_TextChanged"/>
+
+        <ListView x:Name="listview_Bouquet" HorizontalAlignment="Left" Height="400" Margin="10,40,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_Bouquet_MouseLeftButtonUp" MouseRightButtonUp="listview_Bouquet_MouseRightButtonUp" Padding="5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
+
+                        <StackPanel Orientation="Horizontal" Margin="5">
+
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Название:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding name}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Доп.Цена:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding price_extra}" ></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBox x:Name="textbox_Search_SpecialDealDiscount" Margin="572,9,10,414" TextWrapping="Wrap" Controls:TextBoxHelper.Watermark="Поиск..." TextChanged="textbox_Search_SpecialDealDiscount_TextChanged"/>
+
+        <ListView x:Name="listview_SpecialDealDiscount" HorizontalAlignment="Left" Height="400" Margin="572,40,0,0" VerticalAlignment="Top" Width="310" Background="#FFF2FFFC" BorderThickness="1" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseLeftButtonUp="listview_SpecialDealDiscount_MouseLeftButtonUp" MouseRightButtonUp="listview_SpecialDealDiscount_MouseRightButtonUp" Padding="5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1">
+
+                        <StackPanel Orientation="Horizontal" Margin="5">
+
+                            <StackPanel Orientation="Vertical">
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Букет:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding bouquet.name}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Скидка" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding specialdeal.discount}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Дата окончания:" Width="128"></TextBlock>
+                                    <TextBlock Text="{Binding specialdeal.datetime}" ></TextBlock>
+                                </StackPanel>
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Controls:MetroWindow>

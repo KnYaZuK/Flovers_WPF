@@ -4,37 +4,44 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Name="Reply_Win" x:Class="Flovers_WPF.Reply_Window"
         xmlns:chartingToolkit ="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-        Title="Отчеты" Height="600" Width="800" EnableDWMDropShadow="True" Loaded="Reply_Win_Loaded">
+        Title="Отчеты" Height="461" Width="800" EnableDWMDropShadow="True" Loaded="Reply_Win_Loaded">
     <Grid x:Name="grid_replies">
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="800" Background="#FFABE7F9" BorderBrush="Black" BorderThickness="0,1" Margin="0,0,-8,0" FontSize="12">
             <MenuItem x:Name="menu_lvl1_graph" Header="отчеты о работе магазина" Width="220" Margin="100,3,0,0" BorderBrush="Black" Padding="30,5,8,6" FontStyle="Italic" StaysOpenOnClick="True" Background="White">
                 <MenuItem x:Name="menu_lvl2_day" Header="отчет за день" Width="283" Click="menu_lvl2_day_Click"/>
                 <MenuItem x:Name="menu_lvl2_range" Header="отчет за неделю" Click="menu_lvl2_range_Click"/>
                 <MenuItem x:Name="menu_lvl2_month" Header="отчет за месяц" Click="menu_lvl2_month_Click"></MenuItem>
-                <MenuItem x:Name="menu_lvl2_quter" Header="отчет за квартал"/>
+                <MenuItem x:Name="menu_lvl2_quter" Header="отчет за квартал" Click="menu_lvl2_quter_Click"/>
             </MenuItem>
-            <MenuItem x:Name="menu_lvl1_reply" Header="отчеты о продаваемости товаров" Margin="160,3,0,0" Width="220" BorderBrush="Black" Padding="11,5,8,6" FontStyle="Italic" StaysOpenOnClick="True" Background="White">
-                <MenuItem x:Name="menu_lvl2_pos" Header="наиболее продаваемый букет"/>
-                <MenuItem x:Name="menu_lvl2_neg" Header="наименее продаваемый букет"/>
-            </MenuItem>
+            <MenuItem x:Name="menu_lvl1_reply" Header="статистика продаваемости товаров" Width="240" BorderBrush="Black" Padding="11,5,8,6" FontStyle="Italic" Background="White" Margin="137,2,0,0" Click="menu_lvl1_reply_Click"/>
         </Menu>
-        <Grid x:Name="grid_day" HorizontalAlignment="Left" Height="535" Margin="0,35,0,0" VerticalAlignment="Top" Width="792" d:IsHidden="True">
+        <Grid x:Name="grid_day" HorizontalAlignment="Left" Height="396" Margin="0,35,0,0" VerticalAlignment="Top" Width="792" d:IsHidden="True">
             <chartingToolkit:Chart x:Name="day_chart" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="315" Width="772" Title="Продажи за день" ScrollViewer.HorizontalScrollBarVisibility="Visible">
 
             </chartingToolkit:Chart>
             <Button x:Name="button_build" Content="построить график" HorizontalAlignment="Left" Margin="205,331,0,0" VerticalAlignment="Top" Width="577" Click="button_build_Click"/>
-            <Button x:Name="button_createExcel" Content="вывести отчет в Excel файл" HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Width="772"/>
+            <Button x:Name="button_createExcel" Content="вывести отчет в Excel файл" HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Width="772" Click="button_createExcel_Click"/>
             <DatePicker x:Name="datepicker" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Height="20" Width="175"/>
         </Grid>
-        <Grid x:Name="grid_month" HorizontalAlignment="Left" Height="535" Margin="0,35,0,0" VerticalAlignment="Top" Width="792" d:IsHidden="True">
+        <Grid x:Name="grid_month" HorizontalAlignment="Left" Height="396" Margin="0,35,0,0" VerticalAlignment="Top" Width="792" d:IsHidden="True">
             <chartingToolkit:Chart x:Name="month_chart" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="315" Width="772" Title="Продажи за месяц" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
             <Button x:Name="button_create_month" Content="построить график" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Width="772" Click="button_create_month_Click"/>
-            <Button x:Name="button_excel_month" Content="Вывести отчет в Excel файл" HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Width="772"/>
+            <Button x:Name="button_excel_month" Content="Вывести отчет в Excel файл" HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Width="772" Click="button_excel_month_Click"/>
         </Grid>
-        <Grid x:Name="grid_week" HorizontalAlignment="Left" Height="535" Margin="0,35,0,0" VerticalAlignment="Top" Width="792">
+        <Grid x:Name="grid_week" HorizontalAlignment="Left" Height="396" Margin="0,35,0,0" VerticalAlignment="Top" Width="792" d:IsHidden="True">
             <chartingToolkit:Chart x:Name="week_chart" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="315" Width="772" Title="Продажи за неделю" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
             <Button x:Name="button_create_week" Content="построить график" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Width="772" Click="button_create_week_Click"/>
-            <Button x:Name="button_excel_week" Content="вывести отчет в excel файл" HorizontalAlignment="Left" Margin="10,360,0,0" VerticalAlignment="Top" Width="772"/>
+            <Button x:Name="button_excel_week" Content="вывести отчет в excel файл" HorizontalAlignment="Left" Margin="10,360,0,0" VerticalAlignment="Top" Width="772" Click="button_excel_week_Click"/>
+        </Grid>
+        <Grid x:Name="grid_quater" HorizontalAlignment="Left" Height="396" Margin="0,35,0,0" VerticalAlignment="Top" Width="792" d:IsHidden="True">
+            <chartingToolkit:Chart x:Name="quater_chart" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="315" Width="772" Title="Продажи за квартал" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+            <Button x:Name="button_create_quater" Content="построить график" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Width="772" Click="button_create_quater_Click"/>
+            <Button x:Name="button_excel_quater" Content="вывести отчет в Excel файл" HorizontalAlignment="Left" Margin="10,360,0,0" VerticalAlignment="Top" Width="772" Click="button_excel_quater_Click"/>
+        </Grid>
+        <Grid x:Name="grid_stat" HorizontalAlignment="Left" Height="396" Margin="0,35,0,0" VerticalAlignment="Top" Width="792">
+            <chartingToolkit:Chart x:Name="stat_chart" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="315" Width="772" Title="Наиболее/наименее продаваемые товары" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+            <Button x:Name="button_excel_stat" Content="Вывести отчет в excel файл" HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Width="772" Click="button_excel_stat_Click"/>
+            <Button x:Name="button_create_stat" Content="построить график" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Width="772" Click="button_create_stat_Click"/>
         </Grid>
     </Grid>
 </Controls:MetroWindow>

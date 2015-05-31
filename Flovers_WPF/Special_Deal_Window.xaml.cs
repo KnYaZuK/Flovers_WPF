@@ -57,14 +57,22 @@ namespace Flovers_WPF
             oClients = new ClientsRepository(oDBConnection);
             oConstants = new ConstantsRepository(oDBConnection);
         }
-
+        /// <summary>
+        /// инициализация камеры и БД
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void spec_deal_Loaded(object sender, RoutedEventArgs e)
         {
             webcam = new Camera_Control();
             webcam.Ini_Web_Camera(ref imgVideo);
             await Initialize_Database();
         }
-
+        /// <summary>
+        /// включение камеры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_startVideo_Click(object sender, RoutedEventArgs e)
         {
             webcam.Start();
@@ -72,7 +80,11 @@ namespace Flovers_WPF
             button_startVideo.IsEnabled = false;
             button_CaptureImage.IsEnabled = true;
         }
-
+        /// <summary>
+        /// остановка камеры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_stopVideo_Click(object sender, RoutedEventArgs e)
         {
             webcam.Stop();
@@ -80,13 +92,21 @@ namespace Flovers_WPF
             button_stopVideo.IsEnabled = false;
             button_CaptureImage.IsEnabled = false;
         }
-
+        /// <summary>
+        /// захват изображения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_CaptureImage_Click(object sender, RoutedEventArgs e)
         {
             imgCaptured.Source = imgVideo.Source;
             button_SaveImage.IsEnabled = true;
         }
-
+        /// <summary>
+        /// сохранение изображения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_SaveImage_Click(object sender, RoutedEventArgs e)
         {
             Camera_HelperClass.SaveImageCapture((BitmapSource)imgCaptured.Source);
@@ -114,7 +134,10 @@ namespace Flovers_WPF
                 System.Windows.MessageBox.Show("выберите изображение из списка");
             }
         }
-
+        /// <summary>
+        /// создание pdf документа со спецпредложением
+        /// </summary>
+        /// <param name="path">путь к файлу</param>
         public void Create_PDF_File(string path)
         {
             var doc = new Document();
@@ -148,54 +171,65 @@ namespace Flovers_WPF
                 PDF_path = save_pdf.FileName;
             }
         }
-
+        /// <summary>
+        /// рассылка почты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button_SendMail_Click(object sender, RoutedEventArgs e)
         {
-            mail_addresses = await oConstants.Select_Constants_Async("select value from Constants where name=\'e-mail_address\'");
+            mail_addresses = await oConstants.Select_Constants_Async("select value from Constants where name=\'e_mail_address\'");
             string mail_adr = mail_addresses.First().value.ToString();
-            mail_passwords = await oConstants.Select_Constants_Async("select value from Constants where name=\'e-mail_pass\'");
+            mail_passwords = await oConstants.Select_Constants_Async("select value from Constants where name=\'e_mail_pass\'");
             string mail_pas = mail_passwords.First().value.ToString();
 
             if(PDF_path != null)
             {
                 if(mail_adr != null && mail_pas != null)
                 {
-                    string smtpHost = "smtp.yandex.ru";
-                    SmtpClient client = new SmtpClient(smtpHost, 25);
-                    var cred = new NetworkCredential(mail_adr, mail_pas);
-                    client.Credentials = cred;
-                    client.EnableSsl = true;
-
-                    string from = mail_adr;
-                    string subject = textbox_theme.Text;
-                    string to;
-                    string body = "<html><body><div><div style=\"height:10%; background-color:#6DD4FF; border-radius:10px\"><p style=\"margin-left:20px; color:red\">Внимание! для тех,у кого не поддерживается HTML - снизу письма дубликат в формате PDF</p></div><div style=\"height:300px; border: 1px solid black; border-radius:10px\"><p style=\"margin-left:20px\">" + new TextRange(textbox_text.Document.ContentStart, textbox_text.Document.ContentEnd).Text.ToString() + "</p>";
-                    AlternateView htmlv = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
-                    for (int i = 0; i < added_images.Count; i++)
+                    try
                     {
-                        LinkedResource imageResource = new LinkedResource(added_images[i].ToString(), "image/jpg");
-                        imageResource.ContentId = "photo" + i.ToString();
-                        imageResource.TransferEncoding = System.Net.Mime.TransferEncoding.Base64;
-                        htmlv.LinkedResources.Add(imageResource);
+                        string smtpHost = "smtp.yandex.ru";
+                        SmtpClient client = new SmtpClient(smtpHost, 25);
+                        var cred = new NetworkCredential(mail_adr, mail_pas);
+                        client.Credentials = cred;
+                        client.EnableSsl = true;
 
-                        body += "<img style=\"margin-left:20px\" src=\"cid:" + imageResource.ContentId.ToString() + "\" alt='photo' />";
+                        string from = mail_adr;
+                        string subject = textbox_theme.Text;
+                        string to;
+                        string body = "<html><body><div><div style=\"height:10%; background-color:#6DD4FF; border-radius:10px\"><p style=\"margin-left:20px; color:red\">Внимание! для тех,у кого не поддерживается HTML - снизу письма дубликат в формате PDF</p></div><div style=\"height:300px; border: 1px solid black; border-radius:10px\"><p style=\"margin-left:20px\">" + new TextRange(textbox_text.Document.ContentStart, textbox_text.Document.ContentEnd).Text.ToString() + "</p>";
+                        AlternateView htmlv = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+                        for (int i = 0; i < added_images.Count; i++)
+                        {
+                            LinkedResource imageResource = new LinkedResource(added_images[i].ToString(), "image/jpg");
+                            imageResource.ContentId = "photo" + i.ToString();
+                            imageResource.TransferEncoding = System.Net.Mime.TransferEncoding.Base64;
+                            htmlv.LinkedResources.Add(imageResource);
+
+                            body += "<img style=\"margin-left:20px\" src=\"cid:" + imageResource.ContentId.ToString() + "\" alt='photo' />";
+                        }
+                        body += "</div></div></body></html>";
+                        Attachment pdfFile = new Attachment(PDF_path);
+
+                        List<Clients> all_clients = await oClients.Select_All_Clients_Async();
+                        foreach (var c in all_clients)
+                        {
+                            to = c.email;
+                            MailMessage mes = new MailMessage(from, to, subject, body);
+                            mes.IsBodyHtml = true;
+                            mes.SubjectEncoding = Encoding.GetEncoding(1251);
+                            mes.BodyEncoding = Encoding.GetEncoding(1251);
+                            mes.AlternateViews.Add(htmlv);
+                            mes.Attachments.Add(pdfFile);
+                            client.Send(mes);
+                        }
+                        System.Windows.MessageBox.Show("Рассылка завершена!");
                     }
-                    body += "</div></div></body></html>";
-                    Attachment pdfFile = new Attachment(PDF_path);
-
-                    List<Clients> all_clients = await oClients.Select_All_Clients_Async();
-                    foreach (var c in all_clients)
+                    catch
                     {
-                        to = c.email;
-                        MailMessage mes = new MailMessage(from, to, subject, body);
-                        mes.IsBodyHtml = true;
-                        mes.SubjectEncoding = Encoding.GetEncoding(1251);
-                        mes.BodyEncoding = Encoding.GetEncoding(1251);
-                        mes.AlternateViews.Add(htmlv);
-                        mes.Attachments.Add(pdfFile);
-                        client.Send(mes);
+                        System.Windows.MessageBox.Show("Ваш адреc почты или пароль некорректны!");
                     }
-                    System.Windows.MessageBox.Show("Рассылка завершена!");
                 }
                 else
                 {
@@ -204,7 +238,7 @@ namespace Flovers_WPF
             }
             else
             {
-                System.Windows.MessageBox.Show("Сначала необходимо сохранить PDF");
+                System.Windows.MessageBox.Show("Сначала необходимо сохранить или загрузить готовый PDF файл");
             }
         }
 

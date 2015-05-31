@@ -120,6 +120,12 @@
     </ApplicationDefinition>
     <Compile Include="Camera_Control.cs" />
     <Compile Include="Camera_HelperClass.cs" />
+    <Compile Include="SpecialDealDiscount_Window.xaml.cs">
+      <DependentUpon>SpecialDealDiscount_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Discounts_Window.xaml.cs">
+      <DependentUpon>Discounts_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Constants_Window.xaml.cs">
       <DependentUpon>Constants_Window.xaml</DependentUpon>
     </Compile>
@@ -145,6 +151,7 @@
     <Compile Include="DataModel\Carts.cs" />
     <Compile Include="DataModel\Bouquets.cs" />
     <Compile Include="DataModel\Accessories.cs" />
+    <Compile Include="DataModel\SpecialDeals.cs" />
     <Compile Include="DataModel\Users.cs" />
     <Compile Include="MainMenuWindow.xaml.cs">
       <DependentUpon>MainMenuWindow.xaml</DependentUpon>
@@ -170,6 +177,7 @@
     <Compile Include="Reply_Window.xaml.cs">
       <DependentUpon>Reply_Window.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Repository\SpecialDealsRepository.cs" />
     <Compile Include="Repository\AccessoriesRepository.cs" />
     <Compile Include="Repository\BouquetsRepository.cs" />
     <Compile Include="Repository\CardsRepository.cs" />
@@ -179,6 +187,7 @@
     <Compile Include="Repository\ContentsRepository.cs" />
     <Compile Include="Repository\DiscountsRepository.cs" />
     <Compile Include="Repository\FlowersRepository.cs" />
+    <Compile Include="Repository\ISpecialDealsRepository.cs" />
     <Compile Include="Repository\ICardsRepository.cs" />
     <Compile Include="Repository\IPaymentsRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
@@ -204,6 +213,14 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="Задачи.cs" />
+    <Page Include="SpecialDealDiscount_Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Discounts_Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Constants_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -313,6 +330,35 @@
     <Resource Include="Resources\location_pin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel1">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets')" />

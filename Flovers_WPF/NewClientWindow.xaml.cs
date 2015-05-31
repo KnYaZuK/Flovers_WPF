@@ -90,6 +90,34 @@ namespace Flovers_WPF
             Clear_Controls();
         }
 
+        private async Task Update_ListView( string text)
+        {
+            List<Clients_Cards> clientcard = new List<Clients_Cards>();
+
+            List<Clients> result = await oClientsRepository.Select_All_Clients_Async();
+
+            foreach (Clients client in result)
+            {
+                Clients_Cards cc = new Clients_Cards();
+                cc.client = client;
+                cc.card = await conn.GetAsync<Cards>(client.cards_id);
+
+                if (client.referer_id != -1)
+                {
+                    cc.referer = await conn.GetAsync<Clients>(client.referer_id);
+                }
+
+                if ( client.full_name.ToLower().Contains(text.ToLower()) || client.phone_number.ToLower().Contains(text.ToLower()) || client.email.ToLower().Contains(text.ToLower()))
+                {
+                    clientcard.Add(cc);
+                }
+            }
+
+            listview_Clients_Cards.ItemsSource = clientcard;
+
+            Clear_Controls();
+        }
+
         /// <summary>
         /// Сбрасывает значения textbox и состояние кнопок
         /// </summary>
@@ -210,6 +238,18 @@ namespace Flovers_WPF
         private void listview_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             Clear_Controls();
+        }
+
+        private async void textbox_Search_Clients_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if ( textbox_Search_Clients.Text != "")
+            {
+                await Update_ListView(textbox_Search_Clients.Text);
+            }
+            else
+            {
+                await Update_ListView();
+            }
         }
 
 

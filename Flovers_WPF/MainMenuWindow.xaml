@@ -9,6 +9,7 @@
         <Controls:WindowCommands>
             <Button x:Name="bt_settings" Content="Путь к БД" Click="bt_settings_Click"></Button>
             <Button x:Name="button_const" Content="Константы" Click="button_const_Click"></Button>
+            <Button x:Name="button_Discounts" Content="Скидки" Click="button_Discounts_Click"></Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     

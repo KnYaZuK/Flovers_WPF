@@ -36,10 +36,9 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Controls:NumericUpDown x:Name="numericupdown_CountContent" Interval="1" Value="{Binding count}" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество"></Controls:NumericUpDown>
+            <Controls:NumericUpDown x:Name="numericupdown_CountContent" Interval="1" Value="{Binding contents.count}" Margin="10,150,10,104" Controls:TextBoxHelper.Watermark="Количество" GotFocus="numericupdown_CountContent_GotFocus"></Controls:NumericUpDown>
 
             <Button x:Name="button_CreateContent" Content="Добавить" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="222" Click="button_CreateContent_Click"/>
-
             <Button x:Name="button_UpdateContent" Content="Изменить" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" Width="222" Click="button_UpdateContent_Click"/>
             <Button x:Name="button_DeleteContent" Content="Удалить" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="222" Click="button_DeleteContent_Click"/>
 
