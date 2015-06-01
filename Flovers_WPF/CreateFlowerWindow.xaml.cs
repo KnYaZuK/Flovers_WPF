@@ -291,11 +291,11 @@ namespace Flovers_WPF
             listview_Content.SelectedIndex = -1;
 
             combobox_Content.ItemsSource = null;
+            combobox_Content.IsEnabled = false;
+
             combobox_TypeContent.SelectedIndex = -1;
 
             numericupdown_CountContent.Value = null;
-
-            combobox_Content.IsEnabled = false;
 
             numericupdown_CountContent.IsEnabled = false;
 
@@ -523,7 +523,7 @@ namespace Flovers_WPF
         /// <param name="e"></param>
         private void numericupdown_CountContent_GotFocus(object sender, RoutedEventArgs e)
         {
-            if ( listview_Content.SelectedIndex != -1 )
+            if ( listview_Content.SelectedIndex == -1 )
             {
                 button_CreateContent.IsEnabled = true;
             }
