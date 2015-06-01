@@ -47,6 +47,8 @@ namespace Flovers_WPF
         public List<string> needded_adr_copy = new List<string>();
         public List<string> sorted_addresses = new List<string>();
         public List<GMap.NET.PointLatLng> sorted_points = new List<GMap.NET.PointLatLng>();
+        Maps m = new Maps();
+        PDF_creater pdf = new PDF_creater();
 
         public Routes_Window()
         {
@@ -65,39 +67,6 @@ namespace Flovers_WPF
         }
 
         #region Работа с картами 
-        /// <summary>
-        /// Метод геокодирования
-        /// </summary>
-        /// <param name="address">Адрес</param>
-        /// <returns>Широта,Долгота</returns>
-        public List<double> Geocoding(string address)
-        {
-            string url = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=true_or_false&language=ru",Uri.EscapeDataString(address));
-            System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-            System.Net.WebResponse response = request.GetResponse();
-            Stream filestream = response.GetResponseStream();
-            StreamReader sreader = new StreamReader(filestream);
-            string responsereader = sreader.ReadToEnd();
-            response.Close();
-            double latitude = 0.0;
-            double longitude = 0.0;
-            XmlDocument document = new XmlDocument();
-            document.LoadXml(responsereader);
-            if (document.GetElementsByTagName("status")[0].ChildNodes[0].InnerText == "OK")
-            {
-                XmlNodeList nodes = document.SelectNodes("//location");
-
-                foreach (XmlNode node in nodes)
-                {
-                    latitude = XmlConvert.ToDouble(node.SelectSingleNode("lat").InnerText.ToString());
-                    longitude = XmlConvert.ToDouble(node.SelectSingleNode("lng").InnerText.ToString());
-                }
-            }
-            List<double> latlng = new List<double>();
-            latlng.Add(latitude);
-            latlng.Add(longitude);
-            return latlng;
-        }
         /// <summary>
         /// Метод сортировки адресов по мере удаленности и построения маршрута
         /// </summary>
@@ -137,7 +106,7 @@ namespace Flovers_WPF
                 string Start_position = Close_position;
                 int closest_id = 1;
                 string Closest_Adr = "";
-                List<double> Start_position_point = Geocoding(Start_position);
+                List<double> Start_position_point = m.Geocoding(Start_position);
                 sorted_points.Add(new GMap.NET.PointLatLng(Start_position_point[0], Start_position_point[1]));
 
 
@@ -146,7 +115,7 @@ namespace Flovers_WPF
                     if (needded_adr_copy[j] != Start_position)
                     {
                         double Distance = 0.0;
-                        List<double> adr_latlng = Geocoding(needded_adr_copy[j].ToString());
+                        List<double> adr_latlng = m.Geocoding(needded_adr_copy[j].ToString());
                         Distance = gmap_routes.MapProvider.Projection.GetDistance(new GMap.NET.PointLatLng(Start_position_point[0], Start_position_point[1]), new GMap.NET.PointLatLng(adr_latlng[0], adr_latlng[1]));
 
                         if (Distance < min_Dist)
@@ -157,7 +126,7 @@ namespace Flovers_WPF
                     }
                 }
                 sorted_addresses.Add(Closest_Adr.ToString());
-                List<double> closest_address_points = Geocoding(Closest_Adr.ToString());
+                List<double> closest_address_points = m.Geocoding(Closest_Adr.ToString());
                 sorted_points.Add(new GMap.NET.PointLatLng(closest_address_points[0], closest_address_points[1]));
                 needded_adr_copy.Remove(Closest_Adr);
                 Close_position = Closest_Adr;
@@ -176,8 +145,8 @@ namespace Flovers_WPF
 
             for (int i = 0; i < sorted_addresses.Count - 1; i++)
             {
-                List<double> first = Geocoding(sorted_addresses[i]);
-                List<double> last = Geocoding(sorted_addresses[i + 1]);
+                List<double> first = m.Geocoding(sorted_addresses[i]);
+                List<double> last = m.Geocoding(sorted_addresses[i + 1]);
                 route = rp.GetRoute(new GMap.NET.PointLatLng(first[0], first[1]), new GMap.NET.PointLatLng(last[0], last[1]), false, false, (int)gmap_routes.Zoom);
                 if (route != null)
                 {
@@ -204,7 +173,7 @@ namespace Flovers_WPF
             DBConnection oDBConnection = new DBConnection();
 
             await oDBConnection.InitializeDatabase();
-
+    
             oOrdersRepository = new OrdersRepository(oDBConnection);
             oConstantsRepository = new ConstantsRepository(oDBConnection);
         }
@@ -218,28 +187,6 @@ namespace Flovers_WPF
 
         #region Работа с PDF
 
-        public void Create_PDF_File(string path)
-        {
-            var doc = new Document();
-            PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
-            doc.Open();
-
-            BaseFont base_font = BaseFont.CreateFont("arialn.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            iTextSharp.text.Phrase head = new Phrase("Маршрут", new iTextSharp.text.Font(base_font, 18, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Red)));
-            iTextSharp.text.Paragraph header = new iTextSharp.text.Paragraph(head);
-            header.Alignment = Element.ALIGN_CENTER;
-            doc.Add(header);
-
-            for (int i = 0; i < sorted_addresses.Count; i++)
-            {
-                string row = i.ToString() + ")" + sorted_addresses[i].ToString();
-                iTextSharp.text.Phrase text = new Phrase(row, new iTextSharp.text.Font(base_font, 14, iTextSharp.text.Font.NORMAL, new BaseColor(System.Drawing.Color.Black)));
-                iTextSharp.text.Paragraph main_text = new iTextSharp.text.Paragraph(text);
-                doc.Add(main_text);
-            }
-
-            doc.Close();
-        }
 
         private void button_loadPDF_Click(object sender, RoutedEventArgs e)
         {
@@ -249,7 +196,7 @@ namespace Flovers_WPF
             sf.Filter = "(.pdf) | *.pdf";
             if(sf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Create_PDF_File(sf.FileName);
+                pdf.Create_PDF_File(sf.FileName,this);
                 System.Windows.MessageBox.Show("Файл успешно создан");
             }
         }
