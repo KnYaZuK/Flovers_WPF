@@ -290,10 +290,10 @@ namespace Flovers_WPF
 
             listview_Content.SelectedIndex = -1;
 
+            combobox_TypeContent.SelectedIndex = -1;
+
             combobox_Content.ItemsSource = null;
             combobox_Content.IsEnabled = false;
-
-            combobox_TypeContent.SelectedIndex = -1;
 
             numericupdown_CountContent.Value = null;
 
@@ -451,7 +451,7 @@ namespace Flovers_WPF
             {
                 accessories_flowers = (Accessories_Flowers)listview_Content.SelectedItem;
 
-                Clear_Control_Content();
+                //Clear_Control_Content();
 
                 grid_Content.DataContext = accessories_flowers;
 
@@ -526,6 +526,10 @@ namespace Flovers_WPF
             if ( listview_Content.SelectedIndex == -1 )
             {
                 button_CreateContent.IsEnabled = true;
+            }
+            else
+            {
+                button_CreateContent.IsEnabled = false;
             }
 
         }
